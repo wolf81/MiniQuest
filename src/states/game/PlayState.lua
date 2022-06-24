@@ -16,6 +16,6 @@ function PlayState:update(dt)
     self.dungeon:update(dt)
 end
 
-function PlayState:render()
+function PlayState:draw()
     self.dungeon:draw()
 end

@@ -19,7 +19,7 @@ local function createAnimations(animationDefs)
         }
     end
 
-    return animationsReturned
+    return animations
 end
 
 function Entity:new(def)
@@ -36,13 +36,17 @@ function Entity:new(def)
 end
 
 function Entity:update(dt)
-    -- body
+    self.stateMachine:update(dt)
+
+    if self.currentAnimation then
+        self.currentAnimation:update(dt)
+    else
+        error('no animation defined')
+    end    
 end
 
 function Entity:draw()
-    love.graphics.setColor(0.0, 0.5, 0.5, 0.5)
-    love.graphics.rectangle('fill', self.x, self.y, TILE_SIZE, TILE_SIZE)
-    love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
+    self.stateMachine:draw()
 end
 
 function Entity:collides(target)
@@ -52,4 +56,12 @@ function Entity:collides(target)
         self.y + self.height < target.y or 
         self.y > target.y + target.height
     )
+end
+
+function Entity:changeState(state)
+    self.stateMachine:change(state)
+end
+
+function Entity:changeAnimation(name)
+    self.currentAnimation = self.animations[name]
 end

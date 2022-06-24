@@ -38,6 +38,8 @@ function love.resize(w, h)
 end
 
 function love.update(dt)
+    Timer.update(dt)
+
     gStateMachine:update(dt)
 
     love.keyboard.keysPressed = {}
@@ -46,7 +48,7 @@ end
 function love.draw()
     push:start()
 
-    gStateMachine:render()
+    gStateMachine:draw()
 
     showFPS()
 

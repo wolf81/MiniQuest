@@ -4,3 +4,6 @@
 [submodule "lib/classic"]
 	path = lib/classic
 	url = https://github.com/wolf81/classic.git
+[submodule "lib/knife"]
+	path = lib/knife
+	url = https://github.com/wolf81/knife.git

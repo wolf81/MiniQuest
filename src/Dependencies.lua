@@ -8,6 +8,7 @@
 
 push = require 'lib.push.push'
 Object = require 'lib.classic.classic'
+Timer = require 'lib.knife.knife.timer'
 
 require 'dat.entity_defs'
 
@@ -18,7 +19,7 @@ require 'src.StateMachine'
 require 'src.states.BaseState'
 
 require 'src.states.entity.EntityIdleState'
-require 'src.states.entity.EntityWalkState'
+require 'src.states.entity.EntityMoveState'
 
 require 'src.states.game.PlayState'
 
@@ -28,6 +29,8 @@ require 'src.Animation'
 
 require 'src.world.Dungeon'
 
+Map = require 'dat.map'
+
 gTextures = {
     ['world'] = love.graphics.newImage('gfx/tiny_dungeon_world.png'),
     ['monsters'] = love.graphics.newImage('gfx/tiny_dungeon_monsters.png'),
@@ -35,6 +38,7 @@ gTextures = {
 
 gFrames = {
     ['tiles'] = GenerateQuads(gTextures['world'], 16, 16),
+    ['monsters'] = GenerateQuads(gTextures['monsters'], 16, 16),
 }
 
 gStateMachine = StateMachine {

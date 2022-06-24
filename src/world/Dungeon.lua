@@ -13,8 +13,8 @@ local function updateCamera(self)
     self.camera.y = VIRTUAL_HEIGHT / 2 - self.hero.y - TILE_SIZE / 2
 end
 
-function Dungeon:new(path)
-    self.map = dofile(path)
+function Dungeon:new()
+    self.map = Map
 
     self.layers = {}
 
@@ -40,7 +40,7 @@ function Dungeon:new(path)
         end
     end
 
-    self.hero = Hero(ENTITY_DEFS['hero'])
+    self.hero = Hero(ENTITY_DEFS['hero'], self)
     self.hero.x = 1 * TILE_SIZE
     self.hero.y = 4 * TILE_SIZE
 
@@ -49,6 +49,8 @@ end
 
 function Dungeon:update(dt)
     updateCamera(self)
+
+    self.hero:update(dt)
 end
 
 function Dungeon:draw()
