@@ -10,6 +10,12 @@ io.stdout:setvbuf('no') -- show debug output live in SublimeText console
 
 require 'src/Dependencies'
 
+local function showFPS()
+    love.graphics.setFont(gFonts['tiny-dungeon-shadow'])
+    love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
+    love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
+end
+
 function love.load(args)
     math.randomseed(os.time())
     love.window.setTitle('MiniQuest')
@@ -18,7 +24,8 @@ function love.load(args)
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         vsync = true,
-        resizable = true
+        resizable = true,
+        highdpi = false,
     })
 
     love.keyboard.keysPressed = {}
@@ -31,6 +38,8 @@ function love.resize(w, h)
 end
 
 function love.update(dt)
+    dungeon:update(dt)
+
     love.keyboard.keysPressed = {}
 end
 
@@ -38,6 +47,8 @@ function love.draw()
     push:start()
 
     dungeon:draw()
+
+    showFPS()
 
     push:finish()
 end
