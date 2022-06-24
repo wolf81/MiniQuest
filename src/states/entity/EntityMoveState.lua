@@ -48,7 +48,7 @@ function EntityMoveState:update(dt)
         return        
     end
 
-    Timer.tween(0.1, {
+    Timer.tween(0.2, {
         [self.entity] = { 
             x = self.entity.x + dx * TILE_SIZE,
             y = self.entity.y + dy * TILE_SIZE,
