@@ -31,6 +31,8 @@ function Entity:new(def)
     self.y = def.y or 0
 
     self.health = def.health or 1
+
+    self.stateMachine = def.stateMachine
 end
 
 function Entity:update(dt)

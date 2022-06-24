@@ -30,7 +30,7 @@ function love.load(args)
 
     love.keyboard.keysPressed = {}
 
-    dungeon = Dungeon('dat/map.lua')
+    gStateMachine:change('play')
 end
 
 function love.resize(w, h)
@@ -38,7 +38,7 @@ function love.resize(w, h)
 end
 
 function love.update(dt)
-    dungeon:update(dt)
+    gStateMachine:update(dt)
 
     love.keyboard.keysPressed = {}
 end
@@ -46,7 +46,7 @@ end
 function love.draw()
     push:start()
 
-    dungeon:draw()
+    gStateMachine:render()
 
     showFPS()
 

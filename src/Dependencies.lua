@@ -14,6 +14,14 @@ require 'dat.entity_defs'
 require 'src.Entity'
 require 'src.Hero'
 
+require 'src.StateMachine'
+require 'src.states.BaseState'
+
+require 'src.states.entity.EntityIdleState'
+require 'src.states.entity.EntityWalkState'
+
+require 'src.states.game.PlayState'
+
 require 'src.Constants'
 require 'src.Util'
 require 'src.Animation'
@@ -27,6 +35,10 @@ gTextures = {
 
 gFrames = {
     ['tiles'] = GenerateQuads(gTextures['world'], 16, 16),
+}
+
+gStateMachine = StateMachine {
+    ['play'] = function() return PlayState() end,
 }
 
 local TINY_DUNGEON_FONT_GLYPS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-+=:;,"<>.?/\\[]_|'
