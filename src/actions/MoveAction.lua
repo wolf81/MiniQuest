@@ -1,3 +1,11 @@
+--[[
+    GD50
+    MiniQuest
+
+    Author: Wolfgang Schreurs
+    info+miniquest@wolftrail.net
+]]
+
 MoveAction = BaseAction:extend()
 
 function MoveAction:new(actor, direction)
@@ -26,7 +34,7 @@ function MoveAction:perform(onFinish)
     self.actor.direction = self.direction
     self.actor:changeAnimation(self.actor.direction)
 
-    Timer.tween(0.1, {
+    Timer.tween(0.15, {
         [self.actor] = { 
             x = self.actor.x + self.dx,
             y = self.actor.y + self.dy,

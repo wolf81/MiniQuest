@@ -13,6 +13,13 @@ local function updateCamera(self)
     self.camera.y = CAMERA_Y_OFFSET - self.hero.y * TILE_SIZE
 end
 
+local function nextActor(self)
+    self.actorIdx = self.actorIdx + 1
+    if self.actorIdx > #self.actors then
+        self.actorIdx = 1
+    end
+end
+
 function Dungeon:new()
     self.map = Map
 
@@ -50,6 +57,16 @@ function Dungeon:new()
     self.camera = { x = 0, y = 0 }
 end
 
+function Dungeon:getActor(x, y)
+    for _, actor in ipairs(self.actors) do
+        if actor.x == x and actor.y == y then
+            return actor
+        end
+    end
+
+    return nil
+end
+
 function Dungeon:isBlocked(x, y)
     local blocked = false
 
@@ -73,26 +90,47 @@ end
 function Dungeon:update(dt)
     updateCamera(self)
 
-    local actor = self.actors[self.actorIdx]
+    -- animate actors
+    for _, actor in ipairs(self.actors) do
+        actor:update(dt)
+    end
 
-    actor:update(dt)
-    local action = actor:getAction()
+    -- get action for current active actor
+    local actor = self.actors[self.actorIdx]    
+    local action = actor:getAction()    
 
+    -- no action was found, try again next iteration of update
     if action == nil then return end
 
+    -- we did get an action, so execute it and on finish, change active actor
     action:perform(function()
-        self.actorIdx = self.actorIdx + 1
-        if self.actorIdx > #self.actors then
-            self.actorIdx = 1
-        end
+        nextActor(self)
     end)
+
+    -- iterate through all actors, removing all actors that have remove flag 
+    -- set to true
+    for i = #self.actors, 1, -1 do
+        local actor = self.actors[i]
+        if actor.remove then
+            table.remove(self.actors, i)
+
+            -- make sure the active actor index doesnt go out of bounds after
+            -- an actor is removed
+            if self.actorIdx > #self.actors then
+                nextActor(self)
+            end
+        end
+    end
 end
 
 function Dungeon:draw()
+    -- push graphics state, as not to interfere with FPS counter
     love.graphics.push()
 
+    -- target camera towards hero
     love.graphics.translate(math.floor(self.camera.x), math.floor(self.camera.y))
 
+    -- now draw all tile layers
     for _, tiles in ipairs(self.layers) do
         for _, tile in pairs(tiles) do
             love.graphics.draw(
@@ -104,9 +142,12 @@ function Dungeon:draw()
         end
     end
 
+    -- draw actors on top of tiles
     for _, actor in ipairs(self.actors) do
         actor:draw()
     end
 
+    -- after drawing is finished, we can pop state again and main loop can draw
+    -- FPS counter on top
     love.graphics.pop()
 end

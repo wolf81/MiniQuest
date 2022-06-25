@@ -28,6 +28,8 @@ function Entity:new(def, x, y)
 
     self.x = x or 0
     self.y = y or 0
+
+    self.remove = false
 end
 
 function Entity:update(dt)

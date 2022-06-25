@@ -27,6 +27,10 @@ function GenerateQuads(atlas, tilewidth, tileheight)
     return spritesheet
 end
 
-function clamp(value, min, max)
-    return math.max(math.min(value, max), min)
+function directionToVector(direction)
+    if direction == 'left' then return { x = -1, y = 0 }
+    elseif direction == 'right' then return { x = 1, y = 0 }
+    elseif direction == 'up' then return { x = 0, y = -1 }
+    elseif direction == 'down' then return { x = 0, y = 1 }
+    else error('invalid direction:', direction) end
 end

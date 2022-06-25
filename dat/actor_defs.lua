@@ -1,5 +1,6 @@
 ACTOR_DEFS = {
     ['hero'] = {
+        ['hitpoints'] = 10,
         ['animations'] = {
             ['right'] = {
                 frames = { 1, 17 },

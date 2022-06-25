@@ -1,29 +1,23 @@
+--[[
+    GD50
+    MiniQuest
+
+    Author: Wolfgang Schreurs
+    info+miniquest@wolftrail.net
+]]
+
 Actor = Entity:extend()
 
 local function getRandomDirection()
     local directions = { 'left', 'right', 'up', 'down' }
-    local direction = directions[math.random(#directions)]
-
-    local dx, dy = 0, 0
-
-    if direction == 'left' then
-        dx = -1
-    elseif direction == 'right' then
-        dx = 1
-    elseif direction == 'up' then
-        dy = -1
-    elseif direction == 'down' then
-        dy = 1
-    end
-
-    return direction, dx, dy
+    return directions[math.random(#directions)]
 end
 
 function Actor:new(def, dungeon, x, y)
     Entity.new(self, def, x, y)
 
     self.direction = 'down'
-    self.health = def.health or 1
+    self.hitpoints = def.hitpoints or 1
     self.solid = true
 
     self.dungeon = dungeon
@@ -34,12 +28,24 @@ end
 function Actor:getAction()
     if self.action ~= nil then return end
 
-    local direction, dx, dy = getRandomDirection()
+    local direction = getRandomDirection()
+    local dxy = directionToVector(direction)
 
-    if not self.dungeon:isBlocked(self.x + dx, self.y + dy) then
+    if not self.dungeon:isBlocked(self.x + dxy.x, self.y + dxy.y) then
         self.action = MoveAction(self, direction)
-        return self.action
+    else
+        local target = self.dungeon:getActor(x, y)
+        if target ~= nil then
+            self.action = AttackAction(self, target)
+        end
     end
+
+    return self.action
+end
+
+function Actor:inflict(damage)
+    self.hitpoints = math.max(self.hitpoints - damage, 0)
+    self.remove = self.hitpoints == 0
 end
 
 function Actor:draw()

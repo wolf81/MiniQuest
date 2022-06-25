@@ -10,27 +10,34 @@ push = require 'lib.push.push'
 Object = require 'lib.classic.classic'
 Timer = require 'lib.knife.knife.timer'
 
+-- data files
 require 'dat.actor_defs'
 
+-- entities
 require 'src.entities.Entity'
 require 'src.entities.Actor'
 require 'src.entities.Hero'
 require 'src.entities.Tile'
 
+-- actions
 require 'src.actions.BaseAction'
 require 'src.actions.MoveAction'
+require 'src.actions.AttackAction'
 
+-- state machine
 require 'src.StateMachine'
 require 'src.states.BaseState'
 
+-- game states
 require 'src.states.game.PlayState'
 
+-- constants, utility functions & classes
 require 'src.Constants'
 require 'src.Util'
 require 'src.Animation'
 
+-- game world
 require 'src.world.Dungeon'
-
 Map = require 'dat.map'
 
 gTextures = {
