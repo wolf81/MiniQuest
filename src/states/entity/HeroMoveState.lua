@@ -1,25 +1,6 @@
---[[
-    GD50
-    MiniQuest
+HeroMoveState = CreatureMoveState:extend()
 
-    Author: Wolfgang Schreurs
-    info+miniquest@wolftrail.net
-]]
-
-EntityMoveState = BaseState:extend()
-
-function EntityMoveState:new(entity, dungeon)
-    self.entity = entity
-    self.dungeon = dungeon
-
-    self.isMoving = false
-end
-
-function EntityMoveState:enter(params)
-    self.entity:changeAnimation(self.entity.direction)
-end
-
-function EntityMoveState:update(dt)
+function HeroMoveState:update(dt)
     if self.isMoving then return end
 
     self.isMoving = true
@@ -57,15 +38,4 @@ function EntityMoveState:update(dt)
     :finish(function()
         self.isMoving = false
     end)
-end
-
-function EntityMoveState:draw()
-    local anim = self.entity.currentAnimation
-
-    love.graphics.draw(
-        gTextures[anim.texture], 
-        gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x), 
-        math.floor(self.entity.y)
-    )
 end

@@ -8,8 +8,8 @@ function Creature:new(def, dungeon)
     self.health = def.health or 1
 
     self.stateMachine = StateMachine {
-        ['idle'] = function() return EntityIdleState(self) end,
-        ['move'] = function() return EntityMoveState(self, dungeon) end,
+        ['idle'] = function() return CreatureIdleState(self) end,
+        ['move'] = function() return CreatureMoveState(self, dungeon) end,
     }
     self:changeState('idle')
 end

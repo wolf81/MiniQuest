@@ -6,17 +6,17 @@
     info+miniquest@wolftrail.net
 ]]
 
-EntityIdleState = BaseState:extend()
+CreatureIdleState = BaseState:extend()
 
-function EntityIdleState:new(entity)
+function CreatureIdleState:new(entity)
     self.entity = entity
 end
 
-function EntityIdleState:enter(params)
+function CreatureIdleState:enter(params)
     self.entity:changeAnimation(self.entity.direction)
 end
 
-function EntityIdleState:update(dt)
+function CreatureIdleState:update(dt)
     if (love.keyboard.isDown('left') or 
         love.keyboard.isDown('right') or
         love.keyboard.isDown('up') or 
@@ -25,7 +25,7 @@ function EntityIdleState:update(dt)
     end
 end
 
-function EntityIdleState:draw()
+function CreatureIdleState:draw()
     local anim = self.entity.currentAnimation
 
     love.graphics.draw(

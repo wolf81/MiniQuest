@@ -79,11 +79,11 @@ function Dungeon:draw()
         end
     end
 
-    self.hero:draw()
-
     for _, creature in ipairs(self.monsters) do
         creature:draw()
     end
+
+    self.hero:draw()
 
     love.graphics.pop()
 end

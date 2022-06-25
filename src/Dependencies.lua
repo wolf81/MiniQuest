@@ -19,8 +19,9 @@ require 'src.Hero'
 require 'src.StateMachine'
 require 'src.states.BaseState'
 
-require 'src.states.entity.EntityIdleState'
-require 'src.states.entity.EntityMoveState'
+require 'src.states.entity.CreatureIdleState'
+require 'src.states.entity.CreatureMoveState'
+require 'src.states.entity.HeroMoveState'
 
 require 'src.states.game.PlayState'
 
