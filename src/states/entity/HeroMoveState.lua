@@ -1,41 +1,49 @@
+--[[
+    GD50
+    MiniQuest
+
+    Author: Wolfgang Schreurs
+    info+miniquest@wolftrail.net
+]]
+
 HeroMoveState = CreatureMoveState:extend()
 
 function HeroMoveState:update(dt)
-    if self.isMoving then return end
+    if self.started then return end
 
-    self.isMoving = true
+    self.started = true
 
-    local dx = 0
-    local dy = 0
+    local direction = nil
+    local dx, dy = 0, 0
 
     if love.keyboard.isDown('left') then
-        self.entity.direction = 'left'
+        direction = 'left'
         dx = -1
     elseif love.keyboard.isDown('right') then
-        self.entity.direction = 'right'
+        direction = 'right'
         dx = 1
     elseif love.keyboard.isDown('up') then
-        self.entity.direction = 'up'
+        direction = 'up'
         dy = -1
     elseif love.keyboard.isDown('down') then
-        self.entity.direction = 'down'
+        direction = 'down'
         dy = 1
     end
 
-    self.entity:changeAnimation(self.entity.direction)
+    if direction then
+        self.entity.direction = direction
+        self.entity:changeAnimation(self.entity.direction)
 
-    if dx == 0 and dy == 0 then
+        Timer.tween(0.2, {
+            [self.entity] = { 
+                x = self.entity.x + dx,
+                y = self.entity.y + dy,
+            }
+        })
+        :finish(function()
+            self.entity:changeState('idle')
+        end)
+    else
         self.entity:changeState('idle')
-        return        
     end
-
-    Timer.tween(0.2, {
-        [self.entity] = { 
-            x = self.entity.x + dx,
-            y = self.entity.y + dy,
-        }
-    })
-    :finish(function()
-        self.isMoving = false
-    end)
 end

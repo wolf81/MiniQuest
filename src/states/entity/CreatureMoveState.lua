@@ -12,7 +12,7 @@ function CreatureMoveState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
 
-    self.isMoving = false
+    self.started = false
 end
 
 function CreatureMoveState:enter(params)
@@ -20,45 +20,36 @@ function CreatureMoveState:enter(params)
 end
 
 function CreatureMoveState:update(dt)
-    --[[
-    if self.isMoving then return end
+    if self.started then return end
 
-    self.isMoving = true
+    self.started = true
 
-    local dx = 0
-    local dy = 0
+    local directions = { 'left', 'right', 'up', 'down' }
+    local direction = directions[math.random(#directions)]
+    local dx, dy = 0, 0
 
-    if love.keyboard.isDown('left') then
-        self.entity.direction = 'left'
+    if direction == 'left' then
         dx = -1
-    elseif love.keyboard.isDown('right') then
-        self.entity.direction = 'right'
+    elseif direction == 'right' then
         dx = 1
-    elseif love.keyboard.isDown('up') then
-        self.entity.direction = 'up'
+    elseif direction == 'up' then
         dy = -1
-    elseif love.keyboard.isDown('down') then
-        self.entity.direction = 'down'
+    elseif direction == 'down' then
         dy = 1
     end
 
+    self.entity.direction = direction
     self.entity:changeAnimation(self.entity.direction)
-
-    if dx == 0 and dy == 0 then
-        self.entity:changeState('idle')
-        return        
-    end
 
     Timer.tween(0.2, {
         [self.entity] = { 
-            x = self.entity.x + dx * TILE_SIZE,
-            y = self.entity.y + dy * TILE_SIZE,
+            x = self.entity.x + dx,
+            y = self.entity.y + dy,
         }
     })
     :finish(function()
-        self.isMoving = false
+        self.entity:changeState('idle')
     end)
-    --]]
 end
 
 function CreatureMoveState:draw()

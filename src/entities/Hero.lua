@@ -18,6 +18,10 @@ function Hero:new(def, dungeon, x, y)
     self:changeState('idle')
 end
 
+function Hero:isMoving()
+    return getmetatable(self.stateMachine.current) == HeroMoveState
+end
+
 function Hero:update(dt)
     Creature.update(self, dt)
 end

@@ -22,14 +22,14 @@ function Dungeon:new()
         local tiles = {}
         self.layers[#self.layers + 1] = tiles
 
-        for y = 1, self.map.height do
-            for x = 1, self.map.width do
-                local tileId = layer[(y - 1) * self.map.width + x]
+        for y = 0, self.map.height - 1 do
+            for x = 0, self.map.width - 1 do
+                local tileId = layer[y * self.map.width + x + 1]
                 if tileId == 0 then goto continue end
 
                 tiles[#tiles + 1] = { 
-                    x = (x - 1),
-                    y = (y - 1),
+                    x = x,
+                    y = y,
                     id = tileId,
                 }
 
