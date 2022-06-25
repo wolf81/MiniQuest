@@ -12,7 +12,7 @@ function Hero:new(def, dungeon, x, y)
     Creature.new(self, def, dungeon, x, y)
 
     self.stateMachine = StateMachine {
-        ['idle'] = function() return CreatureIdleState(self) end,
+        ['idle'] = function() return HeroIdleState(self) end,
         ['move'] = function() return HeroMoveState(self, dungeon) end,
     }
     self:changeState('idle')

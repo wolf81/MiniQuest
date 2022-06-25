@@ -22,6 +22,7 @@ require 'src.states.BaseState'
 
 require 'src.states.entity.CreatureIdleState'
 require 'src.states.entity.CreatureMoveState'
+require 'src.states.entity.HeroIdleState'
 require 'src.states.entity.HeroMoveState'
 
 require 'src.states.game.PlayState'
