@@ -22,11 +22,11 @@ local function createAnimations(animationDefs)
     return animations
 end
 
-function Entity:new(def)
+function Entity:new(def, x, y)
     self.animations = createAnimations(def.animations)
 
-    self.x = def.x or 0
-    self.y = def.y or 0
+    self.x = x or 0
+    self.y = y or 0
 
     self.stateMachine = def.stateMachine or StateMachine()
 end

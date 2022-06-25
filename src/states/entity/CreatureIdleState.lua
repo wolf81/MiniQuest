@@ -31,7 +31,7 @@ function CreatureIdleState:draw()
     love.graphics.draw(
         gTextures[anim.texture], 
         gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x), 
-        math.floor(self.entity.y)
+        math.floor(self.entity.x * TILE_SIZE), 
+        math.floor(self.entity.y * TILE_SIZE)
     )
 end

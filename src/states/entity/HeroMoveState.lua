@@ -31,8 +31,8 @@ function HeroMoveState:update(dt)
 
     Timer.tween(0.2, {
         [self.entity] = { 
-            x = self.entity.x + dx * TILE_SIZE,
-            y = self.entity.y + dy * TILE_SIZE,
+            x = self.entity.x + dx,
+            y = self.entity.y + dy,
         }
     })
     :finish(function()

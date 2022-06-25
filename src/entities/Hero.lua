@@ -8,8 +8,8 @@
 
 Hero = Creature:extend()
 
-function Hero:new(def, dungeon)
-    Creature.new(self, def, dungeon)
+function Hero:new(def, dungeon, x, y)
+    Creature.new(self, def, dungeon, x, y)
 
     self.stateMachine = StateMachine {
         ['idle'] = function() return CreatureIdleState(self) end,

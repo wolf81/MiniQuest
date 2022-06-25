@@ -9,8 +9,8 @@
 Dungeon = Object:extend()
 
 local function updateCamera(self)
-    self.camera.x = VIRTUAL_WIDTH / 2 - self.hero.x - TILE_SIZE / 2
-    self.camera.y = VIRTUAL_HEIGHT / 2 - self.hero.y - TILE_SIZE / 2
+    self.camera.x = CAMERA_X_OFFSET - self.hero.x * TILE_SIZE
+    self.camera.y = CAMERA_Y_OFFSET - self.hero.y * TILE_SIZE
 end
 
 function Dungeon:new()
@@ -28,10 +28,8 @@ function Dungeon:new()
                 if tileId == 0 then goto continue end
 
                 tiles[#tiles + 1] = { 
-                    gridX = x,
-                    gridY = y,
-                    x = (x - 1) * TILE_SIZE,
-                    y = (y - 1) * TILE_SIZE,
+                    x = (x - 1),
+                    y = (y - 1),
                     id = tileId,
                 }
 
@@ -40,15 +38,10 @@ function Dungeon:new()
         end
     end
 
-    self.hero = Hero(ENTITY_DEFS['hero'], self)
-    self.hero.x = 1 * TILE_SIZE
-    self.hero.y = 4 * TILE_SIZE
+    self.hero = Hero(ENTITY_DEFS['hero'], self, 1, 4)
 
     self.monsters = {}
-    local skeleton = Creature(ENTITY_DEFS['skeleton'], self)
-    skeleton.x = 5 * TILE_SIZE
-    skeleton.y = 3 * TILE_SIZE
-    self.monsters[#self.monsters + 1] = skeleton
+    self.monsters[#self.monsters + 1] = Creature(ENTITY_DEFS['skeleton'], self, 5, 3)
 
     self.camera = { x = 0, y = 0 }
 end
@@ -73,8 +66,8 @@ function Dungeon:draw()
             love.graphics.draw(
                 gTextures['world'], 
                 gFrames['tiles'][tile.id],
-                tile.x, 
-                tile.y
+                tile.x * TILE_SIZE, 
+                tile.y * TILE_SIZE
             )
         end
     end
