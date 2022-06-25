@@ -27,11 +27,13 @@ function Dungeon:new()
                 local tileId = layer[y * self.map.width + x + 1]
                 if tileId == 0 then goto continue end
 
-                tiles[#tiles + 1] = { 
-                    x = x,
-                    y = y,
-                    id = tileId,
+                local tileDef = { 
+                    id = tileId, 
+                    animations = {},
+                    solid = tileId == 7 or tileId == 1,
                 }
+
+                tiles[x .. '.' .. y] = Tile(tileDef, x, y)
 
                 ::continue::
             end
@@ -44,6 +46,20 @@ function Dungeon:new()
     self.monsters[#self.monsters + 1] = Creature(ENTITY_DEFS['skeleton'], self, 5, 3)
 
     self.camera = { x = 0, y = 0 }
+end
+
+function Dungeon:isBlocked(x, y)
+    local blocked = false
+
+    for _, layer in ipairs(self.layers) do
+        local tile = layer[x .. '.' .. y]
+        local solid = tile and tile.solid or false
+        if solid then
+            blocked = true
+        end
+    end
+
+    return blocked
 end
 
 function Dungeon:update(dt)
@@ -62,7 +78,7 @@ function Dungeon:draw()
     love.graphics.translate(math.floor(self.camera.x), math.floor(self.camera.y))
 
     for _, tiles in ipairs(self.layers) do
-        for _, tile in ipairs(tiles) do
+        for _, tile in pairs(tiles) do
             love.graphics.draw(
                 gTextures['world'], 
                 gFrames['tiles'][tile.id],

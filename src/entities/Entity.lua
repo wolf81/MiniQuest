@@ -22,7 +22,7 @@ local function createAnimations(animationDefs)
     return animations
 end
 
-function Entity:new(def, x, y)
+function Entity:new(def, x, y)    
     self.animations = createAnimations(def.animations)
 
     self.x = x or 0

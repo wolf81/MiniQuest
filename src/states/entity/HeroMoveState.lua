@@ -30,6 +30,12 @@ function HeroMoveState:update(dt)
         dy = 1
     end
 
+    if self.dungeon:isBlocked(self.entity.x + dx, self.entity.y + dy) then
+        self.entity:changeState('idle')
+        return
+    end
+
+
     if direction then
         self.entity.direction = direction
         self.entity:changeAnimation(self.entity.direction)

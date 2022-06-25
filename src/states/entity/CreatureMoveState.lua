@@ -8,6 +8,24 @@
 
 CreatureMoveState = BaseState:extend()
 
+local function getRandomDirection()
+    local directions = { 'left', 'right', 'up', 'down' }
+    local direction = directions[math.random(#directions)]
+    local dx, dy = 0, 0
+
+    if direction == 'left' then
+        dx = -1
+    elseif direction == 'right' then
+        dx = 1
+    elseif direction == 'up' then
+        dy = -1
+    elseif direction == 'down' then
+        dy = 1
+    end
+
+    return direction, dx, dy
+end
+
 function CreatureMoveState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
@@ -24,18 +42,15 @@ function CreatureMoveState:update(dt)
 
     self.started = true
 
-    local directions = { 'left', 'right', 'up', 'down' }
-    local direction = directions[math.random(#directions)]
-    local dx, dy = 0, 0
-
-    if direction == 'left' then
-        dx = -1
-    elseif direction == 'right' then
-        dx = 1
-    elseif direction == 'up' then
-        dy = -1
-    elseif direction == 'down' then
-        dy = 1
+    local direction, dx, dy = 'left', 0, 0
+    
+    -- TODO: better to shuffle all directions and then try one by one,
+    -- if no direction possible, move to idle state
+    while true do
+        direction, dx, dy = getRandomDirection()
+        if not self.dungeon:isBlocked(self.entity.x + dx, self.entity.y + dy) then
+            break
+        end
     end
 
     self.entity.direction = direction
