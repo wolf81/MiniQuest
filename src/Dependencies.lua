@@ -21,6 +21,7 @@ require 'src.entities.Tile'
 
 -- actions
 require 'src.actions.BaseAction'
+require 'src.actions.IdleAction'
 require 'src.actions.MoveAction'
 require 'src.actions.AttackAction'
 

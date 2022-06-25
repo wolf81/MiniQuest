@@ -31,7 +31,9 @@ function Actor:getAction()
     local direction = getRandomDirection()
     local dxy = directionToVector(direction)
 
-    if not self.dungeon:isBlocked(self.x + dxy.x, self.y + dxy.y) then
+    if math.random(5) == 1 then
+        self.action = IdleAction(self)
+    elseif not self.dungeon:isBlocked(self.x + dxy.x, self.y + dxy.y) then
         self.action = MoveAction(self, direction)
     else
         local target = self.dungeon:getActor(x, y)
@@ -45,6 +47,9 @@ end
 
 function Actor:inflict(damage)
     self.hitpoints = math.max(self.hitpoints - damage, 0)
+
+    print('hp', self.hitpoints)
+
     self.remove = self.hitpoints == 0
 end
 

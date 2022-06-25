@@ -25,6 +25,7 @@ ACTOR_DEFS = {
         }
     },
     ['skeleton'] = {
+        ['hitpoints'] = 2,
         ['animations'] = {
             ['right'] = {
                 frames = { 129, 145 },
