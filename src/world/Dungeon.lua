@@ -44,6 +44,8 @@ function Dungeon:new()
 
     self.actors = { self.hero }
     self.actors[#self.actors + 1] = Actor(ENTITY_DEFS['skeleton'], self, 5, 3)
+    self.actors[#self.actors + 1] = Actor(ENTITY_DEFS['skeleton'], self, 5, 3)
+    self.actorIdx = 1
 
     self.camera = { x = 0, y = 0 }
 end
@@ -65,9 +67,19 @@ end
 function Dungeon:update(dt)
     updateCamera(self)
 
-    for _, actor in ipairs(self.actors) do
-        actor:update(dt)
-    end
+    local actor = self.actors[self.actorIdx]
+
+    actor:update(dt)
+    local action = actor:getAction()
+
+    if action == nil then return end
+
+    action:perform(function()
+        self.actorIdx = self.actorIdx + 1
+        if self.actorIdx > #self.actors then
+            self.actorIdx = 1
+        end
+    end)
 end
 
 function Dungeon:draw()

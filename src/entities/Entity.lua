@@ -24,16 +24,13 @@ end
 
 function Entity:new(def, x, y)    
     self.animations = createAnimations(def.animations)
+    self.currentAnimation = self.animations['down']
 
     self.x = x or 0
     self.y = y or 0
-
-    self.stateMachine = def.stateMachine or StateMachine()
 end
 
 function Entity:update(dt)
-    self.stateMachine:update(dt)
-
     if self.currentAnimation then
         self.currentAnimation:update(dt)
     else
@@ -42,7 +39,14 @@ function Entity:update(dt)
 end
 
 function Entity:draw()
-    self.stateMachine:draw()
+    local anim = self.currentAnimation
+
+    love.graphics.draw(
+        gTextures[anim.texture], 
+        gFrames[anim.texture][anim:getCurrentFrame()],
+        math.floor(self.x * TILE_SIZE), 
+        math.floor(self.y * TILE_SIZE)
+    )
 end
 
 function Entity:collides(target)
@@ -52,10 +56,6 @@ function Entity:collides(target)
         self.y + self.height < target.y or 
         self.y > target.y + target.height
     )
-end
-
-function Entity:changeState(state)
-    self.stateMachine:change(state)
 end
 
 function Entity:changeAnimation(name)

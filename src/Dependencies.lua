@@ -17,13 +17,10 @@ require 'src.entities.Actor'
 require 'src.entities.Hero'
 require 'src.entities.Tile'
 
+require 'src.actions.MoveAction'
+
 require 'src.StateMachine'
 require 'src.states.BaseState'
-
-require 'src.states.entity.ActorIdleState'
-require 'src.states.entity.ActorMoveState'
-require 'src.states.entity.HeroIdleState'
-require 'src.states.entity.HeroMoveState'
 
 require 'src.states.game.PlayState'
 
