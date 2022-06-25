@@ -1,7 +1,7 @@
-MoveAction = Object:extend()
+MoveAction = BaseAction:extend()
 
 function MoveAction:new(actor, direction)
-    self.actor = actor
+    BaseAction.new(self, actor)
 
     self.dx = 0
     self.dy = 0

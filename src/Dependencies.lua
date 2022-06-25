@@ -17,6 +17,7 @@ require 'src.entities.Actor'
 require 'src.entities.Hero'
 require 'src.entities.Tile'
 
+require 'src.actions.BaseAction'
 require 'src.actions.MoveAction'
 
 require 'src.StateMachine'
