@@ -1,4 +1,4 @@
-ENTITY_DEFS = {
+ACTOR_DEFS = {
     ['hero'] = {
         ['animations'] = {
             ['right'] = {

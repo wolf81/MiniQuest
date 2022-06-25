@@ -40,11 +40,11 @@ function Dungeon:new()
         end
     end
 
-    self.hero = Hero(ENTITY_DEFS['hero'], self, 1, 4)
+    self.hero = Hero(ACTOR_DEFS['hero'], self, 1, 4)
 
     self.actors = { self.hero }
-    self.actors[#self.actors + 1] = Actor(ENTITY_DEFS['skeleton'], self, 5, 3)
-    self.actors[#self.actors + 1] = Actor(ENTITY_DEFS['skeleton'], self, 5, 3)
+    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 5, 3)
+    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 8, 5)
     self.actorIdx = 1
 
     self.camera = { x = 0, y = 0 }
@@ -57,6 +57,12 @@ function Dungeon:isBlocked(x, y)
         local tile = layer[x .. '.' .. y]
         local solid = tile and tile.solid or false
         if solid then
+            blocked = true
+        end
+    end
+
+    for _, actor in ipairs(self.actors) do
+        if actor.x == x and actor.y == y then
             blocked = true
         end
     end
