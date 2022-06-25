@@ -6,21 +6,21 @@
     info+miniquest@wolftrail.net
 ]]
 
-CreatureIdleState = BaseState:extend()
+ActorIdleState = BaseState:extend()
 
-function CreatureIdleState:new(entity)
+function ActorIdleState:new(entity)
     self.entity = entity
 end
 
-function CreatureIdleState:enter(params)
+function ActorIdleState:enter(params)
     self.entity:changeAnimation(self.entity.direction)
 end
 
-function CreatureIdleState:update(dt)
+function ActorIdleState:update(dt)
     self.entity:changeState('move')
 end
 
-function CreatureIdleState:draw()
+function ActorIdleState:draw()
     local anim = self.entity.currentAnimation
 
     love.graphics.draw(

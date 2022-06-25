@@ -6,7 +6,7 @@
     info+miniquest@wolftrail.net
 ]]
 
-HeroIdleState = CreatureIdleState:extend()
+HeroIdleState = ActorIdleState:extend()
 
 function HeroIdleState:update(dt)
     if (love.keyboard.isDown('left') or 

@@ -6,10 +6,10 @@
     info+miniquest@wolftrail.net
 ]]
 
-Hero = Creature:extend()
+Hero = Actor:extend()
 
 function Hero:new(def, dungeon, x, y)
-    Creature.new(self, def, dungeon, x, y)
+    Actor.new(self, def, dungeon, x, y)
 
     self.stateMachine = StateMachine {
         ['idle'] = function() return HeroIdleState(self) end,
@@ -23,9 +23,9 @@ function Hero:isMoving()
 end
 
 function Hero:update(dt)
-    Creature.update(self, dt)
+    Actor.update(self, dt)
 end
 
 function Hero:draw()
-    Creature.draw(self)
+    Actor.draw(self)
 end

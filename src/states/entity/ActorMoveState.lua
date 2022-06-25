@@ -6,7 +6,7 @@
     info+miniquest@wolftrail.net
 ]]
 
-CreatureMoveState = BaseState:extend()
+ActorMoveState = BaseState:extend()
 
 local function getRandomDirection()
     local directions = { 'left', 'right', 'up', 'down' }
@@ -26,18 +26,18 @@ local function getRandomDirection()
     return direction, dx, dy
 end
 
-function CreatureMoveState:new(entity, dungeon)
+function ActorMoveState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
 
     self.started = false
 end
 
-function CreatureMoveState:enter(params)
+function ActorMoveState:enter(params)
     self.entity:changeAnimation(self.entity.direction)
 end
 
-function CreatureMoveState:update(dt)
+function ActorMoveState:update(dt)
     if self.started then return end
 
     self.started = true
@@ -67,7 +67,7 @@ function CreatureMoveState:update(dt)
     end)
 end
 
-function CreatureMoveState:draw()
+function ActorMoveState:draw()
     local anim = self.entity.currentAnimation
 
     love.graphics.draw(

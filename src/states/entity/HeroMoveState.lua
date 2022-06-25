@@ -6,7 +6,7 @@
     info+miniquest@wolftrail.net
 ]]
 
-HeroMoveState = CreatureMoveState:extend()
+HeroMoveState = ActorMoveState:extend()
 
 function HeroMoveState:update(dt)
     if self.started then return end

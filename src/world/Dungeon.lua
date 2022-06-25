@@ -42,8 +42,8 @@ function Dungeon:new()
 
     self.hero = Hero(ENTITY_DEFS['hero'], self, 1, 4)
 
-    self.creatures = { self.hero }
-    self.creatures[#self.creatures + 1] = Creature(ENTITY_DEFS['skeleton'], self, 5, 3)
+    self.actors = { self.hero }
+    self.actors[#self.actors + 1] = Actor(ENTITY_DEFS['skeleton'], self, 5, 3)
 
     self.camera = { x = 0, y = 0 }
 end
@@ -65,8 +65,8 @@ end
 function Dungeon:update(dt)
     updateCamera(self)
 
-    for _, creature in ipairs(self.creatures) do
-        creature:update(dt)
+    for _, actor in ipairs(self.actors) do
+        actor:update(dt)
     end
 end
 
@@ -86,8 +86,8 @@ function Dungeon:draw()
         end
     end
 
-    for _, creature in ipairs(self.creatures) do
-        creature:draw()
+    for _, actor in ipairs(self.actors) do
+        actor:draw()
     end
 
     love.graphics.pop()
