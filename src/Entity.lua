@@ -23,16 +23,12 @@ local function createAnimations(animationDefs)
 end
 
 function Entity:new(def)
-    self.direction = 'down'
-
     self.animations = createAnimations(def.animations)
 
     self.x = def.x or 0
     self.y = def.y or 0
 
-    self.health = def.health or 1
-
-    self.stateMachine = def.stateMachine
+    self.stateMachine = def.stateMachine or StateMachine()
 end
 
 function Entity:update(dt)

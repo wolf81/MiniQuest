@@ -13,6 +13,7 @@ Timer = require 'lib.knife.knife.timer'
 require 'dat.entity_defs'
 
 require 'src.Entity'
+require 'src.Creature'
 require 'src.Hero'
 
 require 'src.StateMachine'

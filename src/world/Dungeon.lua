@@ -44,6 +44,12 @@ function Dungeon:new()
     self.hero.x = 1 * TILE_SIZE
     self.hero.y = 4 * TILE_SIZE
 
+    self.monsters = {}
+    local skeleton = Creature(ENTITY_DEFS['skeleton'], self)
+    skeleton.x = 5 * TILE_SIZE
+    skeleton.y = 3 * TILE_SIZE
+    self.monsters[#self.monsters + 1] = skeleton
+
     self.camera = { x = 0, y = 0 }
 end
 
@@ -51,6 +57,10 @@ function Dungeon:update(dt)
     updateCamera(self)
 
     self.hero:update(dt)
+
+    for _, monster in ipairs(self.monsters) do
+        monster:update(dt)
+    end
 end
 
 function Dungeon:draw()
@@ -70,6 +80,10 @@ function Dungeon:draw()
     end
 
     self.hero:draw()
+
+    for _, creature in ipairs(self.monsters) do
+        creature:draw()
+    end
 
     love.graphics.pop()
 end
