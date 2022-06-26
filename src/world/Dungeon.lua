@@ -47,7 +47,8 @@ function Dungeon:new()
         end
     end
 
-    self.hero = Hero(ACTOR_DEFS['hero'], self, 1, 4)
+    self.hero = Actor(ACTOR_DEFS['hero'], self, 1, 4)
+    self.hero.strategy = HeroStrategy(self.hero, self)
 
     self.actors = { self.hero }
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 5, 3)

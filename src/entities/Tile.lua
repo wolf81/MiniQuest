@@ -13,6 +13,6 @@ function Tile:new(def, x, y)
 
     self.id = def.id
 
-    -- solid tiles block be passed through
+    -- solid tiles block movement of most actors
     self.solid = def.solid or false
 end

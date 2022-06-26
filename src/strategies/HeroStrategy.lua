@@ -6,11 +6,10 @@
     info+miniquest@wolftrail.net
 ]]
 
-Hero = Actor:extend()
+HeroStrategy = BaseStrategy:extend()
 
-function Hero:getAction()
-    if self.action ~= nil then return end
-
+-- the hero strategy just returns actions based on keyboard input
+function HeroStrategy:getAction()
     local direction = nil
 
     if love.keyboard.isDown('left') then
@@ -26,16 +25,17 @@ function Hero:getAction()
     if not direction then return nil end
 
     local dxy = directionToVector(direction)
-    local x, y = self.x + dxy.x, self.y + dxy.y
+    local x, y = self.actor.x + dxy.x, self.actor.y + dxy.y
 
     if not self.dungeon:isBlocked(x, y) then
-        self.action = MoveAction(self, direction)
+        self.action = MoveAction(self.actor, direction)
     else
         local target = self.dungeon:getActor(x, y)
         if target ~= nil then
-            self.action = AttackAction(self, target)
+            self.action = AttackAction(self.actor, target)
         end
     end
 
     return self.action
 end
+

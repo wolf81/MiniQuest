@@ -16,14 +16,19 @@ require 'dat.actor_defs'
 -- entities
 require 'src.entities.Entity'
 require 'src.entities.Actor'
-require 'src.entities.Hero'
 require 'src.entities.Tile'
+require 'src.entities.Effect'
 
 -- actions
 require 'src.actions.BaseAction'
 require 'src.actions.IdleAction'
 require 'src.actions.MoveAction'
 require 'src.actions.AttackAction'
+
+-- strategies
+require 'src.strategies.BaseStrategy'
+require 'src.strategies.HeroStrategy'
+require 'src.strategies.ActorStrategy'
 
 -- state machine
 require 'src.StateMachine'
