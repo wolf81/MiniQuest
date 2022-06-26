@@ -24,8 +24,33 @@ ACTOR_DEFS = {
             },
         }
     },
-    ['skeleton'] = {
+    ['spider'] = {
         ['hitpoints'] = 2,
+        ['animations'] = {
+            ['right'] = {
+                frames = { 257, 273 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['down'] = {
+                frames = { 258, 274 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['up'] = {
+                frames = { 259, 275 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['left'] = {
+                frames = { 260, 276 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+        }        
+    },
+    ['skeleton'] = {
+        ['hitpoints'] = 4,
         ['animations'] = {
             ['right'] = {
                 frames = { 129, 145 },

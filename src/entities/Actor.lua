@@ -8,6 +8,15 @@
 
 Actor = Entity:extend()
 
+-- calculate of this entity is standing next to a hero
+local function isAdjacentToHero(self)
+    return (
+        math.abs(self.x - self.dungeon.hero.x) + 
+        math.abs(self.y - self.dungeon.hero.y)
+    ) == 1
+end
+
+-- select a random direction
 local function getRandomDirection()
     local directions = { 'left', 'right', 'up', 'down' }
     return directions[math.random(#directions)]
@@ -30,25 +39,28 @@ function Actor:getAction()
 
     local direction = getRandomDirection()
     local dxy = directionToVector(direction)
+    local x, y = self.x + dxy.x, self.y + dxy.y
 
-    if math.random(5) == 1 then
+    -- if we're standing next to the hero, attack hero
+    if isAdjacentToHero(self) then
+        self.action = AttackAction(self, self.dungeon.hero)
+
+    -- occasionally idle
+    elseif math.random(5) == 1 then
         self.action = IdleAction(self)
-    elseif not self.dungeon:isBlocked(self.x + dxy.x, self.y + dxy.y) then
+
+    -- if not idling or attacking, try to move
+    elseif not self.dungeon:isBlocked(x, y) then
         self.action = MoveAction(self, direction)
-    else
-        local target = self.dungeon:getActor(x, y)
-        if target ~= nil then
-            self.action = AttackAction(self, target)
-        end
     end
 
     return self.action
 end
 
+-- inflict some damage on this actor; if hitpoints are reduced to 0, then set 
+-- remove flag to true, so the game loop can remove the entity next iteration
 function Actor:inflict(damage)
     self.hitpoints = math.max(self.hitpoints - damage, 0)
-
-    print('hp', self.hitpoints)
 
     self.remove = self.hitpoints == 0
 end

@@ -51,7 +51,7 @@ function Dungeon:new()
 
     self.actors = { self.hero }
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 5, 3)
-    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 8, 5)
+    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['spider'], self, 8, 5)
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 9, 6)
     self.actorIdx = 1
 
@@ -119,6 +119,10 @@ function Dungeon:update(dt)
             -- an actor is removed
             if self.actorIdx > #self.actors then
                 nextActor(self)
+            end
+
+            if actor == self.hero then
+                print('game over')
             end
         end
     end
