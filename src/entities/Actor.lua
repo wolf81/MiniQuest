@@ -11,12 +11,10 @@ Actor = Entity:extend()
 function Actor:new(def, dungeon, x, y)
     Entity.new(self, def, x, y)
 
-    self.direction = 'down'
-    self.hitpoints = def.hitpoints or 1
-    self.solid = true
-
     self.dungeon = dungeon
 
+    self.direction = 'down'
+    self.hitpoints = def.hitpoints or 1
     self.strategy = ActorStrategy(self, dungeon)
 
     self.action = nil

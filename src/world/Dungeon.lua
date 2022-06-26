@@ -38,7 +38,6 @@ function Dungeon:new()
                 }
 
                 tiles[x .. '.' .. y] = Tile(tileDef, x, y)
-
                 ::continue::
             end
         end
@@ -78,14 +77,8 @@ function Dungeon:isBlocked(x, y)
 
     for _, layer in ipairs(self.layers) do
         local tile = layer[x .. '.' .. y]
-        local solid = tile and tile.solid or false
+        local solid = (tile and tile.solid) or false
         if solid then
-            blocked = true
-        end
-    end
-
-    for _, actor in ipairs(self.actors) do
-        if actor.x == x and actor.y == y then
             blocked = true
         end
     end

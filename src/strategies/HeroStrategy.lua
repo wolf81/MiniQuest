@@ -10,6 +10,8 @@ HeroStrategy = BaseStrategy:extend()
 
 -- the hero strategy just returns actions based on keyboard input
 function HeroStrategy:getAction()
+    if self.actor.action then return end
+
     local direction = nil
 
     if love.keyboard.isDown('left') then
@@ -27,15 +29,13 @@ function HeroStrategy:getAction()
     local dxy = directionToVector(direction)
     local x, y = self.actor.x + dxy.x, self.actor.y + dxy.y
 
-    if not self.dungeon:isBlocked(x, y) then
-        self.action = MoveAction(self.actor, direction)
-    else
-        local target = self.dungeon:getActor(x, y)
-        if target ~= nil then
-            self.action = AttackAction(self.actor, target)
-        end
+    local target = self.dungeon:getActor(x, y)
+    if target then
+        return AttackAction(self.actor, target)
+    elseif not self.dungeon:isBlocked(x, y) then
+        return MoveAction(self.actor, direction)
     end
 
-    return self.action
+    return nil
 end
 

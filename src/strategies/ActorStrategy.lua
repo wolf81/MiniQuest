@@ -27,6 +27,11 @@ function ActorStrategy:getAction()
     local dxy = directionToVector(direction)
     local x, y = self.actor.x + dxy.x, self.actor.y + dxy.y
 
+    local target = self.dungeon:getActor(x, y)
+    if target == self.dungeon.hero then
+        return AttackAction(self.actor, self.dungeon.hero)
+    end
+
     -- if we're standing next to the hero, attack hero
     if isAdjacent(self.actor, self.dungeon.hero) then
         return AttackAction(self.actor, self.dungeon.hero)
@@ -36,7 +41,7 @@ function ActorStrategy:getAction()
         return IdleAction(self.actor)
 
     -- if not idling or attacking, try to move
-    elseif not self.dungeon:isBlocked(x, y) then
+    elseif not self.dungeon:isBlocked(x, y) and not target then
         return MoveAction(self.actor, direction)
     end
 

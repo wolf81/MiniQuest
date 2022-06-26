@@ -36,6 +36,8 @@ function AttackAction:perform(onFinish)
         gSounds[effect.sound]:play()
     end
 
-    self.actor.action = nil
-    onFinish()
+    Timer.after(0.1, function()
+        self.actor.action = nil
+        onFinish()
+    end)
 end

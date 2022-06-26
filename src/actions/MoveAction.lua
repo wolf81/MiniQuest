@@ -10,7 +10,7 @@ MoveAction = BaseAction:extend()
 
 function MoveAction:new(actor, direction)
     BaseAction.new(self, actor)
-
+    
     self.dx = 0
     self.dy = 0
     self.direction = direction
@@ -32,10 +32,13 @@ function MoveAction:perform(onFinish)
     self.actor.direction = self.direction
     self.actor:changeAnimation(self.actor.direction)
 
+    local x = self.actor.x + self.dx
+    local y = self.actor.y + self.dy
+
     Timer.tween(0.15, {
         [self.actor] = { 
-            x = self.actor.x + self.dx,
-            y = self.actor.y + self.dy,
+            x = x,
+            y = y,
         }
     })
     :finish(function()
