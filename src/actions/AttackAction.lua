@@ -17,7 +17,10 @@ end
 function AttackAction:perform(onFinish)
     onFinish = onFinish or function() end
 
-    self.target:inflict(1)
+    self.target:inflict(1)    
+
+    local effect = Effect(EFFECT_DEFS['strike'], self.target.x, self.target.y)
+    self.actor.dungeon:addEffect(effect)
 
     self.actor.action = nil
 

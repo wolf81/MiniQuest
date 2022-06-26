@@ -12,6 +12,7 @@ Timer = require 'lib.knife.knife.timer'
 
 -- data files
 require 'dat.actor_defs'
+require 'dat.effect_defs'
 
 -- entities
 require 'src.entities.Entity'
@@ -49,11 +50,13 @@ Map = require 'dat.map'
 gTextures = {
     ['world'] = love.graphics.newImage('gfx/tiny_dungeon_world.png'),
     ['monsters'] = love.graphics.newImage('gfx/tiny_dungeon_monsters.png'),
+    ['effects'] = love.graphics.newImage('gfx/tiny_dungeon_fx.png'),
 }
 
 gFrames = {
     ['tiles'] = GenerateQuads(gTextures['world'], 16, 16),
     ['monsters'] = GenerateQuads(gTextures['monsters'], 16, 16),
+    ['effects'] = GenerateQuads(gTextures['effects'], 16, 16),
 }
 
 gStateMachine = StateMachine {

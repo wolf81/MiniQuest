@@ -56,6 +56,8 @@ function Dungeon:new()
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['bat'], self, 9, 6)
     self.actorIdx = 1
 
+    self.effects = {}
+
     self.camera = { x = 0, y = 0 }
 end
 
@@ -67,6 +69,11 @@ function Dungeon:getActor(x, y)
     end
 
     return nil
+end
+
+function Dungeon:addEffect(effect)
+    print('add effect')
+    self.effects[#self.effects + 1] = effect
 end
 
 function Dungeon:isBlocked(x, y)
@@ -97,6 +104,17 @@ function Dungeon:update(dt)
         actor:update(dt)
     end
 
+    -- update effects and remove immediately on completion
+    for i = #self.effects, 1, -1 do
+        local effect = self.effects[i]
+        effect:update(dt)
+
+        if effect.remove then
+            table.remove(self.effects, i)
+            print('remove effect')
+        end
+    end
+
     -- get action for current active actor
     local actor = self.actors[self.actorIdx]    
     local action = actor:getAction()    
@@ -109,8 +127,7 @@ function Dungeon:update(dt)
         nextActor(self)
     end)
 
-    -- iterate through all actors, removing all actors that have remove flag 
-    -- set to true
+    -- iterate through all actors, removing actors flagged for removal
     for i = #self.actors, 1, -1 do
         local actor = self.actors[i]
         if actor.remove then
@@ -151,6 +168,11 @@ function Dungeon:draw()
     -- draw actors on top of tiles
     for _, actor in ipairs(self.actors) do
         actor:draw()
+    end
+
+    -- draw effects on top of tiles & actors
+    for _, effect in ipairs(self.effects) do
+        effect:draw()
     end
 
     -- after drawing is finished, we can pop state again and main loop can draw
