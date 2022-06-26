@@ -52,7 +52,7 @@ function Dungeon:new()
     self.actors = { self.hero }
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 5, 3)
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['spider'], self, 8, 5)
-    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 9, 6)
+    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['bat'], self, 9, 6)
     self.actorIdx = 1
 
     self.camera = { x = 0, y = 0 }

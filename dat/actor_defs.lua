@@ -25,7 +25,7 @@ ACTOR_DEFS = {
         }
     },
     ['spider'] = {
-        ['hitpoints'] = 2,
+        ['hitpoints'] = 1,
         ['animations'] = {
             ['right'] = {
                 frames = { 257, 273 },
@@ -44,6 +44,31 @@ ACTOR_DEFS = {
             },
             ['left'] = {
                 frames = { 260, 276 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+        }        
+    },
+    ['bat'] = {
+        ['hitpoints'] = 2,
+        ['animations'] = {
+            ['right'] = {
+                frames = { 233, 249 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['down'] = {
+                frames = { 234, 250 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['up'] = {
+                frames = { 235, 251 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['left'] = {
+                frames = { 236, 252 },
                 interval = 0.5,
                 texture = 'monsters',
             },
