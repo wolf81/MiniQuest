@@ -94,14 +94,15 @@ function Dungeon:isBlocked(x, y)
 end
 
 function Dungeon:update(dt)
+    -- first add all entities that might have been added last update loop
     for _, entity in ipairs(self.entitiesToAdd) do
         if entity:is(Effect) then
-            print('add effect')
             self.effects[#self.effects + 1] = entity
         end
     end
     self.entitiesToAdd = {}
 
+    -- make camera follow hero
     updateCamera(self)
 
     -- update actors
@@ -114,7 +115,6 @@ function Dungeon:update(dt)
         local effect = self.effects[i]
         effect:update(dt)
         if effect.remove then
-            print('remove effect')
             table.remove(self.effects, i)
         end
     end

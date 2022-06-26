@@ -1,5 +1,6 @@
 EFFECT_DEFS = {
     ['strike'] = {
+        ['sound'] = 'swing',
         ['animations'] = {
             ['left'] = {
                 frames = { 81, 82, 83 },

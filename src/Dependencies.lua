@@ -59,6 +59,13 @@ gFrames = {
     ['effects'] = GenerateQuads(gTextures['effects'], 16, 16),
 }
 
+gSounds = {
+    ['swing'] = love.audio.newSource('sfx/abilities/swing.wav', 'static'),
+    ['attack_b'] = love.audio.newSource('sfx/abilities/attack_b.wav', 'static'),
+    ['impact_a'] = love.audio.newSource('sfx/impacts/impact_a.wav', 'static'),
+    ['impact_a'] = love.audio.newSource('sfx/impacts/impact_b.wav', 'static'),
+}
+
 gStateMachine = StateMachine {
     ['play'] = function() return PlayState() end,
 }

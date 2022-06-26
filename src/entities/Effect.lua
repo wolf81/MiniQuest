@@ -16,7 +16,7 @@ function Effect:new(def, x, y)
 
     self:changeAnimation(animKey)
 
-    self.currentAnimation.looping = false
+    self.sound = def.sound
 end
 
 function Effect:update(dt)

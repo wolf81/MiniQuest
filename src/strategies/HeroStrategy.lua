@@ -32,7 +32,7 @@ function HeroStrategy:getAction()
     else
         local target = self.dungeon:getActor(x, y)
         if target ~= nil then
-            self.action = AttackAction(self.actor, target)
+            self.action = AttackAction(self.actor, target, direction)
         end
     end
 
