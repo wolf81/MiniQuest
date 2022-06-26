@@ -4,6 +4,18 @@ The goal of MiniQuest is to create a simple turn-based RPG as final project for 
 
 In this document I will try to describe the development process and design choices.
 
+# Entities
+
+The entity structure is quite basic.
+
+There is a Entity base class. This class contains only the very basics that are useful for most entities, such as x and y grid coordinates and a draw function. All other entities will inherit from the Entity base class.
+
+For tiles there is a Tile entity. This entity should eventually be able to choose a texture based on an environment. The texture set that I use provides crypt, dungeon, cavern and labyrinth tiles. Basically it should be possible to changes the look of a map just by changing the environment. 
+
+For the player and non-player characters there is the Actor class. This class uses a direction to draw sprites. This class also adds various functions and properties useful for actors, such as hit points and functions to retrieve an action like move or attack.
+
+Effects are entities that will be mostly used for small animations that are destroyed upon completion. This class can be useful to show spell effects or effects related to various attacks. 
+
 # Actions
 
 In the Zelda and Mario lessons a state machine was used to control actions for actors. However, when I tried implementing the state machine for this project, it didn't seem to make much sense. Perhaps because actors don't freely transition between states. 
