@@ -42,3 +42,16 @@ function getKeys(tbl)
     end
     return keys
 end
+
+local ripairs_iter = function(t, i)
+  i = i - 1
+  local v = t[i]
+  if v ~= nil then
+    return i, v
+  end
+end
+
+-- reverse ipairs, based on code from the lume library
+function ripairs(t)
+  return ripairs_iter, t, (#t + 1)
+end

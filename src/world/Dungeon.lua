@@ -111,8 +111,7 @@ function Dungeon:update(dt)
     end
 
     -- update effects and remove immediately on completion
-    for i = #self.effects, 1, -1 do
-        local effect = self.effects[i]
+    for i, effect in ripairs(self.effects) do
         effect:update(dt)
         if effect.remove then
             table.remove(self.effects, i)
@@ -132,7 +131,7 @@ function Dungeon:update(dt)
     end)
 
     -- iterate through all actors, removing actors flagged for removal
-    for i = #self.actors, 1, -1 do
+    for i, actor in ripairs(self.actors) do
         local actor = self.actors[i]
         if actor.remove then
             table.remove(self.actors, i)
