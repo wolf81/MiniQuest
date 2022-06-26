@@ -29,7 +29,7 @@ function ActorStrategy:getAction()
 
     -- if we're standing next to the hero, attack hero
     if isAdjacent(self.actor, self.dungeon.hero) then
-        return AttackAction(self.actor, self.dungeon.hero, direction)
+        return AttackAction(self.actor, self.dungeon.hero)
 
     -- occasionally idle
     elseif math.random(5) == 1 then

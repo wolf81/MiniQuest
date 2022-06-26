@@ -8,8 +8,16 @@
 
 AttackAction = BaseAction:extend()
 
-function AttackAction:new(actor, target, direction)
+function AttackAction:new(actor, target)
     BaseAction.new(self, actor)
+
+    local dx, dy = actor.x - target.x, actor.y - target.y
+    local direction = nil
+    if dx < 0 then direction = 'right'
+    elseif dx > 0 then direction = 'left'
+    elseif dy < 0 then direction = 'down'
+    elseif dy > 0 then direction = 'up'
+    else error('invalid direction') end
 
     self.target = target
     self.direction = direction
