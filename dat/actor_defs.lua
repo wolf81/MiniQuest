@@ -98,5 +98,30 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         }
-    }
+    },
+    ['vampire'] = {
+        ['hitpoints'] = 6,
+        ['animations'] = {
+            ['right'] = {
+                frames = { 161, 177 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['down'] = {
+                frames = { 162, 178 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['up'] = {
+                frames = { 163, 179 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['left'] = {
+                frames = { 164, 180 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+        }
+    },
 }

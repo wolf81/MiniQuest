@@ -27,6 +27,10 @@ function ActorStrategy:getAction()
     local dxy = directionToVector(direction)
     local x, y = self.actor.x + dxy.x, self.actor.y + dxy.y
 
+    if self.dungeon.finished then 
+        return IdleAction(self.actor) 
+    end
+
     local target = self.dungeon:getActor(x, y)
     if target == self.dungeon.hero then
         return AttackAction(self.actor, self.dungeon.hero)
