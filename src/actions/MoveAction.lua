@@ -29,8 +29,6 @@ function MoveAction:new(actor, direction)
 end
 
 function MoveAction:perform(onFinish)
-    onFinish = onFinish or function() end
-
     self.actor.direction = self.direction
     self.actor:changeAnimation(self.actor.direction)
 

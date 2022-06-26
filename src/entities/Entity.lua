@@ -15,7 +15,8 @@ local function createAnimations(animationDefs)
         animations[k] = Animation {
             texture = animationDef.texture,
             frames = animationDef.frames,
-            interval = animationDef.interval
+            interval = animationDef.interval,
+            looping = animationDef.looping,
         }
     end
 

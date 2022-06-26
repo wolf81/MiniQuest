@@ -34,3 +34,11 @@ function directionToVector(direction)
     elseif direction == 'down' then return { x = 0, y = 1 }
     else error('invalid direction:', direction) end
 end
+
+function getKeys(tbl)
+    local keys = {}
+    for key, _ in pairs(tbl) do
+        keys[#keys + 1] = key
+    end
+    return keys
+end

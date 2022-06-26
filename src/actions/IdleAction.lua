@@ -13,9 +13,6 @@ function IdleAction:new(actor)
 end
 
 function IdleAction:perform(onFinish)
-    onFinish = onFinish or function() end
-
     self.actor.action = nil
-
     onFinish()
 end

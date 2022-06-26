@@ -14,10 +14,7 @@ local function updateCamera(self)
 end
 
 local function nextActor(self)
-    self.actorIdx = self.actorIdx + 1
-    if self.actorIdx > #self.actors then
-        self.actorIdx = 1
-    end
+    self.actorIdx = math.max(1, (self.actorIdx + 1) % (#self.actors + 1))
 end
 
 function Dungeon:new()
@@ -57,6 +54,7 @@ function Dungeon:new()
     self.actorIdx = 1
 
     self.effects = {}
+    self.entitiesToAdd = {}
 
     self.camera = { x = 0, y = 0 }
 end
@@ -71,9 +69,8 @@ function Dungeon:getActor(x, y)
     return nil
 end
 
-function Dungeon:addEffect(effect)
-    print('add effect')
-    self.effects[#self.effects + 1] = effect
+function Dungeon:addEntity(entity)
+    self.entitiesToAdd[#self.entitiesToAdd + 1] = entity
 end
 
 function Dungeon:isBlocked(x, y)
@@ -97,9 +94,17 @@ function Dungeon:isBlocked(x, y)
 end
 
 function Dungeon:update(dt)
+    for _, entity in ipairs(self.entitiesToAdd) do
+        if entity:is(Effect) then
+            print('add effect')
+            self.effects[#self.effects + 1] = entity
+        end
+    end
+    self.entitiesToAdd = {}
+
     updateCamera(self)
 
-    -- animate actors
+    -- update actors
     for _, actor in ipairs(self.actors) do
         actor:update(dt)
     end
@@ -108,10 +113,9 @@ function Dungeon:update(dt)
     for i = #self.effects, 1, -1 do
         local effect = self.effects[i]
         effect:update(dt)
-
         if effect.remove then
-            table.remove(self.effects, i)
             print('remove effect')
+            table.remove(self.effects, i)
         end
     end
 
