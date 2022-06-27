@@ -52,6 +52,7 @@ function Dungeon:new()
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 5, 3)
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['spider'], self, 8, 5)
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['bat'], self, 9, 6)
+    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['bat'], self, 9, 3)
     self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['vampire'], self, 11, 10)
     self.actorIdx = 1
 

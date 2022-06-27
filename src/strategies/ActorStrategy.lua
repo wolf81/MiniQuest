@@ -26,25 +26,21 @@ function ActorStrategy:getAction()
     local direction = getRandomDirection()
     local dxy = directionToVector(direction)
     local x, y = self.actor.x + dxy.x, self.actor.y + dxy.y
+    local target = self.dungeon:getActor(x, y)
 
+    -- stop any movement and attacks if the dungeon is finished
     if self.dungeon.finished then 
         return IdleAction(self.actor) 
-    end
-
-    local target = self.dungeon:getActor(x, y)
-    if target == self.dungeon.hero then
-        return AttackAction(self.actor, self.dungeon.hero)
-    end
 
     -- if we're standing next to the hero, attack hero
-    if isAdjacent(self.actor, self.dungeon.hero) then
+    elseif isAdjacent(self.actor, self.dungeon.hero) then
         return AttackAction(self.actor, self.dungeon.hero)
 
     -- occasionally idle
     elseif math.random(5) == 1 then
         return IdleAction(self.actor)
 
-    -- if not idling or attacking, try to move
+    -- if direction is not blocked a tile or actor, move in direction
     elseif not self.dungeon:isBlocked(x, y) and not target then
         return MoveAction(self.actor, direction)
     end
