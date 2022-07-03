@@ -8,7 +8,9 @@
 
 io.stdout:setvbuf('no') -- show debug output live in SublimeText console
 
-require 'src/Dependencies'
+require 'src.Dependencies'
+
+local zgen = require 'lib.zgen'
 
 local function showFPS()
     love.graphics.setFont(gFonts['tiny-dungeon-shadow'])
@@ -18,6 +20,13 @@ end
 
 function love.load(args)
     math.randomseed(os.time())
+
+    for i = 1, 10 do
+        local dungeon = zgen.Dungeon(35, 25)
+        print(dungeon)
+    end
+
+
     love.window.setTitle('MiniQuest')
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
