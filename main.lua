@@ -26,7 +26,6 @@ function love.load(args)
         print(dungeon)
     end
 
-
     love.window.setTitle('MiniQuest')
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
