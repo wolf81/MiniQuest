@@ -131,6 +131,19 @@ function Dungeon.new(cls, width, height)
 		end
 	end
 
+	local connectRegions = function()
+		local connectorRegions = {}
+		for y = 0, self.width - 1 do
+			for x = 0, self.height - 1 do
+				-- local pos = 
+			end
+		end
+	end
+
+	local removeDeadEnds = function()
+		-- body
+	end
+
 	local addRooms = function()
 		for i = 1, self.numRoomTries do
 			local size = math.random(1, 3 + self.roomExtraSize) * 2 + 1
@@ -162,10 +175,8 @@ function Dungeon.new(cls, width, height)
 
 			startRegion()
 
-			for y = y, y + height - 1 do
-				for x = x, x + width - 1 do
-					carve(vector(x, y), TileType.FLOOR)
-				end
+			for x, y in room:each() do
+				carve(vector(x, y), TileType.FLOOR)
 			end
 
 			::continue::
@@ -178,10 +189,13 @@ function Dungeon.new(cls, width, height)
 	for y = 1, self.height - 1, 2 do
 		for x = 1, self.width - 1, 2 do
 			if getTile(x, y) ~= TileType.WALL then
-				growMaze(vector(x, y))
+				-- growMaze(vector(x, y))
 			end
 		end
 	end
+
+	connectRegions()
+	removeDeadEnds()
 
 	Dungeon.__tostring = function()
 		s = ''

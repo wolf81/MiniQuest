@@ -28,8 +28,34 @@ function Rect:distanceTo(other)
 	)
 end
 
+function Rect:inflate(distance)
+	return Rect(self.x - distance, y - distance, width + (distance * 2), height + (distance * 2))
+end
+
 function Rect:contains(x, y)
 	return x >= self.x and x < self.x + self.w and y >= self.y and y < self.y + self.h
+end
+
+function Rect:each()
+	local x = self.x - 1
+	local y = self.y
+
+	return function()
+		while y < self.y + self.h do
+			x = x + 1
+
+			if x >= self.x + self.w then
+				x = self.x
+				y = y + 1
+			end
+
+			if y < self.y + self.h then
+				return x, y
+			end
+		end
+
+		return nil
+	end
 end
 
 return setmetatable(Rect, { __call = Rect.new })
