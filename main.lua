@@ -12,11 +12,6 @@ require 'src.Dependencies'
 
 local zgen = require 'lib.zgen'
 
-for i = 1, 10 do
-    local dungeon = zgen.Dungeon(15, 15)
-    print(dungeon)
-end
-
 local function showFPS()
     love.graphics.setFont(gFonts['tiny-dungeon-shadow'])
     love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
@@ -24,6 +19,12 @@ local function showFPS()
 end
 
 function love.load(args)
+    for i = 1, 1 do
+        math.randomseed(0)
+        local dungeon = zgen.Dungeon(37, 15)
+        print(dungeon)
+    end
+
     math.randomseed(os.time())
 
     love.window.setTitle('MiniQuest')

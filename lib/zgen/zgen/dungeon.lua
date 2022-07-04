@@ -160,8 +160,7 @@ function Dungeon.new(cls, width, height)
 
 			if regions:count() < 2 then goto continue end
 
-			local pos = vector(x, y)
-			connectorRegions[pos] = regions
+			connectorRegions[vector(x, y)] = regions
 
 			::continue::
 		end
