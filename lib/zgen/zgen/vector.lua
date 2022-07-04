@@ -208,7 +208,7 @@ return setmetatable({
   fromPolar       = fromPolar,
   randomDirection = randomDirection,
   isvector        = isvector,
-  zero            = zero
+  zero            = zero,
 }, {
   __call = function(_, ...) return new(...) end
 })

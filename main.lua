@@ -12,6 +12,11 @@ require 'src.Dependencies'
 
 local zgen = require 'lib.zgen'
 
+for i = 1, 10 do
+    local dungeon = zgen.Dungeon(15, 15)
+    print(dungeon)
+end
+
 local function showFPS()
     love.graphics.setFont(gFonts['tiny-dungeon-shadow'])
     love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
@@ -20,11 +25,6 @@ end
 
 function love.load(args)
     math.randomseed(os.time())
-
-    for i = 1, 10 do
-        local dungeon = zgen.Dungeon(35, 25)
-        print(dungeon)
-    end
 
     love.window.setTitle('MiniQuest')
     love.graphics.setDefaultFilter('nearest', 'nearest')

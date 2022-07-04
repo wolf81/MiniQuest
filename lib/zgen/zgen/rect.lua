@@ -29,7 +29,7 @@ function Rect:distanceTo(other)
 end
 
 function Rect:inflate(distance)
-	return Rect(self.x - distance, y - distance, width + (distance * 2), height + (distance * 2))
+	return Rect(self.x - distance, self.y - distance, self.w + (distance * 2), self.h + (distance * 2))
 end
 
 function Rect:contains(x, y)
@@ -56,6 +56,10 @@ function Rect:each()
 
 		return nil
 	end
+end
+
+function Rect:__tostring()
+	return 'Rect { x = ' .. self.x .. ', y = ' .. self.y .. ', w = ' .. self.w .. ', h = ' .. self.h .. ' }' 
 end
 
 return setmetatable(Rect, { __call = Rect.new })
