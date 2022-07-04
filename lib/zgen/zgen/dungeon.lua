@@ -62,6 +62,10 @@ function Dungeon.new(cls, width, height)
 		return self.tiles:get(x, y)
 	end
 
+	local getRooms = function()
+		return self.rooms
+	end
+
 	local fill = function(tileType)
 		self.tiles = Array2D(self.width, self.height)
 
@@ -311,9 +315,9 @@ function Dungeon.new(cls, width, height)
 	end
 
 	return setmetatable({
-		-- list of methods
 		getTile = getTile,
 		setTile = setTile,
+		getRooms = getRooms,
 	}, Dungeon)
 end
 
