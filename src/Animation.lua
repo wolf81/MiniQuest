@@ -33,6 +33,8 @@ function Animation:update(dt)
         return
     end
 
+    if self.interval == 0 then return end
+
     -- no need to update if animation is only one frame
     if #self.frames > 1 then
         self.timer = self.timer + dt

@@ -10,7 +10,7 @@ io.stdout:setvbuf('no') -- show debug output live in SublimeText console
 
 require 'src.Dependencies'
 
-local zgen = require 'lib.zgen'
+amazing = require 'lib.amazing'
 
 local function showFPS()
     love.graphics.setFont(gFonts['tiny-dungeon-shadow'])
@@ -19,13 +19,15 @@ local function showFPS()
 end
 
 function love.load(args)
-    for i = 1, 1 do
-        math.randomseed(0)
-        local dungeon = zgen.Dungeon(37, 15)
-        print(dungeon)
-    end
+    love.math.setRandomSeed(os.time())
 
-    math.randomseed(os.time())
+    local builder = amazing.builder.bsp(amazing.RandomTable({
+        ['spider']      = 60,
+        ['bat']         = 40,
+        ['skeleton']    = 20,
+        ['vampire']     = 5,
+    }))
+    local map, spawns = builder.build()
 
     love.window.setTitle('MiniQuest')
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -39,7 +41,7 @@ function love.load(args)
 
     love.keyboard.keysPressed = {}
 
-    gStateMachine:change('play')
+    gStateMachine:change('play', { map = map, spawns = spawns })
 end
 
 function love.resize(w, h)

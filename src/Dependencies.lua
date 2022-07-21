@@ -45,7 +45,7 @@ require 'src.Animation'
 
 -- game world
 require 'src.world.Dungeon'
-Map = require 'dat.map'
+-- Map = require 'dat.map'
 
 gTextures = {
     ['world'] = love.graphics.newImage('gfx/tiny_dungeon_world.png'),

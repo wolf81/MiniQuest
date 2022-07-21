@@ -8,8 +8,14 @@
 
 PlayState = BaseState:extend()
 
-function PlayState:new()
-    self.dungeon = Dungeon('dat/map.lua')    
+function PlayState:enter(params)
+    local map, spawns = params.map, params.spawns
+    print(map, spawns)
+
+    self.dungeon = Dungeon(map, spawns)
+end
+
+function PlayState:new(...)
 end
 
 function PlayState:update(dt)

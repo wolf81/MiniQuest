@@ -6,6 +6,8 @@
     info+miniquest@wolftrail.net
 ]]
 
+amazing = require 'lib.amazing'
+
 Dungeon = Object:extend()
 
 local function updateCamera(self)
@@ -17,43 +19,55 @@ local function nextActor(self)
     self.actorIdx = math.max(1, (self.actorIdx + 1) % (#self.actors + 1))
 end
 
-function Dungeon:new()
-    self.map = Map
+function Dungeon:new(map, spawns)
+    self.map = map
 
     self.finished = false
 
-    self.layers = {}
+    local tiles = {}
 
-    for layerIdx, layer in ipairs(self.map.layers) do
-        local tiles = {}
-        self.layers[#self.layers + 1] = tiles
+    local map_w, map_h = map.size()
+    for x, y, tile in map.iter() do
+        local tileDef = {
+            id = 0,
+            animations = {},
+            solid = false,
+        }
 
-        for y = 0, self.map.height - 1 do
-            for x = 0, self.map.width - 1 do
-                local tileId = layer[y * self.map.width + x + 1]
-                if tileId == 0 then goto continue end
+        if bit.band(tile, amazing.Tile.WALL) == amazing.Tile.WALL then
+            tileDef.solid = true
+            tileDef.id = love.math.random(7, 11)
 
-                local tileDef = { 
-                    id = tileId, 
-                    animations = {},
-                    solid = tileId == 7 or tileId == 1,
-                }
-
-                tiles[x .. '.' .. y] = Tile(tileDef, x, y)
-                ::continue::
+            if y > 0 and y < map_h then
+                local tile_below = map.get(x, y + 1)
+                local floor_door = bit.bor(amazing.Tile.FLOOR, amazing.Tile.DOOR)
+                if bit.band(tile_below, floor_door) ~= 0 then
+                    tileDef.id = love.math.random(1, 4)
+                end
             end
+        elseif bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
+            tileDef.id = 13
+        elseif bit.band(tile, amazing.Tile.STAIR_DN) == amazing.Tile.STAIR_DN then
+            tileDef.id = 14
+        else
+            tileDef.id = love.math.random(98, 102)
+        end
+        
+        tiles[x .. '.' .. y] = Tile(tileDef, x, y)
+
+        if bit.band(tile, amazing.Tile.STAIR_DN) == amazing.Tile.STAIR_DN then
+            self.hero = Actor(ACTOR_DEFS['hero'], self, x, y)
+            self.hero.strategy = HeroStrategy(self.hero, self)
         end
     end
 
-    self.hero = Actor(ACTOR_DEFS['hero'], self, 1, 4)
-    self.hero.strategy = HeroStrategy(self.hero, self)
+    self.layers = { tiles }
 
     self.actors = { self.hero }
-    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['skeleton'], self, 5, 3)
-    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['spider'], self, 8, 5)
-    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['bat'], self, 9, 6)
-    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['bat'], self, 9, 3)
-    self.actors[#self.actors + 1] = Actor(ACTOR_DEFS['vampire'], self, 11, 10)
+
+    for _, spawn in ipairs(spawns) do
+        self.actors[#self.actors + 1] = Actor(ACTOR_DEFS[spawn.id], self, spawn.x, spawn.y)        
+    end
     self.actorIdx = 1
 
     self.effects = {}

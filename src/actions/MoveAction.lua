@@ -35,7 +35,7 @@ function MoveAction:perform(onFinish)
     local x = self.actor.x + self.dx
     local y = self.actor.y + self.dy
 
-    Timer.tween(0.15, {
+    Timer.tween(0.01, {
         [self.actor] = { 
             x = x,
             y = y,

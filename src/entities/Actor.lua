@@ -6,6 +6,8 @@
     info+miniquest@wolftrail.net
 ]]
 
+local mfloor = math.floor
+
 Actor = Entity:extend()
 
 function Actor:new(def, dungeon, x, y)
@@ -42,6 +44,6 @@ function Actor:draw()
     love.graphics.draw(
         gTextures[anim.texture], 
         gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.x * TILE_SIZE), 
-        math.floor(self.y * TILE_SIZE)
+        mfloor(self.x * TILE_SIZE), 
+        mfloor(self.y * TILE_SIZE)
     )end
