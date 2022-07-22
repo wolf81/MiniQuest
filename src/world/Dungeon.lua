@@ -25,6 +25,7 @@ function Dungeon:new(map, spawns)
     self.finished = false
 
     local tiles = {}
+    local shadow = {}
 
     local map_w, map_h = map.size()
     for x, y, tile in map.iter() do
@@ -43,6 +44,11 @@ function Dungeon:new(map, spawns)
                 local floor_door = bit.bor(amazing.Tile.FLOOR, amazing.Tile.DOOR)
                 if bit.band(tile_below, floor_door) ~= 0 then
                     tileDef.id = love.math.random(1, 4)
+                    shadow[x .. '.' .. y] = Tile({
+                        id = 176,
+                        animations = {},
+                        solid = false,
+                    }, x, y + 1)
                 end
             end
         elseif bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
@@ -61,7 +67,7 @@ function Dungeon:new(map, spawns)
         end
     end
 
-    self.layers = { tiles }
+    self.layers = { tiles, shadow }
 
     self.actors = { self.hero }
 
@@ -129,8 +135,19 @@ function Dungeon:update(dt)
         end
     end
 
+    local offset = 3
+    local action = nil
+
     -- get action for current active actor
     local actor = self.actors[self.actorIdx]    
+    if (actor.x < self.hero.x - offset or 
+        actor.x > self.hero.x + offset or 
+        actor.y < self.hero.y - offset or 
+        actor.y > self.hero.y + offset) then
+        nextActor(self)
+        return
+    end
+
     local action = actor:getAction()    
 
     -- no action was found, try again next iteration of update
