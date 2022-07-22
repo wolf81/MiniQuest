@@ -1,14 +1,13 @@
 Scheduler = Object:extend()
 
 local function performActions(actions, on_finish)
-	local n_actions = #actions
+	if #actions == 0 then on_finish() end
 
+	local n_actions = #actions
 	for _, action in ipairs(actions) do
 		action:perform(function()
 			n_actions = n_actions - 1
-			if n_actions == 0 then
-				on_finish()
-			end
+			if n_actions == 0 then on_finish() end
 		end)
 	end
 end
@@ -38,15 +37,24 @@ function Scheduler:update(dt)
 	hero_action:prepare()
 
 	local actions = { hero_action }
+	local combat_actions = {}
+
 	for _, entity in ipairs(self.entities) do
 		local action = entity:getAction(hero_action.cost)
 		if action then
 			action:prepare()
-			actions[#actions + 1] = action
+			
+			if action:is(AttackAction) then
+				combat_actions[#combat_actions + 1] = action
+			else
+				actions[#actions + 1] = action
+			end
 		end
 	end
 
 	performActions(actions, function()
-		self.busy = false
+		performActions(combat_actions, function()
+			self.busy = false
+		end)
 	end)
 end
