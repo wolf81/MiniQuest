@@ -13,6 +13,10 @@ function BaseAction:new(actor)
     self.cost = 100
 end
 
+function BaseAction:isCombatAction()
+    return false
+end
+
 function BaseAction:prepare()
     -- override as needed
 end

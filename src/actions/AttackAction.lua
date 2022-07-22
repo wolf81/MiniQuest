@@ -24,6 +24,10 @@ function AttackAction:new(actor, target)
     self.cost = math.ceil(self.cost / actor.attack_speed)
 end
 
+function AttackAction:isCombatAction()
+    return true
+end
+
 function AttackAction:prepare()
     self.target:inflict(1)   
 end

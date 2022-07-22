@@ -44,7 +44,7 @@ function Scheduler:update(dt)
 		if action then
 			action:prepare()
 			
-			if action:is(AttackAction) then
+			if action:isCombatAction() then
 				combat_actions[#combat_actions + 1] = action
 			else
 				actions[#actions + 1] = action
