@@ -1,5 +1,18 @@
 Scheduler = Object:extend()
 
+local function performActions(actions, on_finish)
+	local n_actions = #actions
+
+	for _, action in ipairs(actions) do
+		action:perform(function()
+			n_actions = n_actions - 1
+			if n_actions == 0 then
+				on_finish()
+			end
+		end)
+	end
+end
+
 function Scheduler:new(entities)
 	self.entities = {}
 	self.hero = nil
@@ -33,11 +46,7 @@ function Scheduler:update(dt)
 		end
 	end
 
-	local n_actions = #actions
-	for _, action in ipairs(actions) do
-		action:perform(function()
-			n_actions = n_actions - 1
-			self.busy = n_actions > 0
-		end)
-	end
+	performActions(actions, function()
+		self.busy = false
+	end)
 end

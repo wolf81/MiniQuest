@@ -63,4 +63,5 @@ function Actor:draw()
         gFrames[anim.texture][anim:getCurrentFrame()],
         mfloor(self.x * TILE_SIZE), 
         mfloor(self.y * TILE_SIZE)
-    )end
+    )
+end
