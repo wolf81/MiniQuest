@@ -1,3 +1,11 @@
+--[[
+	The Scheduler coordinates actions for all entities. The Scheduler will 
+	always expect the Hero to move first. After the hero has selected an action,
+	the Scheduler retrieves the energy cost for the action. Each other entity
+	will receive the same energy. Each other entity then determined what action
+	to take, based on available energy.
+--]]
+
 Scheduler = Object:extend()
 
 local function performActions(actions, duration, on_finish)
@@ -34,7 +42,7 @@ function Scheduler:update(dt)
 
 	self.busy = true
 
-	local actions = { hero_action }
+	local move_actions = { hero_action }
 	local combat_actions = {}
 
 	for _, entity in ipairs(self.entities) do
@@ -43,12 +51,12 @@ function Scheduler:update(dt)
 			if action:isCombatAction() then
 				combat_actions[#combat_actions + 1] = action
 			else
-				actions[#actions + 1] = action
+				move_actions[#move_actions + 1] = action
 			end
 		end
 	end
 
-	performActions(actions, 0.25, function()
+	performActions(move_actions, 0.25, function()
 		performActions(combat_actions, 0.25, function()
 			self.busy = false
 		end)
