@@ -8,6 +8,8 @@
 
 ActorStrategy = BaseStrategy:extend()
 
+local BASE_ENERGY_COST = 100
+
 -- calculate of this entity is standing next to a hero
 local function isAdjacent(actor, target)
     local target_x, target_y = target:nextPosition()    
@@ -33,7 +35,7 @@ function ActorStrategy:getAction()
 
     -- if we're standing next to the hero, attack hero
     if isAdjacent(self.actor, self.dungeon.hero) then
-        local energy_cost = 100 * self.actor.attack_speed
+        local energy_cost = BASE_ENERGY_COST * self.actor.attack_speed
         if self.actor.energy >= energy_cost then
             self.actor.energy = self.actor.energy - energy_cost
             return AttackAction(self.actor, self.dungeon.hero)
@@ -41,20 +43,20 @@ function ActorStrategy:getAction()
 
     -- occasionally idle
     elseif math.random(5) == 1 then
-        local energy_cost = 100
+        local energy_cost = BASE_ENERGY_COST
         if self.actor.energy >= energy_cost then
             self.actor.energy = self.actor.energy - energy_cost
+            return IdleAction(self.actor)
         end
-        return IdleAction(self.actor)
 
     -- if direction is not blocked a tile or actor, move in direction
     elseif not self.dungeon:isBlocked(x, y) and not target then
-        local energy_cost = 100 * self.actor.move_speed
+        local energy_cost = BASE_ENERGY_COST * self.actor.move_speed
         if self.actor.energy >= energy_cost then
             self.actor.energy = self.actor.energy - energy_cost
             return MoveAction(self.actor, direction)
         end
-    end
+    end 
 
     return nil
 end

@@ -106,6 +106,7 @@ ACTOR_DEFS = {
     },
     ['vampire'] = {
         ['move_speed'] = 2.0,
+        ['attack_speed'] = 2.0,
         ['hitpoints'] = 6,
         ['animations'] = {
             ['right'] = {

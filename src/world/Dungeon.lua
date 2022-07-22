@@ -26,6 +26,7 @@ function Dungeon:new(map, spawns)
 
     local tiles = {}
     local shadow = {}
+    local objects = {}
 
     local map_w, map_h = map.size()
     for x, y, tile in map.iter() do
@@ -34,6 +35,8 @@ function Dungeon:new(map, spawns)
             animations = {},
             solid = false,
         }
+
+        tileDef.id = love.math.random(98, 102)
 
         if bit.band(tile, amazing.Tile.WALL) == amazing.Tile.WALL then
             tileDef.solid = true
@@ -52,22 +55,28 @@ function Dungeon:new(map, spawns)
                 end
             end
         elseif bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
-            tileDef.id = 13
+            objects[x .. '.' .. y] = Tile({
+                id = 14,
+                animations = {},
+                solid = false,
+            }, x, y)
         elseif bit.band(tile, amazing.Tile.STAIR_DN) == amazing.Tile.STAIR_DN then
-            tileDef.id = 14
-        else
-            tileDef.id = love.math.random(98, 102)
+            objects[x .. '.' .. y] = Tile({
+                id = 13,
+                animations = {},
+                solid = false,
+            }, x, y)
         end
         
         tiles[x .. '.' .. y] = Tile(tileDef, x, y)
 
-        if bit.band(tile, amazing.Tile.STAIR_DN) == amazing.Tile.STAIR_DN then
+        if bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
             self.hero = Actor(ACTOR_DEFS['hero'], self, x, y)
             self.hero.strategy = HeroStrategy(self.hero, self)
         end
     end
 
-    self.layers = { tiles, shadow }
+    self.layers = { tiles, shadow, objects }
 
     self.actors = { self.hero }
 
@@ -139,31 +148,6 @@ function Dungeon:update(dt)
     end
 
     self.scheduler:update(dt)
-
-    --[[
-    local offset = 3
-    local action = nil
-
-    -- get action for current active actor
-    local actor = self.actors[self.actorIdx]    
-    if (actor.x < self.hero.x - offset or 
-        actor.x > self.hero.x + offset or 
-        actor.y < self.hero.y - offset or 
-        actor.y > self.hero.y + offset) then
-        nextActor(self)
-        return
-    end
-
-    local action = actor:getAction()    
-
-    -- no action was found, try again next iteration of update
-    if action == nil then return end
-
-    -- we did get an action, so execute it and on finish, change active actor
-    action:perform(function()
-        nextActor(self)
-    end)
-    --]]
     
     -- iterate through all actors, removing actors flagged for removal
     for i, actor in ripairs(self.actors) do
