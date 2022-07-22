@@ -10,9 +10,10 @@ ActorStrategy = BaseStrategy:extend()
 
 -- calculate of this entity is standing next to a hero
 local function isAdjacent(actor, target)
+    local target_x, target_y = target:nextPosition()    
     return (
-        math.abs(actor.x - target.x) + 
-        math.abs(actor.y - target.y)
+        math.abs(actor.x - target_x) + 
+        math.abs(actor.y - target_y)
     ) == 1
 end
 
@@ -30,23 +31,19 @@ function ActorStrategy:getAction()
 
     if self.actor.energy == 0 then return end
 
-    --[[
-    -- stop any movement and attacks if the dungeon is finished
-    if self.dungeon.finished then
-        return IdleAction(self.actor) 
-    --]]
-
     -- if we're standing next to the hero, attack hero
     if isAdjacent(self.actor, self.dungeon.hero) then
-        if self.actor.energy >= 100 then
-            self.actor.energy = self.actor.energy - 100
+        local energy_cost = 100 * self.actor.attack_speed
+        if self.actor.energy >= energy_cost then
+            self.actor.energy = self.actor.energy - energy_cost
             return AttackAction(self.actor, self.dungeon.hero)
         end
 
     -- occasionally idle
     elseif math.random(5) == 1 then
-        if self.actor.energy >= 100 then
-            self.actor.energy = self.actor.energy - 100
+        local energy_cost = 100
+        if self.actor.energy >= energy_cost then
+            self.actor.energy = self.actor.energy - energy_cost
         end
         return IdleAction(self.actor)
 

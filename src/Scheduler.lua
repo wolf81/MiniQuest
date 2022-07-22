@@ -17,16 +17,18 @@ end
 function Scheduler:update(dt)
 	if self.busy then return end
 
-	local hero_action, energy_cost = self.hero:getAction() 
+	local hero_action = self.hero:getAction(0)	
 	if not hero_action then return end
 
 	self.busy = true
 
+	hero_action:prepare()
+
 	local actions = { hero_action }
 	for _, entity in ipairs(self.entities) do
-		entity.energy = entity.energy + hero_action.cost
-		local action = entity:getAction()
+		local action = entity:getAction(hero_action.cost)
 		if action then
+			action:prepare()
 			actions[#actions + 1] = action
 		end
 	end

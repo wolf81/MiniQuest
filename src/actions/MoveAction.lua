@@ -14,7 +14,7 @@ function MoveAction:new(actor, direction)
     self.dx = 0
     self.dy = 0
     self.direction = direction
-    self.cost = math.ceil(self.cost / (actor.move_speed or 1.0)) 
+    self.cost = math.ceil(self.cost / actor.move_speed) 
 
     if self.direction == 'left' then
         self.dx = -1
@@ -29,17 +29,19 @@ function MoveAction:new(actor, direction)
     end
 end
 
-function MoveAction:perform(onFinish)
+function MoveAction:prepare()
     self.actor.direction = self.direction
-    self.actor:changeAnimation(self.actor.direction)
+    self.actor.next_x = self.actor.x + self.dx
+    self.actor.next_y = self.actor.y + self.dy
+end
 
-    local x = self.actor.x + self.dx
-    local y = self.actor.y + self.dy
+function MoveAction:perform(onFinish)
+    self.actor:changeAnimation(self.actor.direction)
 
     Timer.tween(0.25, {
         [self.actor] = { 
-            x = x,
-            y = y,
+            x = self.actor.next_x,
+            y = self.actor.next_y,
         }
     })
     :finish(function()

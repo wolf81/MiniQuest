@@ -86,7 +86,8 @@ end
 
 function Dungeon:getActor(x, y)
     for _, actor in ipairs(self.actors) do
-        if actor.x == x and actor.y == y then
+        local actor_x, actor_y = actor:nextPosition()
+        if actor_x == x and actor_y == y then
             return actor
         end
     end
