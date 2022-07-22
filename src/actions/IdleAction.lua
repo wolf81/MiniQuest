@@ -12,7 +12,7 @@ function IdleAction:new(actor)
     BaseAction.new(self, actor)
 end
 
-function IdleAction:perform(onFinish)
+function IdleAction:perform(duration, onFinish)
     self.actor.action = nil
     onFinish()
 end

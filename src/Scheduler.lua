@@ -1,11 +1,11 @@
 Scheduler = Object:extend()
 
-local function performActions(actions, on_finish)
+local function performActions(actions, duration, on_finish)
 	if #actions == 0 then on_finish() end
 
 	local n_actions = #actions
 	for _, action in ipairs(actions) do
-		action:perform(function()
+		action:perform(duration, function()
 			n_actions = n_actions - 1
 			if n_actions == 0 then on_finish() end
 		end)
@@ -52,8 +52,8 @@ function Scheduler:update(dt)
 		end
 	end
 
-	performActions(actions, function()
-		performActions(combat_actions, function()
+	performActions(actions, 0.25, function()
+		performActions(combat_actions, 0.25, function()
 			self.busy = false
 		end)
 	end)

@@ -21,6 +21,6 @@ function BaseAction:prepare()
     -- override as needed
 end
 
-function BaseAction:perform(onFinish)
+function BaseAction:perform(duration, onFinish)
     error('perform should be implemented by subclasses')
 end

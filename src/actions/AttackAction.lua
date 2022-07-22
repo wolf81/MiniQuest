@@ -32,7 +32,7 @@ function AttackAction:prepare()
     self.target:inflict(1)   
 end
 
-function AttackAction:perform(onFinish)    
+function AttackAction:perform(duration, onFinish)    
     self.actor.direction = self.direction
     self.actor:changeAnimation(self.actor.direction)
 
@@ -43,7 +43,7 @@ function AttackAction:perform(onFinish)
         gSounds[effect.sound]:play()
     end
 
-    Timer.after(0.25, function()
+    Timer.after(duration, function()
         self.actor.action = nil
         onFinish()
     end)

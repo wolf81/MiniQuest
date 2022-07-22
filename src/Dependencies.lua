@@ -25,6 +25,7 @@ require 'src.actions.BaseAction'
 require 'src.actions.IdleAction'
 require 'src.actions.MoveAction'
 require 'src.actions.AttackAction'
+require 'src.actions.CompositeAction'
 
 -- strategies
 require 'src.strategies.BaseStrategy'

@@ -33,30 +33,52 @@ function ActorStrategy:getAction()
 
     if self.actor.energy == 0 then return end
 
-    -- if we're standing next to the hero, attack hero
-    if isAdjacent(self.actor, self.dungeon.hero) then
-        local energy_cost = BASE_ENERGY_COST * self.actor.attack_speed
-        if self.actor.energy >= energy_cost then
-            self.actor.energy = self.actor.energy - energy_cost
-            return AttackAction(self.actor, self.dungeon.hero)
-        end
+    local actions = {}
 
-    -- occasionally idle
-    elseif math.random(5) == 1 then
-        local energy_cost = BASE_ENERGY_COST
-        if self.actor.energy >= energy_cost then
-            self.actor.energy = self.actor.energy - energy_cost
-            return IdleAction(self.actor)
-        end
+    while true do
+        local attack_cost = math.ceil(BASE_ENERGY_COST / self.actor.attack_speed)
+        local move_cost = math.ceil(BASE_ENERGY_COST / self.actor.move_speed)
+        local min_cost = math.min(attack_cost, move_cost)
+        local can_attack = true
 
-    -- if direction is not blocked a tile or actor, move in direction
-    elseif not self.dungeon:isBlocked(x, y) and not target then
-        local energy_cost = BASE_ENERGY_COST * self.actor.move_speed
-        if self.actor.energy >= energy_cost then
-            self.actor.energy = self.actor.energy - energy_cost
-            return MoveAction(self.actor, direction)
+        if self.actor.energy < min_cost then break end
+
+        local is_adjacent_to_hero = isAdjacent(self.actor, self.dungeon.hero)
+
+        -- if we're standing next to the hero, attack hero
+        if is_adjacent_to_hero then
+            if self.actor.energy >= attack_cost then
+                self.actor.energy = self.actor.energy - attack_cost
+                actions[#actions + 1] = AttackAction(self.actor, self.dungeon.hero)
+            end
+
+        -- occasionally idle
+        elseif math.random(5) == 1 then
+            if self.actor.energy >= move_cost then
+                self.actor.energy = self.actor.energy - move_cost
+                actions[#actions + 1] = IdleAction(self.actor)
+            end
+
+        -- if direction is not blocked a tile or actor, move in direction
+        elseif not self.dungeon:isBlocked(x, y) and not target then
+            if self.actor.energy >= move_cost then
+                self.actor.energy = self.actor.energy - move_cost
+                actions[#actions + 1] = MoveAction(self.actor, direction)
+            end
+        end 
+
+        if is_adjacent_to_hero then
+            if self.actor.energy < attack_cost then break end
+        else
+            if self.actor.energy < move_cost then break end
         end
-    end 
+    end
+
+    if #actions == 1 then 
+        return actions[1]
+    elseif #actions > 1 then
+        return CompositeAction(self.actor, actions)
+    end
 
     return nil
 end

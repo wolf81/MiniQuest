@@ -1,12 +1,12 @@
 CompositeAction = BaseAction:extend()
 
-local function performActions(actions, onFinish)
+local function performActions(actions, duration, onFinish)
     if #actions == 0 then 
         onFinish() 
     else
         local action = table.remove(actions, 1)
-        action:perform(function()
-            performActions(actions, onFinish)
+        action:perform(duration, function()
+            performActions(actions, duration, onFinish)
         end)
     end
 end
@@ -33,7 +33,8 @@ function CompositeAction:prepare()
     end
 end
 
-function CompositeAction:perform(onFinish)
-    performActions(self.actions, onFinish)
+function CompositeAction:perform(duration, onFinish)
+    local duration = duration / #self.actions
+    performActions(self.actions, duration, onFinish)
 end
 

@@ -19,6 +19,7 @@ function Actor:new(def, dungeon, x, y)
     self.hitpoints = def.hitpoints or 1
     self.strategy = ActorStrategy(self, dungeon)
     self.energy = 0
+
     self.move_speed = def.move_speed or 1.0
     self.attack_speed = def.attack_speed or 1.0
 

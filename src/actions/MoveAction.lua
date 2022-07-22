@@ -35,10 +35,10 @@ function MoveAction:prepare()
     self.actor.next_y = self.actor.y + self.dy
 end
 
-function MoveAction:perform(onFinish)
+function MoveAction:perform(duration, onFinish)
     self.actor:changeAnimation(self.actor.direction)
 
-    Timer.tween(0.25, {
+    Timer.tween(duration, {
         [self.actor] = { 
             x = self.actor.next_x,
             y = self.actor.next_y,

@@ -25,7 +25,7 @@ function love.load(args)
         ['spider']      = 60,
         ['bat']         = 40,
         ['skeleton']    = 20,
-        ['vampire']     = 5,
+        ['vampire']     = 105,
     }))
     local map, spawns = builder.build()
 

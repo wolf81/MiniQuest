@@ -2,7 +2,7 @@ ACTOR_DEFS = {
     ['hero'] = {
         ['hitpoints'] = 10,
         ['move_speed'] = 1.5,
-        ['attack_speed'] = 1.2,
+        ['attack_speed'] = 1.0,
         ['animations'] = {
             ['right'] = {
                 frames = { 1, 17 },
@@ -106,7 +106,7 @@ ACTOR_DEFS = {
     },
     ['vampire'] = {
         ['move_speed'] = 2.0,
-        ['attack_speed'] = 2.0,
+        ['attack_speed'] = 1.6,
         ['hitpoints'] = 6,
         ['animations'] = {
             ['right'] = {
