@@ -1,6 +1,8 @@
 ACTOR_DEFS = {
     ['hero'] = {
         ['hitpoints'] = 10,
+        ['move_speed'] = 1.5,
+        ['attack_speed'] = 1.2,
         ['animations'] = {
             ['right'] = {
                 frames = { 1, 17 },
@@ -26,6 +28,7 @@ ACTOR_DEFS = {
     },
     ['spider'] = {
         ['hitpoints'] = 1,
+        ['move_speed'] = 0.8,
         ['animations'] = {
             ['right'] = {
                 frames = { 257, 273 },
@@ -51,6 +54,7 @@ ACTOR_DEFS = {
     },
     ['bat'] = {
         ['hitpoints'] = 2,
+        ['move_speed'] = 1.6,
         ['animations'] = {
             ['right'] = {
                 frames = { 233, 249 },
@@ -76,6 +80,7 @@ ACTOR_DEFS = {
     },
     ['skeleton'] = {
         ['hitpoints'] = 4,
+        ['move_speed'] = 1.0,
         ['animations'] = {
             ['right'] = {
                 frames = { 129, 145 },
@@ -100,6 +105,7 @@ ACTOR_DEFS = {
         }
     },
     ['vampire'] = {
+        ['move_speed'] = 2.0,
         ['hitpoints'] = 6,
         ['animations'] = {
             ['right'] = {

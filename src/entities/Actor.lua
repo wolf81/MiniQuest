@@ -18,12 +18,17 @@ function Actor:new(def, dungeon, x, y)
     self.direction = 'down'
     self.hitpoints = def.hitpoints or 1
     self.strategy = ActorStrategy(self, dungeon)
+    self.energy = 0
+    self.move_speed = def.move_speed or 1.0
+    self.attack_speed = def.attack_speed or 1.0
 
     self.action = nil
 end
 
 function Actor:getAction()
-    if self.action ~= nil then return end
+    if self.remove then return nil end
+
+    if self.action then return self.action end
 
     self.action = self.strategy:getAction()
 

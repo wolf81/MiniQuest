@@ -79,6 +79,8 @@ function Dungeon:new(map, spawns)
     self.effects = {}
     self.entitiesToAdd = {}
 
+    self.scheduler = Scheduler(self.actors)
+
     self.camera = { x = 0, y = 0 }
 end
 
@@ -135,6 +137,9 @@ function Dungeon:update(dt)
         end
     end
 
+    self.scheduler:update(dt)
+
+    --[[
     local offset = 3
     local action = nil
 
@@ -157,7 +162,8 @@ function Dungeon:update(dt)
     action:perform(function()
         nextActor(self)
     end)
-
+    --]]
+    
     -- iterate through all actors, removing actors flagged for removal
     for i, actor in ripairs(self.actors) do
         local actor = self.actors[i]

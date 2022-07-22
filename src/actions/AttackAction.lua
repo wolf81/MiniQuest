@@ -21,13 +21,14 @@ function AttackAction:new(actor, target)
 
     self.target = target
     self.direction = direction
+    self.cost = math.ceil(self.cost / (actor.attack_speed or 1.0))
 end
 
 function AttackAction:perform(onFinish)
     self.actor.direction = self.direction
     self.actor:changeAnimation(self.actor.direction)
 
-    self.target:inflict(1)    
+    self.target:inflict(1)   
 
     local effect = Effect(EFFECT_DEFS['strike'], self.target.x, self.target.y)
     self.actor.dungeon:addEntity(effect)
@@ -36,7 +37,7 @@ function AttackAction:perform(onFinish)
         gSounds[effect.sound]:play()
     end
 
-    Timer.after(0.1, function()
+    Timer.after(0.25, function()
         self.actor.action = nil
         onFinish()
     end)

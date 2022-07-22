@@ -10,6 +10,7 @@ BaseAction = Object:extend()
 
 function BaseAction:new(actor)
     self.actor = actor
+    self.cost = 100
 end
 
 function BaseAction:perform(onFinish)

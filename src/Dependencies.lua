@@ -43,6 +43,8 @@ require 'src.Constants'
 require 'src.Util'
 require 'src.Animation'
 
+require 'src.Scheduler'
+
 -- game world
 require 'src.world.Dungeon'
 -- Map = require 'dat.map'

@@ -14,6 +14,7 @@ function MoveAction:new(actor, direction)
     self.dx = 0
     self.dy = 0
     self.direction = direction
+    self.cost = math.ceil(self.cost / (actor.move_speed or 1.0)) 
 
     if self.direction == 'left' then
         self.dx = -1
@@ -35,7 +36,7 @@ function MoveAction:perform(onFinish)
     local x = self.actor.x + self.dx
     local y = self.actor.y + self.dy
 
-    Timer.tween(0.01, {
+    Timer.tween(0.25, {
         [self.actor] = { 
             x = x,
             y = y,
