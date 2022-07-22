@@ -12,10 +12,11 @@ local BASE_ENERGY_COST = 100
 
 -- calculate of this entity is standing next to a hero
 local function isAdjacent(actor, target)
+    local actor_x, actor_y = actor:nextPosition()
     local target_x, target_y = target:nextPosition()    
     return (
-        math.abs(actor.x - target_x) + 
-        math.abs(actor.y - target_y)
+        math.abs(actor_x - target_x) + 
+        math.abs(actor_y - target_y)
     ) == 1
 end
 
@@ -25,23 +26,41 @@ local function getRandomDirection()
     return directions[math.random(#directions)]
 end
 
-function ActorStrategy:getAction()
+local function canMove(actor, dungeon)
     local direction = getRandomDirection()
     local dxy = directionToVector(direction)
-    local x, y = self.actor.x + dxy.x, self.actor.y + dxy.y
-    local target = self.dungeon:getActor(x, y)
+    local actor_x, actor_y = actor:nextPosition()
+    local actor_x, actor_y = actor_x + dxy.x, actor_y + dxy.y
+    local target = dungeon:getActor(actor_x, actor_y)
 
+    if not dungeon:isBlocked(actor_x, actor_y) and not target then
+        return direction
+    end
+
+    return nil
+end
+
+function ActorStrategy:getAction()
     if self.actor.energy == 0 then return end
 
     local actions = {}
 
     while true do
+
+    -- local direction = getRandomDirection()
+    -- local dxy = directionToVector(direction)
+    -- local x, y = self.actor:nextPosition()
+    -- local x, y = x + dxy.x, y + dxy.y
+    -- local target = self.dungeon:getActor(x, y)
+
         local attack_cost = math.ceil(BASE_ENERGY_COST / self.actor.attack_speed)
         local move_cost = math.ceil(BASE_ENERGY_COST / self.actor.move_speed)
         local min_cost = math.min(attack_cost, move_cost)
         local can_attack = true
 
         if self.actor.energy < min_cost then break end
+
+        local direction = canMove(self.actor, self.dungeon)
 
         local is_adjacent_to_hero = isAdjacent(self.actor, self.dungeon.hero)
 
@@ -60,7 +79,7 @@ function ActorStrategy:getAction()
             end
 
         -- if direction is not blocked a tile or actor, move in direction
-        elseif not self.dungeon:isBlocked(x, y) and not target then
+        elseif direction then
             if self.actor.energy >= move_cost then
                 self.actor.energy = self.actor.energy - move_cost
                 actions[#actions + 1] = MoveAction(self.actor, direction)

@@ -27,12 +27,11 @@ function MoveAction:new(actor, direction)
     else
         error('invalid direction: ' .. self.direction)
     end
-end
 
-function MoveAction:prepare()
+    local x, y = self.actor:nextPosition()
     self.actor.direction = self.direction
-    self.actor.next_x = self.actor.x + self.dx
-    self.actor.next_y = self.actor.y + self.dy
+    self.actor.next_x = x + self.dx
+    self.actor.next_y = y + self.dy
 end
 
 function MoveAction:perform(duration, onFinish)

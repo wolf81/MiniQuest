@@ -22,14 +22,12 @@ function AttackAction:new(actor, target)
     self.target = target
     self.direction = direction
     self.cost = math.ceil(self.cost / actor.attack_speed)
+
+    self.target:inflict(1)   
 end
 
 function AttackAction:isCombatAction()
     return true
-end
-
-function AttackAction:prepare()
-    self.target:inflict(1)   
 end
 
 function AttackAction:perform(duration, onFinish)    

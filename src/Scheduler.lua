@@ -34,16 +34,12 @@ function Scheduler:update(dt)
 
 	self.busy = true
 
-	hero_action:prepare()
-
 	local actions = { hero_action }
 	local combat_actions = {}
 
 	for _, entity in ipairs(self.entities) do
 		local action = entity:getAction(hero_action.cost)
 		if action then
-			action:prepare()
-			
 			if action:isCombatAction() then
 				combat_actions[#combat_actions + 1] = action
 			else
