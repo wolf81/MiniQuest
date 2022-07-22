@@ -8,14 +8,14 @@
 
 Scheduler = Object:extend()
 
-local function performActions(actions, duration, on_finish)
-	if #actions == 0 then on_finish() end
+local function performActions(actions, duration, onFinish)
+	if #actions == 0 then onFinish() end
 
 	local n_actions = #actions
 	for _, action in ipairs(actions) do
 		action:perform(duration, function()
 			n_actions = n_actions - 1
-			if n_actions == 0 then on_finish() end
+			if n_actions == 0 then onFinish() end
 		end)
 	end
 end
