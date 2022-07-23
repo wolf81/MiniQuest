@@ -21,7 +21,7 @@ end
 function love.load(args)
     love.math.setRandomSeed(os.time())
 
-    local builder = amazing.builder.bsp(amazing.RandomTable({
+    local builder = amazing.builder.hive(amazing.RandomTable({
         ['spider']      = 60,
         ['bat']         = 60,
         ['skeleton']    = 25,

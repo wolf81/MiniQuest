@@ -15,7 +15,7 @@ function Actor:new(def, dungeon, x, y)
 
     self.dungeon = dungeon
 
-    self.direction = 'down'
+    self.direction = Direction.S
     self.hitpoints = def.hitpoints or 1
     self.strategy = ActorStrategy(self, dungeon)
     self.energy = 0
