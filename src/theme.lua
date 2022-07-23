@@ -1,5 +1,17 @@
 Theme = Object:extend()
 
+Theme.dungeon = function()
+    return Theme(66, 1, 7)    
+end
+
+Theme.cavern = function()
+    return Theme(82, 17, 23)    
+end
+
+Theme.swamp = function()
+    return Theme(82, 33, 39)
+end
+
 local function generateTilesTable(offset, count, decrement_spawn_chance)
     local decrement_spawn_chance = decrement_spawn_chance or false
 

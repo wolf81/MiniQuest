@@ -20,7 +20,7 @@ local function nextActor(self)
 end
 
 local function getTheme()
-    return Theme(66, 1, 7)
+    return shuffle({ Theme.cavern(), Theme.dungeon(), Theme.swamp() })[1]
 end
 
 function Dungeon:new(map, spawns)
