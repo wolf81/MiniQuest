@@ -6,11 +6,15 @@
     info+miniquest@wolftrail.net
 ]]
 
-amazing = require 'lib.amazing'
+local amazing = require 'lib.amazing'
 
 Dungeon = Object:extend()
 
 local WALL_SHADOW_TILE_ID = 176
+
+local function isNan(v)
+    return v ~= v
+end
 
 local function updateCamera(self)
     self.camera.x = CAMERA_X_OFFSET - self.hero.x * TILE_SIZE
@@ -76,6 +80,17 @@ function Dungeon:new(map, spawns)
     self.scheduler = Scheduler(self.actors)
 
     self.camera = { x = 0, y = 0 }
+
+    self:updateMovementGraph()
+end
+
+function Dungeon:updateMovementGraph()
+    local isBlocked = function(x, y)
+        return bit.band(self.map.get(x, y), amazing.Tile.WALL) == amazing.Tile.WALL
+    end
+
+    local x, y = self.hero:nextPosition()
+    self.movement = amazing.dijkstra.map(self.map, x, y, isBlocked)
 end
 
 function Dungeon:getActor(x, y)
@@ -94,17 +109,7 @@ function Dungeon:addEntity(entity)
 end
 
 function Dungeon:isBlocked(x, y)
-    local blocked = false
-
-    for _, layer in ipairs(self.layers) do
-        local tile = layer[x .. '.' .. y]
-        local solid = (tile and tile.solid) or false
-        if solid then
-            blocked = true
-        end
-    end
-
-    return blocked
+    return isNan(self.movement.get(x, y))
 end
 
 function Dungeon:update(dt)

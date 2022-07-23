@@ -45,7 +45,12 @@ function HeroStrategy:getAction()
     elseif target then
         return AttackAction(self.actor, target)
     elseif not self.dungeon:isBlocked(x, y) then
-        return MoveAction(self.actor, dir)
+        local move = MoveAction(self.actor, dir)
+        -- TODO: this is ugly, but I think we need to do this order to get the
+        -- next position of hero set properly, so other entities can move 
+        -- towards hero
+        self.dungeon:updateMovementGraph()
+        return move
     end
 
     return nil

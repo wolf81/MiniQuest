@@ -107,6 +107,7 @@ ACTOR_DEFS = {
     ['zombie'] = {
         ['hitpoints'] = 4,
         ['move_speed'] = 0.5,
+        ['attack_speed'] = 0.8,
         ['animations'] = {
             ['right'] = {
                 frames = { 165, 181 },

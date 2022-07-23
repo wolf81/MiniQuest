@@ -40,7 +40,11 @@ require 'src.StateMachine'
 require 'src.states.BaseState'
 
 -- game states
-require 'src.states.game.PlayState'
+require 'src.states.game.GamePlayState'
+
+-- entity states
+require 'src.states.entity.EntityIdleState'
+require 'src.states.entity.EntityEngageState'
 
 -- constants, utility functions & classes
 require 'src.Constants'
@@ -75,7 +79,7 @@ gSounds = {
 }
 
 gStateMachine = StateMachine {
-    ['play'] = function() return PlayState() end,
+    ['play'] = function() return GamePlayState() end,
 }
 
 local TINY_DUNGEON_FONT_GLYPS = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-+=:;,"<>.?/\\[]_|'
