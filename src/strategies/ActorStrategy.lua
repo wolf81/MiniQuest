@@ -13,31 +13,32 @@ local BASE_ENERGY_COST = 100
 -- calculate of this entity is standing next to a hero
 local function isAdjacent(actor, target)
     local actor_x, actor_y = actor:nextPosition()
-    local target_x, target_y = target:nextPosition()    
-    return (
-        math.abs(actor_x - target_x) + 
-        math.abs(actor_y - target_y)
-    ) == 1
-end
-
--- select a random direction
-local function getRandomDirection()
-    local dirs = { 
-        Direction.W, Direction.E, Direction.N, Direction.S, 
-        Direction.NW, Direction.NE, Direction.SE, Direction.SW 
-    }
-    return dirs[math.random(#dirs)]
+    local target_x, target_y = target:nextPosition()   
+    local dx, dy = math.abs(actor_x - target_x), math.abs(actor_y - target_y)
+    return dx <= 1 and dy <= 1
 end
 
 local function canMove(actor, dungeon)
-    local dir = getRandomDirection()
-    local heading = Direction.heading[dir]
-    local actor_x, actor_y = actor:nextPosition()
-    local actor_x, actor_y = actor_x + heading.x, actor_y + heading.y
-    local target = dungeon:getActor(actor_x, actor_y)
+    local dirs = shuffle({ 
+        Direction.W, Direction.E, Direction.N, Direction.S, 
+        Direction.NW, Direction.NE, Direction.SE, Direction.SW 
+    })
 
-    if not dungeon:isBlocked(actor_x, actor_y) and not target then
-        return dir
+    local cart_cost = math.ceil(BASE_ENERGY_COST / actor.move_speed)
+    local ordi_cost = cart_cost * math.sqrt(2)
+
+    for _, dir in ipairs(dirs) do
+        local heading = Direction.heading[dir]
+        local actor_x, actor_y = actor:nextPosition()
+        local actor_x, actor_y = actor_x + heading.x, actor_y + heading.y
+        local target = dungeon:getActor(actor_x, actor_y)
+        local cost = Direction.isOrdinal(dir) and ordi_cost or cart_cost
+
+        if not dungeon:isBlocked(actor_x, actor_y) and not target then
+            if actor.energy >= cost then
+                return dir, cost
+            end
+        end        
     end
 
     return nil
@@ -59,7 +60,7 @@ function ActorStrategy:getAction()
         -- make sure we have enough energy for any action
         if self.actor.energy < math.min(attack_cost, move_cost) then break end
 
-        local dir = canMove(self.actor, self.dungeon)
+        local dir, cost = canMove(self.actor, self.dungeon)
         local is_adjacent_to_hero = isAdjacent(self.actor, self.dungeon.hero)
 
         -- if we're standing next to the hero, attack hero
@@ -82,8 +83,8 @@ function ActorStrategy:getAction()
 
         -- if direction is not blocked a tile or actor, move in direction
         elseif dir then
-            if self.actor.energy >= move_cost then
-                self.actor.energy = self.actor.energy - move_cost
+            if self.actor.energy >= cost then
+                self.actor.energy = self.actor.energy - cost
                 actions[#actions + 1] = MoveAction(self.actor, dir)
             else
                 -- we were not standing next to the hero and we don't have any

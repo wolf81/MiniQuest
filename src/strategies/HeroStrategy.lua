@@ -14,13 +14,13 @@ function HeroStrategy:getAction()
 
     local dir = nil
 
-    if love.keyboard.isDown('left') or love.keyboard.isDown('kp4') then
+    if love.keyboard.isDown('a') or love.keyboard.isDown('kp4') then
         dir = Direction.W
-    elseif love.keyboard.isDown('right') or love.keyboard.isDown('kp6') then
+    elseif love.keyboard.isDown('d') or love.keyboard.isDown('kp6') then
         dir = Direction.E
-    elseif love.keyboard.isDown('up') or love.keyboard.isDown('kp8') then
+    elseif love.keyboard.isDown('w') or love.keyboard.isDown('kp8') then
         dir = Direction.N
-    elseif love.keyboard.isDown('down') or love.keyboard.isDown('kp2') then
+    elseif love.keyboard.isDown('x') or love.keyboard.isDown('kp2') then
         dir = Direction.S
     elseif love.keyboard.isDown('kp9') then
         dir = Direction.NE

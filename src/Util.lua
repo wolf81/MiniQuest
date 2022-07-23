@@ -6,6 +6,8 @@
     info+miniquest@wolftrail.net
 ]]
 
+local lrandom = love.math.random
+
 function GenerateQuads(atlas, tilewidth, tileheight)
     local sheetWidth = math.floor(atlas:getWidth() / tilewidth)
     local sheetHeight = math.floor(atlas:getHeight() / tileheight)
@@ -54,4 +56,13 @@ end
 -- reverse ipairs, based on code from the lume library
 function ripairs(t)
   return ripairs_iter, t, (#t + 1)
+end
+
+function shuffle(arr)    
+    for i = #arr, 2, -1 do
+        local j = lrandom(i)
+        arr[i], arr[j] = arr[j], arr[i]
+    end
+
+    return arr
 end
