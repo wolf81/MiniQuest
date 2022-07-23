@@ -19,6 +19,10 @@ local function nextActor(self)
     self.actorIdx = math.max(1, (self.actorIdx + 1) % (#self.actors + 1))
 end
 
+local function getTheme()
+    return Theme(66, 1, 7)
+end
+
 function Dungeon:new(map, spawns)
     self.map = map
 
@@ -28,59 +32,30 @@ function Dungeon:new(map, spawns)
     local shadow = {}
     local objects = {}
 
-    local wallTilesH = amazing.RandomTable({
-        [1] = 20, [2] = 15, [3] = 10, 
-        [4] = 5,  [5] = 2,  [6] = 1,
-    })
-
-    local wallTilesV = amazing.RandomTable({
-        [7]  = 20, [8]  = 15, [9] = 10,
-        [10] = 5,  [11] = 2, -- [12] = 2,
-    })
-
-    local floorTiles = amazing.RandomTable({
-        [98]  = 10, [99]  = 10, [100] = 10, 
-        [101] = 10, [102] = 10
-    })
+    local theme = getTheme()
 
     local map_w, map_h = map.size()
     for x, y, tile in map.iter() do
-        local tileDef = {
-            id = 0,
-            animations = {},
-            solid = false,
-        }
+        local tileDef = { id = 0 }
 
-        tileDef.id = floorTiles.roll()
+        tileDef.id = theme:getFloorTile()
 
         if bit.band(tile, amazing.Tile.WALL) == amazing.Tile.WALL then
             tileDef.solid = true
-            tileDef.id = wallTilesV.roll()
+            tileDef.id = theme:getWallTileV()
 
             if y > 0 and y < map_h then
                 local tile_below = map.get(x, y + 1)
                 local floor_door = bit.bor(amazing.Tile.FLOOR, amazing.Tile.DOOR)
                 if bit.band(tile_below, floor_door) ~= 0 then
-                    tileDef.id = wallTilesH.roll()
-                    shadow[x .. '.' .. y] = Tile({
-                        id = 176,
-                        animations = {},
-                        solid = false,
-                    }, x, y + 1)
+                    tileDef.id = theme:getWallTileH() 
+                    shadow[x .. '.' .. y] = Tile({ id = 176, }, x, y + 1)
                 end
             end
         elseif bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
-            objects[x .. '.' .. y] = Tile({
-                id = 14,
-                animations = {},
-                solid = false,
-            }, x, y)
+            objects[x .. '.' .. y] = Tile({ id = theme:getStairUp() }, x, y)
         elseif bit.band(tile, amazing.Tile.STAIR_DN) == amazing.Tile.STAIR_DN then
-            objects[x .. '.' .. y] = Tile({
-                id = 13,
-                animations = {},
-                solid = false,
-            }, x, y)
+            objects[x .. '.' .. y] = Tile({ id = theme:getStairDown() }, x, y)
         end
         
         tiles[x .. '.' .. y] = Tile(tileDef, x, y)

@@ -24,7 +24,7 @@ local function createAnimations(animationDefs)
 end
 
 function Entity:new(def, x, y)    
-    self.animations = createAnimations(def.animations)
+    self.animations = createAnimations(def.animations or {})
     self.currentAnimation = self.animations['down']
 
     self.x = x or 0

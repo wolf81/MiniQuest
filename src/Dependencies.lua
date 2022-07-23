@@ -49,6 +49,8 @@ require 'src.Animation'
 
 require 'src.Scheduler'
 
+require 'src.Theme'
+
 -- game world
 require 'src.world.Dungeon'
 -- Map = require 'dat.map'
