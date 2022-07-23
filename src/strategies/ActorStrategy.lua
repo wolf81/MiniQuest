@@ -22,7 +22,10 @@ end
 
 -- select a random direction
 local function getRandomDirection()
-    local dirs = { Direction.W, Direction.E, Direction.N, Direction.S }
+    local dirs = { 
+        Direction.W, Direction.E, Direction.N, Direction.S, 
+        Direction.NW, Direction.NE, Direction.SE, Direction.SW 
+    }
     return dirs[math.random(#dirs)]
 end
 

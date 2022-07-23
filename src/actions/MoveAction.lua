@@ -16,7 +16,7 @@ local directionString = {
     [Direction.S]  = 'down',
     [Direction.SE] = 'down',
     [Direction.E]  = 'right',
-    [Direction.NE] = 'right',    
+    [Direction.NE] = 'right',
 }
 
 function MoveAction:new(actor, direction)
@@ -26,6 +26,9 @@ function MoveAction:new(actor, direction)
     self.dy = 0
     self.direction = direction
     self.cost = math.ceil(self.cost / actor.move_speed) 
+    if Direction.isOrdinal(direction) then
+        self.cost = self.cost + math.sqrt(2)
+    end
 
     local heading = Direction.heading[direction]
     self.dx = heading.x

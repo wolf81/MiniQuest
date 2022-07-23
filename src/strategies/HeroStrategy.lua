@@ -22,6 +22,16 @@ function HeroStrategy:getAction()
         dir = Direction.N
     elseif love.keyboard.isDown('down') or love.keyboard.isDown('kp2') then
         dir = Direction.S
+    elseif love.keyboard.isDown('kp9') then
+        dir = Direction.NE
+    elseif love.keyboard.isDown('kp7') then        
+        dir = Direction.NW
+    elseif love.keyboard.isDown('kp1') then
+        dir = Direction.SW
+    elseif love.keyboard.isDown('kp3') then        
+        dir = Direction.SE
+    elseif love.keyboard.isDown('kp5') then
+        dir = Direction.NONE
     end
 
     if not dir then return nil end
@@ -30,7 +40,9 @@ function HeroStrategy:getAction()
     local x, y = self.actor.x + heading.x, self.actor.y + heading.y
 
     local target = self.dungeon:getActor(x, y)
-    if target then
+    if dir == Direction.NONE then
+        return IdleAction(self.actor)
+    elseif target then
         return AttackAction(self.actor, target)
     elseif not self.dungeon:isBlocked(x, y) then
         return MoveAction(self.actor, dir)
