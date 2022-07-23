@@ -38,22 +38,26 @@ function Theme:new(floor_offset, wall_h_offset, wall_v_offset)
     self.stair_down = wall_v_offset + 6
 end
 
-function Theme:getFloorTile()
-    return self.floor_tiles.roll()
+function Theme:getFloorTile(x, y)
+    return Tile({ id = self.floor_tiles.roll() }, x, y)
 end
 
-function Theme:getWallTileH()
-    return self.wall_tiles_h.roll()
+function Theme:getWallTileH(x, y)
+    return Tile({ id = self.wall_tiles_h.roll(), solid = true }, x, y)
 end
 
-function Theme:getWallTileV()
-    return self.wall_tiles_v.roll()
+function Theme:getWallTileV(x, y)
+    return Tile({ id = self.wall_tiles_v.roll(), solid = true }, x, y)
 end
 
-function Theme:getStairUp()
-    return self.stair_up
+function Theme:getStairUp(x, y)
+    return Tile({ id = self.stair_up }, x, y)
 end
 
-function Theme:getStairDown()
-    return self.stair_down
+function Theme:getStairDown(x, y)
+    return Tile({ id = self.stair_down }, x, y)
 end
+
+-- function Theme:getDoor(x, y)
+--     return Tile({ id = 161 }, x, y)
+-- end

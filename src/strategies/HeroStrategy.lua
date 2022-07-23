@@ -10,7 +10,7 @@ HeroStrategy = BaseStrategy:extend()
 
 -- the hero strategy just returns actions based on keyboard input
 function HeroStrategy:getAction()
-    if self.actor.action then return end
+    if self.actor.action then return self.actor.action end
 
     local dir = nil
 

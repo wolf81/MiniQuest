@@ -10,13 +10,11 @@ amazing = require 'lib.amazing'
 
 Dungeon = Object:extend()
 
+local WALL_SHADOW_TILE_ID = 176
+
 local function updateCamera(self)
     self.camera.x = CAMERA_X_OFFSET - self.hero.x * TILE_SIZE
     self.camera.y = CAMERA_Y_OFFSET - self.hero.y * TILE_SIZE
-end
-
-local function nextActor(self)
-    self.actorIdx = math.max(1, (self.actorIdx + 1) % (#self.actors + 1))
 end
 
 local function getTheme()
@@ -36,29 +34,27 @@ function Dungeon:new(map, spawns)
 
     local map_w, map_h = map.size()
     for x, y, tile in map.iter() do
-        local tileDef = { id = 0 }
-
-        tileDef.id = theme:getFloorTile()
+        local tile_obj = theme:getFloorTile(x, y)
 
         if bit.band(tile, amazing.Tile.WALL) == amazing.Tile.WALL then
-            tileDef.solid = true
-            tileDef.id = theme:getWallTileV()
+            tile_obj = theme:getWallTileV(x, y)
 
             if y > 0 and y < map_h then
                 local tile_below = map.get(x, y + 1)
                 local floor_door = bit.bor(amazing.Tile.FLOOR, amazing.Tile.DOOR)
                 if bit.band(tile_below, floor_door) ~= 0 then
-                    tileDef.id = theme:getWallTileH() 
-                    shadow[x .. '.' .. y] = Tile({ id = 176, }, x, y + 1)
+                    tile_obj = theme:getWallTileH(x, y) 
+                    shadow[x .. '.' .. y] = 
+                        Tile({ id = WALL_SHADOW_TILE_ID, }, x, y + 1)
                 end
             end
         elseif bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
-            objects[x .. '.' .. y] = Tile({ id = theme:getStairUp() }, x, y)
+            objects[x .. '.' .. y] = theme:getStairUp(x, y)
         elseif bit.band(tile, amazing.Tile.STAIR_DN) == amazing.Tile.STAIR_DN then
-            objects[x .. '.' .. y] = Tile({ id = theme:getStairDown() }, x, y)
+            objects[x .. '.' .. y] = theme:getStairDown(x, y)
         end
         
-        tiles[x .. '.' .. y] = Tile(tileDef, x, y)
+        tiles[x .. '.' .. y] = tile_obj 
 
         if bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
             self.hero = Actor(ACTOR_DEFS['hero'], self, x, y)
@@ -73,7 +69,6 @@ function Dungeon:new(map, spawns)
     for _, spawn in ipairs(spawns) do
         self.actors[#self.actors + 1] = Actor(ACTOR_DEFS[spawn.id], self, spawn.x, spawn.y)        
     end
-    self.actorIdx = 1
 
     self.effects = {}
     self.entitiesToAdd = {}
@@ -144,12 +139,6 @@ function Dungeon:update(dt)
         local actor = self.actors[i]
         if actor.remove then
             table.remove(self.actors, i)
-
-            -- make sure the active actor index doesnt go out of bounds after
-            -- an actor is removed
-            if self.actorIdx > #self.actors then
-                nextActor(self)
-            end
 
             if actor == self.hero then
                 self.finished = true
