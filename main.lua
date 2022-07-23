@@ -23,8 +23,9 @@ function love.load(args)
 
     local builder = amazing.builder.bsp(amazing.RandomTable({
         ['spider']      = 60,
-        ['bat']         = 40,
-        ['skeleton']    = 20,
+        ['bat']         = 60,
+        ['skeleton']    = 25,
+        ['zombie']      = 15,
         ['vampire']     = 5,
     }))
     local map, spawns = builder.build()

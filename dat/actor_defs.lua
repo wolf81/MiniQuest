@@ -104,6 +104,32 @@ ACTOR_DEFS = {
             },
         }
     },
+    ['zombie'] = {
+        ['hitpoints'] = 4,
+        ['move_speed'] = 0.5,
+        ['animations'] = {
+            ['right'] = {
+                frames = { 165, 181 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['down'] = {
+                frames = { 166, 182 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['up'] = {
+                frames = { 167, 183 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['left'] = {
+                frames = { 168, 184 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+        }        
+    },
     ['vampire'] = {
         ['move_speed'] = 1.8,
         ['attack_speed'] = 1.6,
