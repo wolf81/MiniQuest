@@ -1,23 +1,26 @@
 Theme = Object:extend()
 
-function Theme:new(floor_offset, wall_h_offset, wall_v_offset)
+local function generateTilesTable(offset, count, decrement_spawn_chance)
+    local decrement_spawn_chance = decrement_spawn_chance or false
+
     local tiles = {}
-    for i = 0, 4 do
-        tiles[i + floor_offset] = 25 - (i * 5)
-    end    
-    self.floor_tiles = amazing.RandomTable(tiles)
 
-    tiles = {}
-    for i = 0, 5 do
-        tiles[i + wall_h_offset] = 25 - (i * 4)
-    end
-    self.wall_tiles_h = amazing.RandomTable(tiles)
+    local chance = 25
+    for i = 0, count - 1 do
+        tiles[i + offset] = chance
 
-    tiles = {}
-    for i = 0, 5 do
-        tiles[i + wall_v_offset] = 25 - (i * 4)
+        if decrement_spawn_chance then
+            chance = math.max(math.ceil(chance / 2), 1)
+        end
     end
-    self.wall_tiles_v = amazing.RandomTable(tiles)
+
+    return amazing.RandomTable(tiles)
+end
+
+function Theme:new(floor_offset, wall_h_offset, wall_v_offset)
+    self.floor_tiles = generateTilesTable(floor_offset, 5)
+    self.wall_tiles_h = generateTilesTable(wall_h_offset, 6, true)
+    self.wall_tiles_v = generateTilesTable(wall_v_offset, 6, true)
 
     self.stair_up = wall_v_offset + 7
     self.stair_down = wall_v_offset + 6
