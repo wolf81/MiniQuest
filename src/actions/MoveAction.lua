@@ -8,6 +8,17 @@
 
 MoveAction = BaseAction:extend()
 
+local directionString = {
+    [Direction.N]  = 'up',
+    [Direction.NW] = 'up',
+    [Direction.W]  = 'left',
+    [Direction.SW] = 'left',
+    [Direction.S]  = 'down',
+    [Direction.SE] = 'down',
+    [Direction.E]  = 'right',
+    [Direction.NE] = 'right',    
+}
+
 function MoveAction:new(actor, direction)
     BaseAction.new(self, actor)
     
@@ -16,20 +27,12 @@ function MoveAction:new(actor, direction)
     self.direction = direction
     self.cost = math.ceil(self.cost / actor.move_speed) 
 
-    if self.direction == 'left' then
-        self.dx = -1
-    elseif self.direction == 'right' then
-        self.dx = 1
-    elseif self.direction == 'up' then
-        self.dy = -1
-    elseif self.direction == 'down' then
-        self.dy = 1
-    else
-        error('invalid direction: ' .. self.direction)
-    end
+    local heading = Direction.heading[direction]
+    self.dx = heading.x
+    self.dy = heading.y
 
     local x, y = self.actor:nextPosition()
-    self.actor.direction = self.direction
+    self.actor.direction = directionString[self.direction]
     self.actor.next_x = x + self.dx
     self.actor.next_y = y + self.dy
 end

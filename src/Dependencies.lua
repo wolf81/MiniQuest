@@ -14,6 +14,9 @@ Timer = require 'lib.knife.knife.timer'
 require 'dat.actor_defs'
 require 'dat.effect_defs'
 
+-- utility
+require 'src.Direction'
+
 -- entities
 require 'src.entities.Entity'
 require 'src.entities.Actor'

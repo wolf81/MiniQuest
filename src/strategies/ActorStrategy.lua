@@ -22,19 +22,19 @@ end
 
 -- select a random direction
 local function getRandomDirection()
-    local directions = { 'left', 'right', 'up', 'down' }
-    return directions[math.random(#directions)]
+    local dirs = { Direction.W, Direction.E, Direction.N, Direction.S }
+    return dirs[math.random(#dirs)]
 end
 
 local function canMove(actor, dungeon)
-    local direction = getRandomDirection()
-    local dxy = directionToVector(direction)
+    local dir = getRandomDirection()
+    local heading = Direction.heading[dir]
     local actor_x, actor_y = actor:nextPosition()
-    local actor_x, actor_y = actor_x + dxy.x, actor_y + dxy.y
+    local actor_x, actor_y = actor_x + heading.x, actor_y + heading.y
     local target = dungeon:getActor(actor_x, actor_y)
 
     if not dungeon:isBlocked(actor_x, actor_y) and not target then
-        return direction
+        return dir
     end
 
     return nil
@@ -56,7 +56,7 @@ function ActorStrategy:getAction()
         -- make sure we have enough energy for any action
         if self.actor.energy < math.min(attack_cost, move_cost) then break end
 
-        local direction = canMove(self.actor, self.dungeon)
+        local dir = canMove(self.actor, self.dungeon)
         local is_adjacent_to_hero = isAdjacent(self.actor, self.dungeon.hero)
 
         -- if we're standing next to the hero, attack hero
@@ -78,10 +78,10 @@ function ActorStrategy:getAction()
             end
 
         -- if direction is not blocked a tile or actor, move in direction
-        elseif direction then
+        elseif dir then
             if self.actor.energy >= move_cost then
                 self.actor.energy = self.actor.energy - move_cost
-                actions[#actions + 1] = MoveAction(self.actor, direction)
+                actions[#actions + 1] = MoveAction(self.actor, dir)
             else
                 -- we were not standing next to the hero and we don't have any
                 -- energy left to move, so bail

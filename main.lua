@@ -66,10 +66,10 @@ function love.draw()
     push:finish()
 end
 
-function love.keypressed(key)
+function love.keypressed(key, code)
     love.keyboard.keysPressed[key] = true
 end
 
-function love.keyboard.wasPressed(key)
+function love.keyboard.wasPressed(key, code)
     return love.keyboard.keysPressed[key]
 end
