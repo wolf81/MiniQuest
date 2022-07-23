@@ -23,3 +23,5 @@ WALL_TILES_H = { 7, 8, 9, 10, 11, 12 }
 -- the camera offsets are used to center the camera on a target
 CAMERA_X_OFFSET = (VIRTUAL_WIDTH - TILE_SIZE) / 2
 CAMERA_Y_OFFSET = (VIRTUAL_HEIGHT - TILE_SIZE) / 2
+
+ORDINAL_MOVE_FACTOR = math.sqrt(2)

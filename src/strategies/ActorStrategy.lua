@@ -25,7 +25,7 @@ local function canMove(actor, dungeon)
     })
 
     local cart_cost = math.ceil(BASE_ENERGY_COST / actor.move_speed)
-    local ordi_cost = cart_cost * math.sqrt(2)
+    local ordi_cost = cart_cost * ORDINAL_MOVE_FACTOR
 
     for _, dir in ipairs(dirs) do
         local heading = Direction.heading[dir]
