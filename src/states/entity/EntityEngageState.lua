@@ -8,8 +8,6 @@
 
 local mabs, mceil = math.abs, math.ceil
 
-local isNan = function(v) return v ~= v end
-
 EntityEngageState = BaseState:extend()
 
 -- calculate of this entity is standing next to a hero
@@ -18,6 +16,28 @@ local function isAdjacent(actor, target)
     local target_x, target_y = target:nextPosition()   
     local dx, dy = mabs(actor_x - target_x), mabs(actor_y - target_y)
     return dx <= 1 and dy <= 1
+end
+
+local function getAdjacentCells(cart_move_cost, ord_move_cost)
+    if ord_move_cost then 
+        return {
+            { dir = Direction.N,  cost = cart_move_cost },
+            { dir = Direction.W,  cost = cart_move_cost },
+            { dir = Direction.E,  cost = cart_move_cost },
+            { dir = Direction.S,  cost = cart_move_cost },
+            { dir = Direction.NW, cost = ord_move_cost  },
+            { dir = Direction.SW, cost = ord_move_cost  },
+            { dir = Direction.NE, cost = ord_move_cost  },
+            { dir = Direction.SE, cost = ord_move_cost  },
+        }
+    end
+
+    return {
+        { dir = Direction.N, cost = cart_move_cost },
+        { dir = Direction.W, cost = cart_move_cost },
+        { dir = Direction.E, cost = cart_move_cost },
+        { dir = Direction.S, cost = cart_move_cost },
+    }
 end
 
 function EntityEngageState:enter()
@@ -38,67 +58,65 @@ function EntityEngageState:update()
 
     -- if hero out of range, transition to idle state
     if (hero.x < self.entity.x - sight or 
-        hero.x > self.entity.x + sight + 1 or
+        hero.x > self.entity.x + sight or
         hero.y < self.entity.y - sight or
-        hero.y > self.entity.y + sight + 1) then
+        hero.y > self.entity.y + sight) then
         self.entity.strategy:idle()
         return
     end
 end
 
-function EntityEngageState:draw()
-    -- body
-end
-
 function EntityEngageState:getAction()
-    -- TODO: support the composite action
-
+    local actions = {}
     local attack_cost = mceil(BASE_ENERGY_COST / self.entity.attack_speed)
     local move_cost = mceil(BASE_ENERGY_COST / self.entity.move_speed)
 
-    if isAdjacent(self.entity, self.dungeon.hero) and self.entity.energy >= attack_cost then
-        self.entity.energy = self.entity.energy - attack_cost
-        return AttackAction(self.entity, self.dungeon.hero)
-    elseif self.entity.energy >= move_cost then        
-        local adjacent_cells = {
-            { dir = Direction.N, cost = move_cost },
-            { dir = Direction.W, cost = move_cost },
-            { dir = Direction.E, cost = move_cost },
-            { dir = Direction.S, cost = move_cost },
-        }
-
-        local ord_move_cost = math.ceil(move_cost * ORDINAL_MOVE_FACTOR)
-        if self.entity.energy >= ord_move_cost then
-            table.insert(adjacent_cells, { dir = Direction.NW, cost = ord_move_cost })
-            table.insert(adjacent_cells, { dir = Direction.NE, cost = ord_move_cost })
-            table.insert(adjacent_cells, { dir = Direction.SW, cost = ord_move_cost })
-            table.insert(adjacent_cells, { dir = Direction.SE, cost = ord_move_cost })            
-        end
-
-        local x, y = self.entity.x, self.entity.y
-        for idx, cell in ripairs(adjacent_cells) do
-            local heading = Direction.heading[cell.dir]
-            local x1, y1 = x + heading.x, y + heading.y
-            local v = self.dungeon.movement.get(x1, y1)
-            local target = self.dungeon:getActor(x1, y1)
-
-            if isNan(v) or target ~= nil then 
-                table.remove(adjacent_cells, idx)
-            else 
-                cell.v = v
+    while true do
+        if isAdjacent(self.entity, self.dungeon.hero) then
+            if self.entity.energy >= attack_cost then
+                self.entity.energy = self.entity.energy - attack_cost
+                actions[#actions + 1] = AttackAction(self.entity, self.dungeon.hero)
+            else
+                break
             end
-        end
+        elseif self.entity.energy >= move_cost then        
+            local ord_move_cost = math.ceil(move_cost * ORDINAL_MOVE_FACTOR)
+            local adjacent_cells = getAdjacentCells(move_cost, 
+                self.entity.energy >= ord_move_cost and ord_move_cost or nil)
 
-        table.sort(adjacent_cells, function(a, b) return a.v < b.v end)
+            local x, y = self.entity:nextPosition()
+            for idx, cell in ripairs(adjacent_cells) do
+                local heading = Direction.heading[cell.dir]
+                local x1, y1 = x + heading.x, y + heading.y
+                local v = self.dungeon.movement.get(x1, y1)
+                local target = self.dungeon:getActor(x1, y1)
 
-        if #adjacent_cells > 0 then
-            local cell = adjacent_cells[1]
-            if not isNan(cell.v) then
-                self.entity.energy = self.entity.energy - cell.cost
-                return MoveAction(self.entity, adjacent_cells[1].dir)
+                if isNan(v) or target ~= nil then 
+                    table.remove(adjacent_cells, idx)
+                else 
+                    cell.v = v
+                end
             end
+
+            table.sort(adjacent_cells, function(a, b) return a.v < b.v end)
+
+            if #adjacent_cells > 0 then
+                local cell = adjacent_cells[1]
+                if not isNan(cell.v) then
+                    self.entity.energy = self.entity.energy - cell.cost
+                    actions[#actions + 1] = MoveAction(self.entity, cell.dir)
+                end
+            end
+        else
+            break
         end
     end
 
-    return nil
+    if #actions == 0 then
+        return nil
+    elseif #actions == 1 then
+        return actions[1]
+    else
+        return CompositeAction(self.entity, actions)
+    end
 end

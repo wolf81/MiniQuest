@@ -58,6 +58,7 @@ function ripairs(t)
   return ripairs_iter, t, (#t + 1)
 end
 
+-- shuffle an array
 function shuffle(arr)    
     for i = #arr, 2, -1 do
         local j = lrandom(i)
@@ -65,4 +66,9 @@ function shuffle(arr)
     end
 
     return arr
+end
+
+-- check if a value is not a number
+function isNan(x)
+    return x ~= x
 end

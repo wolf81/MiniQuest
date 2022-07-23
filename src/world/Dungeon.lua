@@ -12,10 +12,6 @@ Dungeon = Object:extend()
 
 local WALL_SHADOW_TILE_ID = 176
 
-local function isNan(v)
-    return v ~= v
-end
-
 local function updateCamera(self)
     self.camera.x = CAMERA_X_OFFSET - self.hero.x * TILE_SIZE
     self.camera.y = CAMERA_Y_OFFSET - self.hero.y * TILE_SIZE

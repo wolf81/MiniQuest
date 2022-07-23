@@ -24,23 +24,27 @@ function EntityIdleState:update()
     local sight = 5
 
     if (hero.x > self.entity.x - sight and 
-        hero.x < self.entity.x + sight + 1 and
+        hero.x < self.entity.x + sight and
         hero.y > self.entity.y - sight and
-        hero.y < self.entity.y + sight + 1) then
+        hero.y < self.entity.y + sight) then
         self.entity.strategy:engage()
     end
 end
 
-function EntityIdleState:draw()
-    -- body
-end
-
 function EntityIdleState:getAction()
     local idle_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
-    if self.entity.energy >= idle_cost then
+    local actions = {}
+
+    while self.entity.energy >= idle_cost do
         self.entity.energy = self.entity.energy - idle_cost
-        return IdleAction(self.entity)
+        actions[#actions + 1] = IdleAction(self.entity)
     end
 
-    return nil
+    if #actions == 0 then 
+        return nil
+    elseif #actions == 1 then 
+        return actions[1]
+    else 
+        return CompositeAction(self.entity, actions) 
+    end
 end
