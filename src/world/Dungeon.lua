@@ -28,6 +28,21 @@ function Dungeon:new(map, spawns)
     local shadow = {}
     local objects = {}
 
+    local wallTilesH = amazing.RandomTable({
+        [1] = 20, [2] = 15, [3] = 10, 
+        [4] = 5,  [5] = 2,  [6] = 1,
+    })
+
+    local wallTilesV = amazing.RandomTable({
+        [7]  = 20, [8]  = 15, [9] = 10,
+        [10] = 5,  [11] = 2, -- [12] = 2,
+    })
+
+    local floorTiles = amazing.RandomTable({
+        [98]  = 10, [99]  = 10, [100] = 10, 
+        [101] = 10, [102] = 10
+    })
+
     local map_w, map_h = map.size()
     for x, y, tile in map.iter() do
         local tileDef = {
@@ -36,17 +51,17 @@ function Dungeon:new(map, spawns)
             solid = false,
         }
 
-        tileDef.id = love.math.random(98, 102)
+        tileDef.id = floorTiles.roll()
 
         if bit.band(tile, amazing.Tile.WALL) == amazing.Tile.WALL then
             tileDef.solid = true
-            tileDef.id = love.math.random(7, 11)
+            tileDef.id = wallTilesV.roll()
 
             if y > 0 and y < map_h then
                 local tile_below = map.get(x, y + 1)
                 local floor_door = bit.bor(amazing.Tile.FLOOR, amazing.Tile.DOOR)
                 if bit.band(tile_below, floor_door) ~= 0 then
-                    tileDef.id = love.math.random(1, 4)
+                    tileDef.id = wallTilesH.roll()
                     shadow[x .. '.' .. y] = Tile({
                         id = 176,
                         animations = {},
