@@ -48,7 +48,7 @@ function EntityFleeState:update()
         hero.x > self.entity.x + sight or
         hero.y < self.entity.y - sight or
         hero.y > self.entity.y + sight) then
-        self.entity.strategy:idle()
+        return self.entity.strategy:idle()
     end
 end
 

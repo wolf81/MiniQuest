@@ -54,8 +54,7 @@ function EntityCombatState:update()
     local sight = 5
 
     if self.entity.morale == 1 then
-        self.entity.strategy:flee()
-        return        
+        return self.entity.strategy:flee()
     end
 
     -- if hero out of range, transition to idle state
@@ -63,8 +62,7 @@ function EntityCombatState:update()
         hero.x > self.entity.x + sight or
         hero.y < self.entity.y - sight or
         hero.y > self.entity.y + sight) then
-        self.entity.strategy:idle()
-        return
+        return self.entity.strategy:idle()
     end
 end
 

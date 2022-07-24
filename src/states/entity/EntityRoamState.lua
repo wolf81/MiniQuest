@@ -12,12 +12,12 @@ EntityRoamState = BaseState:extend()
 
 function EntityRoamState:enter()
     print('enter roam state')
+    self.turns = love.math.random(5, 10)
 end
 
 function EntityRoamState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
-    self.turns = love.math.random(5, 10)
 end
 
 function EntityRoamState:update()
@@ -34,7 +34,7 @@ function EntityRoamState:update()
 
     self.turns = self.turns - 1
     if self.turns == 0 then
-        self.entity.strategy:sleep()
+        return self.entity.strategy:sleep()
     end
 end
 
