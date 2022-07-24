@@ -33,6 +33,7 @@ function AttackAction:new(actor, target)
 
     self.target = target
     self.direction = direction
+    self.actor.direction = self.direction
     self.cost = math.ceil(self.cost / actor.attack_speed)
 
     self.target:inflict(1)   
