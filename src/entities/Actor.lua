@@ -10,6 +10,13 @@ local mfloor = math.floor
 
 Actor = Entity:extend()
 
+local function parseFlags(self, flags)
+    local flags = flags or {}
+    for _, v in ipairs(flags) do
+        if v == 'undead' then self.undead = true end
+    end
+end
+
 function Actor:new(def, dungeon, x, y)
     Entity.new(self, def, x, y)
 
@@ -17,18 +24,17 @@ function Actor:new(def, dungeon, x, y)
 
     self.direction = Direction.S
     self.hitpoints = def.hitpoints or 1
-    self.strategy = ActorStrategy(self, dungeon)
     self.energy = 0
 
     self.move_speed = def.move_speed or 1.0
     self.attack_speed = def.attack_speed or 1.0
     self.morale = def.morale or 10
-    self.undead = def.undead or false
-
     self.next_x = x
     self.next_y = y
 
-    self.action = nil
+    parseFlags(self, def.flags)
+
+    self.strategy = ActorStrategy(self, dungeon)
 end
 
 function Actor:nextPosition()
