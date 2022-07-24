@@ -1,3 +1,11 @@
+--[[
+    GD50
+    MiniQuest
+
+    Author: Wolfgang Schreurs
+    info+miniquest@wolftrail.net
+]]
+
 CompositeAction = BaseAction:extend()
 
 local function performActions(actions, duration, onFinish)

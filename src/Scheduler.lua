@@ -1,4 +1,12 @@
 --[[
+    GD50
+    MiniQuest
+
+    Author: Wolfgang Schreurs
+    info+miniquest@wolftrail.net
+]]
+
+--[[
 	The Scheduler coordinates actions for all entities. The Scheduler will 
 	always expect the Hero to move first. After the hero has selected an action,
 	the Scheduler retrieves the energy cost for the action. Each other entity
