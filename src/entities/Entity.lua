@@ -6,6 +6,8 @@
     info+miniquest@wolftrail.net
 ]]
 
+local mfloor = math.floor
+
 Entity = Object:extend()
 
 local function createAnimations(animationDefs)
@@ -47,8 +49,8 @@ function Entity:draw()
     love.graphics.draw(
         gTextures[anim.texture], 
         gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.x * TILE_SIZE), 
-        math.floor(self.y * TILE_SIZE)
+        mfloor(self.x * TILE_SIZE), 
+        mfloor(self.y * TILE_SIZE)
     )
 end
 

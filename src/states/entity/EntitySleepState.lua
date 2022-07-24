@@ -41,7 +41,7 @@ function EntitySleepState:getAction()
 
     while self.entity.energy >= idle_cost do
         self.entity.energy = self.entity.energy - idle_cost
-        actions[#actions + 1] = IdleAction(self.entity)
+        actions[#actions + 1] = IdleAction(self.entity, true)
     end
 
     if #actions == 0 then 

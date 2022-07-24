@@ -50,6 +50,11 @@ ACTOR_DEFS = {
                 interval = 0.5,
                 texture = 'monsters',
             },
+            ['sleep'] = {
+                frames = { 258 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
         }        
     },
     ['bat'] = {
@@ -74,6 +79,11 @@ ACTOR_DEFS = {
             },
             ['left'] = {
                 frames = { 236, 252 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['sleep'] = {
+                frames = { 234 },
                 interval = 0.5,
                 texture = 'monsters',
             },

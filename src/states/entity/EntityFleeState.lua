@@ -53,13 +53,15 @@ function EntityFleeState:update()
 end
 
 function EntityFleeState:getAction()
-    local move_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
     local actions = {}
 
-    while self.entity.energy >= move_cost do
-        self.entity.energy = self.entity.energy - move_cost
-
+    while true do
+        local move_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
         local ord_move_cost = math.ceil(move_cost * ORDINAL_MOVE_FACTOR)
+
+        if self.entity.energy < move_cost then break end
+
+        self.entity.energy = self.entity.energy - move_cost
         local adjacent_cells = getAdjacentCells(move_cost, 
             self.entity.energy >= ord_move_cost and ord_move_cost or nil)
 
@@ -85,6 +87,8 @@ function EntityFleeState:getAction()
                 self.entity.energy = self.entity.energy - cell.cost
                 actions[#actions + 1] = MoveAction(self.entity, cell.dir)
             end
+        else
+            break
         end        
     end
 
