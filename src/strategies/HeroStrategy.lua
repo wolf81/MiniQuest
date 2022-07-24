@@ -14,23 +14,23 @@ function HeroStrategy:getAction()
 
     local dir = nil
 
-    if love.keyboard.isDown('kp4') then
+    if love.keyboard.isDown('kp4') or love.keyboard.isDown('h') then
         dir = Direction.W
-    elseif love.keyboard.isDown('kp6') then
+    elseif love.keyboard.isDown('kp6') or love.keyboard.isDown('l') then
         dir = Direction.E
-    elseif love.keyboard.isDown('kp8') then
+    elseif love.keyboard.isDown('kp8') or love.keyboard.isDown('k') then
         dir = Direction.N
-    elseif love.keyboard.isDown('kp2') then
+    elseif love.keyboard.isDown('kp2') or love.keyboard.isDown('j') then
         dir = Direction.S
-    elseif love.keyboard.isDown('kp9') then
+    elseif love.keyboard.isDown('kp9') or love.keyboard.isDown('u') then
         dir = Direction.NE
-    elseif love.keyboard.isDown('kp7') then        
+    elseif love.keyboard.isDown('kp7') or love.keyboard.isDown('y') then        
         dir = Direction.NW
-    elseif love.keyboard.isDown('kp1') then
+    elseif love.keyboard.isDown('kp1') or love.keyboard.isDown('b') then
         dir = Direction.SW
-    elseif love.keyboard.isDown('kp3') then        
+    elseif love.keyboard.isDown('kp3') or love.keyboard.isDown('n') then        
         dir = Direction.SE
-    elseif love.keyboard.isDown('kp5') then
+    elseif love.keyboard.isDown('kp5') or love.keyboard.isDown('.') then
         dir = Direction.NONE
     end
 
