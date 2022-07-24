@@ -18,23 +18,24 @@ function EntityIdleState:new(entity, dungeon)
 end
 
 function EntityIdleState:update()
-    local hero = self.dungeon.hero
+    local hero_x, hero_y = self.dungeon.hero:nextPosition()
+    local sight = self.entity.sight
 
-    local sight = 5
-
-    if (hero.x > self.entity.x - sight and 
-        hero.x < self.entity.x + sight and
-        hero.y > self.entity.y - sight and
-        hero.y < self.entity.y + sight) then
+    if (hero_x > self.entity.x - sight and 
+        hero_x < self.entity.x + sight and
+        hero_y > self.entity.y - sight and
+        hero_y < self.entity.y + sight) then
         return self.entity.strategy:combat()
     end
 end
 
 function EntityIdleState:getAction()
-    local idle_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
     local actions = {}
 
-    while self.entity.energy >= idle_cost do
+    while true do
+        local idle_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
+        if self.entity.energy < idle_cost then break end
+
         self.entity.energy = self.entity.energy - idle_cost
         actions[#actions + 1] = IdleAction(self.entity)
     end

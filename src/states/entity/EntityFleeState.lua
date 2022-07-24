@@ -40,14 +40,13 @@ function EntityFleeState:new(entity, dungeon)
 end
 
 function EntityFleeState:update()
-    local hero = self.dungeon.hero
+    local hero_x, hero_y = self.dungeon.hero:nextPosition()
+    local sight = self.entity.sight * 2
 
-    local sight = 5
-
-    if (hero.x < self.entity.x - sight or 
-        hero.x > self.entity.x + sight or
-        hero.y < self.entity.y - sight or
-        hero.y > self.entity.y + sight) then
+    if (hero_x < self.entity.x - sight or 
+        hero_x > self.entity.x + sight or
+        hero_y < self.entity.y - sight or
+        hero_y > self.entity.y + sight) then
         return self.entity.strategy:idle()
     end
 end
@@ -83,10 +82,8 @@ function EntityFleeState:getAction()
 
         if #adjacent_cells > 0 then
             local cell = adjacent_cells[1]
-            if not isNan(cell.v) then
-                self.entity.energy = self.entity.energy - cell.cost
-                actions[#actions + 1] = MoveAction(self.entity, cell.dir)
-            end
+            self.entity.energy = self.entity.energy - cell.cost
+            actions[#actions + 1] = MoveAction(self.entity, cell.dir)
         else
             break
         end        

@@ -50,18 +50,18 @@ function EntityCombatState:new(entity, dungeon)
 end
 
 function EntityCombatState:update()
-    local hero = self.dungeon.hero
-    local sight = 5
+    local hero_x, hero_y = self.dungeon.hero:nextPosition()
+    local sight = self.entity.sight
 
     if self.entity.morale == 1 then
         return self.entity.strategy:flee()
     end
 
     -- if hero out of range, transition to idle state
-    if (hero.x < self.entity.x - sight or 
-        hero.x > self.entity.x + sight or
-        hero.y < self.entity.y - sight or
-        hero.y > self.entity.y + sight) then
+    if (hero_x < self.entity.x - sight or 
+        hero_x > self.entity.x + sight or
+        hero_y < self.entity.y - sight or
+        hero_y > self.entity.y + sight) then
         return self.entity.strategy:idle()
     end
 end

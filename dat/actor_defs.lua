@@ -28,6 +28,7 @@ ACTOR_DEFS = {
     },
     ['spider'] = {
         ['hitpoints'] = 1,
+        ['sight'] = 3,
         ['move_speed'] = 0.8,
         ['animations'] = {
             ['right'] = {
@@ -51,15 +52,15 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
             ['sleep'] = {
-                frames = { 258 },
-                interval = 0.5,
+                frames = { 258, 274 },
+                interval = 1.5,
                 texture = 'monsters',
             },
         }        
     },
     ['bat'] = {
-        ['morale'] = 2,
         ['hitpoints'] = 3,
+        ['morale'] = 2,
         ['move_speed'] = 1.6,
         ['animations'] = {
             ['right'] = {
@@ -83,8 +84,8 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
             ['sleep'] = {
-                frames = { 234 },
-                interval = 0.5,
+                frames = { 234, 250 },
+                interval = 1.5,
                 texture = 'monsters',
             },
         }        
@@ -118,6 +119,7 @@ ACTOR_DEFS = {
     },
     ['skel_mage'] = {
         ['hitpoints'] = 2,
+        ['sight'] = 6,
         ['move_speed'] = 1.2,
         ['flags'] = { 'undead' },
         ['animations'] = {
@@ -173,6 +175,7 @@ ACTOR_DEFS = {
     },
     ['vampire'] = {
         ['hitpoints'] = 6,
+        ['sight'] = 6,
         ['move_speed'] = 1.8,
         ['attack_speed'] = 1.6,
         ['flags'] = { 'undead' },

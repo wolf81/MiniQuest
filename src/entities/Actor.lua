@@ -29,6 +29,7 @@ function Actor:new(def, dungeon, x, y)
     self.move_speed = def.move_speed or 1.0
     self.attack_speed = def.attack_speed or 1.0
     self.morale = def.morale or 10
+    self.sight = def.sight or 5
     self.next_x = x
     self.next_y = y
 

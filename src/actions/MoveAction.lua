@@ -29,6 +29,7 @@ function MoveAction:new(actor, direction)
     self.cost = math.ceil(self.cost / actor.move_speed) 
     if Direction.isOrdinal(direction) then
         self.cost = math.ceil(self.cost * ORDINAL_MOVE_FACTOR)
+        print('c', self.cost)
     end
 
     local heading = Direction.heading[direction]
