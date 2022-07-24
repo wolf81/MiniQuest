@@ -58,6 +58,10 @@ function ripairs(t)
   return ripairs_iter, t, (#t + 1)
 end
 
+function oneIn(count)
+    return lrandom(count) == 1
+end
+
 -- shuffle an array
 function shuffle(arr)    
     for i = #arr, 2, -1 do

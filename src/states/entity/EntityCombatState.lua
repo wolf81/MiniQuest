@@ -10,7 +10,7 @@ local mabs, mceil = math.abs, math.ceil
 
 EntityCombatState = BaseState:extend()
 
--- calculate of this entity is standing next to a hero
+-- calculate if this entity is standing next to a hero
 local function isAdjacent(actor, target)
     local actor_x, actor_y = actor:nextPosition()
     local target_x, target_y = target:nextPosition()   
@@ -47,12 +47,9 @@ end
 function EntityCombatState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
-    self.action = nil
 end
 
 function EntityCombatState:update()
-    self.action = nil
-
     local hero = self.dungeon.hero
     local sight = 5
 
@@ -73,10 +70,11 @@ end
 
 function EntityCombatState:getAction()
     local actions = {}
-    local attack_cost = mceil(BASE_ENERGY_COST / self.entity.attack_speed)
-    local move_cost = mceil(BASE_ENERGY_COST / self.entity.move_speed)
 
     while true do
+        local attack_cost = mceil(BASE_ENERGY_COST / self.entity.attack_speed)
+        local move_cost = mceil(BASE_ENERGY_COST / self.entity.move_speed)
+
         if isAdjacent(self.entity, self.dungeon.hero) then
             if self.entity.energy >= attack_cost then
                 self.entity.energy = self.entity.energy - attack_cost

@@ -37,7 +37,6 @@ end
 function EntityFleeState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
-    self.action = nil
 end
 
 function EntityFleeState:update()

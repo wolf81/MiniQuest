@@ -6,31 +6,36 @@
     info+miniquest@wolftrail.net
 ]]
 
-EntityIdleState = BaseState:extend()
+EntitySleepState = BaseState:extend()
 
-function EntityIdleState:enter()
-    print('enter idle state')
+function EntitySleepState:enter()
+    print('enter sleep state')
 end
 
-function EntityIdleState:new(entity, dungeon)
+function EntitySleepState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
+    self.turns = love.math.random(5, 10)
 end
 
-function EntityIdleState:update()
+function EntitySleepState:update()
     local hero = self.dungeon.hero
 
-    local sight = 5
-
+    local sight = 1
     if (hero.x > self.entity.x - sight and 
         hero.x < self.entity.x + sight and
         hero.y > self.entity.y - sight and
         hero.y < self.entity.y + sight) then
         return self.entity.strategy:combat()
     end
+
+    self.turns = self.turns - 1
+    if self.turns == 0 then
+        self.entity.strategy:roam()
+    end
 end
 
-function EntityIdleState:getAction()
+function EntitySleepState:getAction()
     local idle_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
     local actions = {}
 

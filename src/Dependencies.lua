@@ -46,6 +46,8 @@ require 'src.states.game.GamePlayState'
 require 'src.states.entity.EntityIdleState'
 require 'src.states.entity.EntityCombatState'
 require 'src.states.entity.EntityFleeState'
+require 'src.states.entity.EntityRoamState'
+require 'src.states.entity.EntitySleepState'
 
 -- constants, utility functions & classes
 require 'src.Constants'

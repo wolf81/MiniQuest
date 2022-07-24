@@ -16,12 +16,23 @@ function BaseStrategy:new(actor, dungeon)
         ['idle'] = function() return EntityIdleState(self.actor, self.dungeon) end,
         ['combat'] = function() return EntityCombatState(self.actor, self.dungeon) end,
         ['flee'] = function() return EntityFleeState(self.actor, self.dungeon) end,
+        ['roam'] = function() return EntityRoamState(self.actor, self.dungeon) end,
+        ['sleep'] = function() return EntitySleepState(self.actor, self.dungeon) end,
     }
-    self.stateMachine:change('idle', {})
+
+    if self.actor.undead then
+        self:idle()
+    else
+        self:sleep()
+    end
 end
 
 function BaseStrategy:update(dt)
     -- body
+end
+
+function BaseStrategy:sleep()
+    self.stateMachine:change('sleep')
 end
 
 function BaseStrategy:idle()
@@ -34,6 +45,10 @@ end
 
 function BaseStrategy:flee()
     self.stateMachine:change('flee')
+end
+
+function BaseStrategy:roam()
+    self.stateMachine:change('roam')
 end
 
 function BaseStrategy:getAction()
