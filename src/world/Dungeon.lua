@@ -21,7 +21,7 @@ local function getTheme()
     return shuffle({ Theme.cavern(), Theme.dungeon(), Theme.swamp() })[1]
 end
 
-function Dungeon:new(map, spawns)
+function Dungeon:new(map, start, spawns)
     self.map = map
 
     self.finished = false
@@ -55,11 +55,11 @@ function Dungeon:new(map, spawns)
         end
         
         tiles[x .. '.' .. y] = tile_obj 
+    end
 
-        if bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
-            self.hero = Actor(ACTOR_DEFS['hero'], self, x, y)
-            self.hero.strategy = HeroStrategy(self.hero, self)
-        end
+    if start ~= nil then
+        self.hero = Actor(ACTOR_DEFS['hero'], self, start.x, start.y)
+        self.hero.strategy = HeroStrategy(self.hero, self)
     end
 
     self.layers = { tiles, shadow, objects }

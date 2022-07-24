@@ -18,17 +18,19 @@ local function showFPS()
     love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 end
 
+local spawn_table = amazing.RandomTable({
+    ['spider']      = 60,
+    ['bat']         = 60,
+    ['skeleton']    = 25,
+    ['zombie']      = 15,
+    ['vampire']     = 5,
+})
+
 function love.load(args)
     love.math.setRandomSeed(os.time())
 
-    local builder = amazing.builder.hive(amazing.RandomTable({
-        ['spider']      = 60,
-        ['bat']         = 60,
-        ['skeleton']    = 25,
-        ['zombie']      = 15,
-        ['vampire']     = 5,
-    }))
-    local map, spawns = builder.build()
+    local builder = amazing.builder.random({ ['spawn_table'] = spawn_table })
+    local map, start, spawns = builder.build()
 
     love.window.setTitle('MiniQuest')
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -42,7 +44,7 @@ function love.load(args)
 
     love.keyboard.keysPressed = {}
 
-    gStateMachine:change('play', { map = map, spawns = spawns })
+    gStateMachine:change('play', { map = map, start = start, spawns = spawns })
 end
 
 function love.resize(w, h)

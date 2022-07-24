@@ -9,7 +9,7 @@
 GamePlayState = BaseState:extend()
 
 function GamePlayState:enter(params)
-    self.dungeon = Dungeon(params.map, params.spawns)
+    self.dungeon = Dungeon(params.map, params.start, params.spawns)
 end
 
 function GamePlayState:new(...)
