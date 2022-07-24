@@ -20,7 +20,7 @@ end
 
 function EntitySleepState:update()
     local hero_x, hero_y = self.dungeon.hero:nextPosition()
-    local sight = 1
+    local sight = 2
 
     if (hero_x > self.entity.x - sight and 
         hero_x < self.entity.x + sight and

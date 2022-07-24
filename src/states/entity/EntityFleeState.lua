@@ -60,7 +60,6 @@ function EntityFleeState:getAction()
 
         if self.entity.energy < move_cost then break end
 
-        self.entity.energy = self.entity.energy - move_cost
         local adjacent_cells = getAdjacentCells(move_cost, 
             self.entity.energy >= ord_move_cost and ord_move_cost or nil)
 
