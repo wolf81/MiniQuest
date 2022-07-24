@@ -8,7 +8,7 @@
 
 EntityFleeState = BaseState:extend()
 
-local DIJKSTRA_FLEE_CONSTANT = -1.2
+local DIJKSTRA_SAFETY_CONSTANT = -1.6
 
 local function getAdjacentCells(cart_move_cost, ord_move_cost)
     if ord_move_cost then 
@@ -75,7 +75,7 @@ function EntityFleeState:getAction()
             if isNan(v) or target ~= nil then 
                 table.remove(adjacent_cells, idx)
             else 
-                cell.v = v * DIJKSTRA_FLEE_CONSTANT
+                cell.v = v * DIJKSTRA_SAFETY_CONSTANT
             end
         end
 
