@@ -104,6 +104,32 @@ ACTOR_DEFS = {
             },
         }
     },
+    ['skel_mage'] = {
+        ['hitpoints'] = 2,
+        ['move_speed'] = 1.2,
+        ['animations'] = {
+            ['right'] = {
+                frames = { 137, 153 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['down'] = {
+                frames = { 138, 154 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['up'] = {
+                frames = { 139, 155 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+            ['left'] = {
+                frames = { 140, 156 },
+                interval = 0.5,
+                texture = 'monsters',
+            },
+        }
+    },
     ['zombie'] = {
         ['hitpoints'] = 4,
         ['move_speed'] = 0.5,

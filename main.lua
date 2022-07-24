@@ -23,6 +23,7 @@ local spawn_table = amazing.RandomTable({
     ['bat']         = 60,
     ['skeleton']    = 25,
     ['zombie']      = 15,
+    ['skel_mage']   = 10,
     ['vampire']     = 5,
 })
 
