@@ -8,6 +8,7 @@
 
 MoveAction = BaseAction:extend()
 
+-- This is duplicated in AttackAction
 local directionString = {
     [Direction.N]  = 'up',
     [Direction.NW] = 'up',

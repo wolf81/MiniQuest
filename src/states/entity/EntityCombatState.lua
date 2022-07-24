@@ -8,7 +8,7 @@
 
 local mabs, mceil = math.abs, math.ceil
 
-EntityEngageState = BaseState:extend()
+EntityCombatState = BaseState:extend()
 
 -- calculate of this entity is standing next to a hero
 local function isAdjacent(actor, target)
@@ -40,21 +40,26 @@ local function getAdjacentCells(cart_move_cost, ord_move_cost)
     }
 end
 
-function EntityEngageState:enter()
+function EntityCombatState:enter()
     print('enter engage state')
 end
 
-function EntityEngageState:new(entity, dungeon)
+function EntityCombatState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon
     self.action = nil
 end
 
-function EntityEngageState:update()
+function EntityCombatState:update()
     self.action = nil
 
     local hero = self.dungeon.hero
     local sight = 5
+
+    if self.entity.morale == 1 then
+        self.entity.strategy:flee()
+        return        
+    end
 
     -- if hero out of range, transition to idle state
     if (hero.x < self.entity.x - sight or 
@@ -66,7 +71,7 @@ function EntityEngageState:update()
     end
 end
 
-function EntityEngageState:getAction()
+function EntityCombatState:getAction()
     local actions = {}
     local attack_cost = mceil(BASE_ENERGY_COST / self.entity.attack_speed)
     local move_cost = mceil(BASE_ENERGY_COST / self.entity.move_speed)

@@ -27,7 +27,7 @@ function EntityIdleState:update()
         hero.x < self.entity.x + sight and
         hero.y > self.entity.y - sight and
         hero.y < self.entity.y + sight) then
-        self.entity.strategy:engage()
+        self.entity.strategy:combat()
     end
 end
 

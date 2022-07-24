@@ -53,7 +53,8 @@ ACTOR_DEFS = {
         }        
     },
     ['bat'] = {
-        ['hitpoints'] = 2,
+        ['morale'] = 2,
+        ['hitpoints'] = 3,
         ['move_speed'] = 1.6,
         ['animations'] = {
             ['right'] = {
