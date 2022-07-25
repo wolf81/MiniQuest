@@ -23,8 +23,6 @@ local directionString = {
 function MoveAction:new(actor, direction)
     BaseAction.new(self, actor)
     
-    self.dx = 0
-    self.dy = 0
     self.direction = direction
     self.cost = math.ceil(self.cost / actor.move_speed) 
     if Direction.isOrdinal(direction) then
@@ -51,7 +49,6 @@ function MoveAction:perform(duration, onFinish)
         }
     })
     :finish(function()
-        self.actor.action = nil
         onFinish()
     end)
 end

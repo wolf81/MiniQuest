@@ -55,7 +55,6 @@ function AttackAction:perform(duration, onFinish)
     end
 
     Timer.after(duration, function()
-        self.actor.action = nil
         onFinish()
     end)
 end

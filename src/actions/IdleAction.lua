@@ -19,6 +19,5 @@ function IdleAction:perform(duration, onFinish)
         self.actor:changeAnimation('sleep')
     end
 
-    self.actor.action = nil
     onFinish()
 end

@@ -49,12 +49,9 @@ end
 function Actor:getAction(energy_gain)
     if self.remove then return nil end
 
-    if self.action then return self.action end
-
     self.energy = self.energy + energy_gain
-    self.action = self.strategy:getAction()
 
-    return self.action
+    return self.strategy:getAction()
 end
 
 -- inflict some damage on this actor; if hitpoints are reduced to 0, then set 

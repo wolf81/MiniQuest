@@ -16,8 +16,6 @@ end
 
 -- the hero strategy just returns actions based on keyboard input
 function HeroStrategy:getAction()
-    if self.actor.action then return self.actor.action end
-
     local dir = nil
 
     if love.keyboard.isDown('kp4') or love.keyboard.isDown('h') then
