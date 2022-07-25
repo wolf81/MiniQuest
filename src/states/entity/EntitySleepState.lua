@@ -11,10 +11,14 @@ EntitySleepState = BaseState:extend()
 function EntitySleepState:enter()
     print('enter sleep state')
     self.turns = love.math.random(5, 10)
+
+    self.entity:addEffect('sleep')
 end
 
 function EntitySleepState:exit()
     print('exit sleep state')
+
+    self.entity:removeEffect('sleep')    
 end
 
 function EntitySleepState:new(entity, dungeon)

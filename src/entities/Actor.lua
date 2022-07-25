@@ -66,14 +66,3 @@ function Actor:inflict(damage)
     
     self.morale = self.morale - 1
 end
-
-function Actor:draw()
-    local anim = self.currentAnimation
-
-    love.graphics.draw(
-        gTextures[anim.texture], 
-        gFrames[anim.texture][anim:getCurrentFrame()],
-        mfloor(self.x * TILE_SIZE), 
-        mfloor(self.y * TILE_SIZE)
-    )
-end

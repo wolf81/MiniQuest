@@ -8,6 +8,12 @@
 
 HeroStrategy = BaseStrategy:extend()
 
+function HeroStrategy:new(actor, dungeon)
+    BaseStrategy.new(self, actor, dungeon)
+    
+    self:idle()
+end
+
 -- the hero strategy just returns actions based on keyboard input
 function HeroStrategy:getAction()
     if self.actor.action then return self.actor.action end

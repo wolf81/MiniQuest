@@ -31,8 +31,22 @@ function Entity:new(def, x, y)
 
     self.x = x or 0
     self.y = y or 0
+    self.effects = {}
 
     self.remove = false
+end
+
+function Entity:addEffect(name)
+    print('add effect', name)
+    assert(EFFECT_DEFS[name] ~= nil, 'effect not defined: ' .. name)
+
+    local effect = Effect(EFFECT_DEFS[name], 0, 0)
+    self.effects[name] = effect
+end
+
+function Entity:removeEffect(name)
+    print('rm effect', name)
+    self.effects[name] = nil
 end
 
 function Entity:update(dt)
@@ -41,6 +55,10 @@ function Entity:update(dt)
     else
         error('no animation defined')
     end 
+
+    for _, effect in pairs(self.effects) do
+        effect:update(dt)
+    end
 end
 
 function Entity:draw()
@@ -52,6 +70,14 @@ function Entity:draw()
         mfloor(self.x * TILE_SIZE), 
         mfloor(self.y * TILE_SIZE)
     )
+
+    -- TODO: perhaps quicker to use translate instead of setting coords
+    -- or perhaps allow draw to accept x, y arguments instead
+    for _, effect in pairs(self.effects) do
+        effect.x = self.x
+        effect.y = self.y
+        effect:draw()
+    end
 end
 
 function Entity:collides(target)

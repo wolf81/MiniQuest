@@ -32,7 +32,7 @@ EFFECT_DEFS = {
         ['animations'] = {
             ['default'] = {
                 frames = { 1, 2, 3 },
-                interval = 0.2,
+                interval = 0.5,
                 texture = 'effects_custom',
                 looping = true,
             },
