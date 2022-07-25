@@ -13,6 +13,10 @@ function EntitySleepState:enter()
     self.turns = love.math.random(5, 10)
 end
 
+function EntitySleepState:exit()
+    print('exit sleep state')
+end
+
 function EntitySleepState:new(entity, dungeon)
     self.entity = entity
     self.dungeon = dungeon

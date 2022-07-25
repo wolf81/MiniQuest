@@ -40,7 +40,7 @@ function Entity:update(dt)
         self.currentAnimation:update(dt)
     else
         error('no animation defined')
-    end    
+    end 
 end
 
 function Entity:draw()

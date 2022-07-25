@@ -66,12 +66,14 @@ gTextures = {
     ['world'] = love.graphics.newImage('gfx/tiny_dungeon_world.png'),
     ['monsters'] = love.graphics.newImage('gfx/tiny_dungeon_monsters.png'),
     ['effects'] = love.graphics.newImage('gfx/tiny_dungeon_fx.png'),
+    ['effects_custom'] = love.graphics.newImage('gfx/custom_fx.png'),
 }
 
 gFrames = {
     ['tiles'] = GenerateQuads(gTextures['world'], 16, 16),
     ['monsters'] = GenerateQuads(gTextures['monsters'], 16, 16),
     ['effects'] = GenerateQuads(gTextures['effects'], 16, 16),
+    ['effects_custom'] = GenerateQuads(gTextures['effects_custom'], 16, 16),
 }
 
 gSounds = {

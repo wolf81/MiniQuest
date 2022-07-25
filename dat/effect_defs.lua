@@ -27,5 +27,15 @@ EFFECT_DEFS = {
                 looping = false,
             },
         },
-    }
+    },
+    ['sleep'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 1, 2, 3 },
+                interval = 0.2,
+                texture = 'effects_custom',
+                looping = true,
+            },
+        },
+    },
 }

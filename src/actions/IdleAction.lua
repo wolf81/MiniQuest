@@ -17,8 +17,11 @@ end
 function IdleAction:perform(duration, onFinish)
     if self.sleeping then
         self.actor:changeAnimation('sleep')
+
+        local effect = Effect(EFFECT_DEFS['sleep'], self.actor.x, self.actor.y)
+        self.actor.dungeon:addEntity(effect)
     end
-    
+
     self.actor.action = nil
     onFinish()
 end
