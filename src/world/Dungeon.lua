@@ -6,8 +6,6 @@
     info+miniquest@wolftrail.net
 ]]
 
-local amazing = require 'lib.amazing'
-
 Dungeon = Object:extend()
 
 local WALL_SHADOW_TILE_ID = 176

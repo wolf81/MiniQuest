@@ -10,8 +10,6 @@ io.stdout:setvbuf('no') -- show debug output live in SublimeText console
 
 require 'src.Dependencies'
 
-amazing = require 'lib.amazing'
-
 local function showFPS()
     love.graphics.setFont(gFonts['tiny-dungeon-shadow'])
     love.graphics.setColor(1.0, 1.0, 1.0, 1.0)

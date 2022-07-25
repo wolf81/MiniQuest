@@ -54,7 +54,5 @@ function AttackAction:perform(duration, onFinish)
         gSounds[effect.sound]:play()
     end
 
-    Timer.after(duration, function()
-        onFinish()
-    end)
+    Timer.after(duration, onFinish)
 end

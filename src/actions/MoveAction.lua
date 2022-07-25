@@ -48,7 +48,5 @@ function MoveAction:perform(duration, onFinish)
             y = self.actor.next_y,
         }
     })
-    :finish(function()
-        onFinish()
-    end)
+    :finish(onFinish)
 end
