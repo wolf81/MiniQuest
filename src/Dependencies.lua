@@ -55,6 +55,7 @@ require 'src.Constants'
 require 'src.Util'
 require 'src.Animation'
 
+require 'src.DeferredProxy'
 require 'src.Scheduler'
 
 require 'src.Theme'

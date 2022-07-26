@@ -16,6 +16,22 @@ local function showFPS()
     love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 10, 10)
 end
 
+local prefab_map = [[
+########################################            
+#           +    #    #                ####         
+#  %     %  #  % # %  #       %           ###       
+#           #    #    ###                   ###     
+###+#########    #            %                ##   
+#           #    #    ###              ##   %   ##  
+#  %     %  # %  #  % #       %        # >  %    #  
+#           #    #    ###              ##   %   ##  
+########+####    #            %                ##   
+#           #    #    ###                   ###     
++@          #  % # %  #       %           ###       
+#           #    +    #                ####         
+########################################            
+]]
+
 local spawn_table = amazing.RandomTable({
     ['spider']      = 60,
     ['bat']         = 60,
@@ -28,7 +44,10 @@ local spawn_table = amazing.RandomTable({
 function love.load(args)
     love.math.setRandomSeed(os.time())
 
-    local builder = amazing.builder.random({ ['spawn_table'] = spawn_table })
+    local builder = amazing.builder.prefab({ 
+        ['spawn_table'] = spawn_table,
+        ['map'] = prefab_map,
+    })
     local map, start, spawns = builder.build()
 
     love.window.setTitle('MiniQuest')
