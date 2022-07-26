@@ -10,3 +10,6 @@
 [submodule "lib/amazing"]
 	path = lib/amazing
 	url = https://github.com/wolf81/amazing.git
+[submodule "lib/hump"]
+	path = lib/hump
+	url = https://github.com/wolf81/hump.git

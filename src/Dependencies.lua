@@ -10,6 +10,7 @@ push = require 'lib.push.push'
 Object = require 'lib.classic.classic'
 Timer = require 'lib.knife.knife.timer'
 amazing = require 'lib.amazing'
+vector = require 'lib.hump.vector'
 
 -- data files
 require 'dat.actor_defs'
