@@ -8,51 +8,50 @@
 
 EntitySleepState = BaseState:extend()
 
-function EntitySleepState:enter()
-    print('enter sleep state')
-    self.turns = love.math.random(5, 10)
+function EntitySleepState:enter(actor)
+    actor:addEffect('state', 'sleep')
 
-    self.entity:addEffect('sleep')
+    self.turns = love.math.random(5, 10)
+    --self.entity:addEffect('sleep')
 end
 
 function EntitySleepState:exit()
     print('exit sleep state')
 
-    self.entity:removeEffect('sleep')    
+    --self.entity:removeEffect('sleep')    
 end
 
-function EntitySleepState:new(entity, dungeon)
-    self.entity = entity
+function EntitySleepState:new(dungeon)
     self.dungeon = dungeon
 end
 
-function EntitySleepState:update()
-    local hero_x, hero_y = self.dungeon.hero:nextPosition()
+function EntitySleepState:update(actor)
+    local hero = self.dungeon.scheduler.hero
     local sight = 2
 
-    if (hero_x > self.entity.x - sight and 
-        hero_x < self.entity.x + sight and
-        hero_y > self.entity.y - sight and
-        hero_y < self.entity.y + sight) then
-        return self.entity.strategy:combat()
+    if (hero.x > actor.x - sight and 
+        hero.x < actor.x + sight and
+        hero.y > actor.y - sight and
+        hero.y < actor.y + sight) then
+        return actor:combat()
     end
 
     self.turns = self.turns - 1
     if self.turns == 0 then
-        self.entity.strategy:roam()
+        actor:roam()
     end
 end
 
-function EntitySleepState:getAction()
+function EntitySleepState:getAction(actor)
     local actions = {}
 
     while true do
-        local idle_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
+        local idle_cost = math.ceil(BASE_ENERGY_COST / actor.move_speed)
         
-        if self.entity.energy < idle_cost then break end
+        if actor.energy < idle_cost then break end
 
-        self.entity.energy = self.entity.energy - idle_cost
-        actions[#actions + 1] = IdleAction(self.entity, true)
+        actor.energy = actor.energy - idle_cost
+        actions[#actions + 1] = IdleAction(actor, true)
     end
 
     if #actions == 0 then 
@@ -60,6 +59,6 @@ function EntitySleepState:getAction()
     elseif #actions == 1 then 
         return actions[1]
     else 
-        return CompositeAction(self.entity, actions) 
+        return CompositeAction(actor, actions) 
     end
 end

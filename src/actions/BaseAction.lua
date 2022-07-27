@@ -17,6 +17,6 @@ function BaseAction:isCombatAction()
     return false
 end
 
-function BaseAction:perform(duration, onFinish)
+function BaseAction:perform(actor, duration, onFinish)
     error('perform should be implemented by subclasses')
 end

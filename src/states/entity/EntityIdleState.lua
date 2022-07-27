@@ -8,36 +8,35 @@
 
 EntityIdleState = BaseState:extend()
 
-function EntityIdleState:enter()
-    print('enter idle state')
+function EntityIdleState:enter(actor)
+    actor:addEffect('state', 'idle')
 end
 
-function EntityIdleState:new(entity, dungeon)
-    self.entity = entity
+function EntityIdleState:new(dungeon)
     self.dungeon = dungeon
 end
 
-function EntityIdleState:update()
-    local hero_x, hero_y = self.dungeon.hero:nextPosition()
-    local sight = self.entity.sight
+function EntityIdleState:update(actor)
+    local hero_x, hero_y = self.dungeon.scheduler.hero:nextPosition()
+    local sight = actor.sight
 
-    if (hero_x > self.entity.x - sight and 
-        hero_x < self.entity.x + sight and
-        hero_y > self.entity.y - sight and
-        hero_y < self.entity.y + sight) then
-        return self.entity:combat()
+    if (hero_x > actor.x - sight and 
+        hero_x < actor.x + sight and
+        hero_y > actor.y - sight and
+        hero_y < actor.y + sight) then
+        return actor:combat()
     end
 end
 
-function EntityIdleState:getAction()
+function EntityIdleState:getAction(actor, duration, onFinish)
     local actions = {}
 
     while true do
-        local idle_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
-        if self.entity.energy < idle_cost then break end
+        local idle_cost = math.ceil(BASE_ENERGY_COST / actor.move_speed)
+        if actor.energy < idle_cost then break end
 
-        self.entity.energy = self.entity.energy - idle_cost
-        actions[#actions + 1] = IdleAction(self.entity)
+        actor.energy = actor.energy - idle_cost
+        actions[#actions + 1] = IdleAction(actor)
     end
 
     if #actions == 0 then 
@@ -45,6 +44,6 @@ function EntityIdleState:getAction()
     elseif #actions == 1 then 
         return actions[1]
     else 
-        return CompositeAction(self.entity, actions) 
+        return CompositeAction(actor, actions) 
     end
 end

@@ -56,8 +56,7 @@ function Dungeon:new(map, start, spawns)
     end
 
     if start ~= nil then
-        self.hero = Actor(ACTOR_DEFS['hero'], self, start.x, start.y)
-        self.hero.strategy = HeroStrategy
+        self.hero = Actor(ACTOR_DEFS['hero'], self, start.x, start.y, HeroStrategy)
     end
 
     self.layers = { tiles, shadow, objects }
@@ -65,7 +64,8 @@ function Dungeon:new(map, start, spawns)
     self.actors = { self.hero }
 
     for _, spawn in ipairs(spawns) do
-        self.actors[#self.actors + 1] = Actor(ACTOR_DEFS[spawn.id], self, spawn.x, spawn.y)        
+        local actor = Actor(ACTOR_DEFS[spawn.id], self, spawn.x, spawn.y)
+        self.actors[#self.actors + 1] = actor
     end
 
     self.effects = {}
@@ -88,14 +88,7 @@ function Dungeon:updateMovementGraph()
 end
 
 function Dungeon:getActor(x, y)
-    for _, actor in ipairs(self.actors) do
-        local actor_x, actor_y = actor:nextPosition()
-        if actor_x == x and actor_y == y then
-            return actor
-        end
-    end
-
-    return nil
+    return self.scheduler:getActor(x, y)
 end
 
 function Dungeon:addEntity(entity)

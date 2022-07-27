@@ -38,4 +38,54 @@ EFFECT_DEFS = {
             },
         },
     },
+    ['state_roam'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 17 },
+                interval = 0.5,
+                texture = 'effects_custom',
+                looping = true,
+            },
+        },
+    },
+    ['state_sleep'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 18 },
+                interval = 0.5,
+                texture = 'effects_custom',
+                looping = true,
+            },
+        },
+    },
+    ['state_idle'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 19 },
+                interval = 0.5,
+                texture = 'effects_custom',
+                looping = true,
+            },
+        },
+    },
+    ['state_combat'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 20 },
+                interval = 0.5,
+                texture = 'effects_custom',
+                looping = true,
+            },
+        },
+    },
+    ['state_flee'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 21 },
+                interval = 0.5,
+                texture = 'effects_custom',
+                looping = true,
+            },
+        },
+    },
 }

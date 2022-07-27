@@ -41,8 +41,7 @@ function CompositeAction:prepare()
     end
 end
 
-function CompositeAction:perform(duration, onFinish)
-    local duration = duration / #self.actions
-    performActions(self.actions, duration, onFinish)
+function CompositeAction:perform(actor, duration, onFinish)
+    actor.sync(duration, onFinish)
 end
 

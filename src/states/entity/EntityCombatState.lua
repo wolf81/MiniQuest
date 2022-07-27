@@ -40,52 +40,57 @@ local function getAdjacentCells(cart_move_cost, ord_move_cost)
     }
 end
 
-function EntityCombatState:enter()
-    print('enter engage state')
+function EntityCombatState:enter(actor)
+    actor:addEffect('state', 'combat')
+
+    print('enter combat state')
 end
 
-function EntityCombatState:new(entity, dungeon)
-    self.entity = entity
+function EntityCombatState:new(dungeon)
     self.dungeon = dungeon
 end
 
-function EntityCombatState:update()
-    local hero_x, hero_y = self.dungeon.hero:nextPosition()
-    local sight = self.entity.sight
+function EntityCombatState:update(actor)
+    local hero_x, hero_y = self.dungeon.scheduler.hero:nextPosition()
+    local sight = actor.sight
 
-    if self.entity.morale == 1 then
-        return self.entity:flee()
+    if actor.morale == 1 then
+        return actor:flee()
     end
 
     -- if hero out of range, transition to idle state
-    if (hero_x < self.entity.x - sight or 
-        hero_x > self.entity.x + sight or
-        hero_y < self.entity.y - sight or
-        hero_y > self.entity.y + sight) then
-        return self.entity:idle()
+    if (hero_x < actor.x - sight or 
+        hero_x > actor.x + sight or
+        hero_y < actor.y - sight or
+        hero_y > actor.y + sight) then
+        if not actor.undead then
+            return actor:roam()
+        else
+            return actor:idle()
+        end
     end
 end
 
-function EntityCombatState:getAction()
+function EntityCombatState:getAction(actor)
     local actions = {}
 
     while true do
-        local attack_cost = mceil(BASE_ENERGY_COST / self.entity.attack_speed)
-        local move_cost = mceil(BASE_ENERGY_COST / self.entity.move_speed)
+        local attack_cost = mceil(BASE_ENERGY_COST / actor.attack_speed)
+        local move_cost = mceil(BASE_ENERGY_COST / actor.move_speed)
 
-        if isAdjacent(self.entity, self.dungeon.hero) then
-            if self.entity.energy >= attack_cost then
-                self.entity.energy = self.entity.energy - attack_cost
-                actions[#actions + 1] = AttackAction(self.entity, self.dungeon.hero)
+        if isAdjacent(actor, self.dungeon.scheduler.hero) then
+            if actor.energy >= attack_cost then
+                actor.energy = actor.energy - attack_cost
+                actions[#actions + 1] = AttackAction(actor, self.dungeon.scheduler.hero)
             else
                 break
             end
-        elseif self.entity.energy >= move_cost then        
+        elseif actor.energy >= move_cost then        
             local ord_move_cost = math.ceil(move_cost * ORDINAL_MOVE_FACTOR)
             local adjacent_cells = getAdjacentCells(move_cost, 
-                self.entity.energy >= ord_move_cost and ord_move_cost or nil)
+                actor.energy >= ord_move_cost and ord_move_cost or nil)
 
-            local x, y = self.entity:nextPosition()
+            local x, y = actor:nextPosition()
             for idx, cell in ripairs(adjacent_cells) do
                 local heading = Direction.heading[cell.dir]
                 local x1, y1 = x + heading.x, y + heading.y
@@ -104,8 +109,8 @@ function EntityCombatState:getAction()
             if #adjacent_cells > 0 then
                 local cell = adjacent_cells[1]
                 if not isNan(cell.v) then
-                    self.entity.energy = self.entity.energy - cell.cost
-                    actions[#actions + 1] = MoveAction(self.entity, cell.dir)
+                    actor.energy = actor.energy - cell.cost
+                    actions[#actions + 1] = MoveAction(actor, cell.dir)
                 end
             end
         else
@@ -118,6 +123,6 @@ function EntityCombatState:getAction()
     elseif #actions == 1 then
         return actions[1]
     else
-        return CompositeAction(self.entity, actions)
+        return CompositeAction(actor, actions)
     end
 end

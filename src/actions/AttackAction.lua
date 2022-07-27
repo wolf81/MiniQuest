@@ -31,28 +31,29 @@ function AttackAction:new(actor, target)
     elseif dy > 0 then direction = Direction.N
     else error('invalid direction') end
 
-    self.target = target
     self.direction = direction
-    self.actor.direction = self.direction
     self.cost = math.ceil(self.cost / actor.attack_speed)
 
-    self.target:inflict(1)   
+    self.effect_x = target.x
+    self.effect_y = target.y
+
+    target:inflict(1)   
 end
 
 function AttackAction:isCombatAction()
     return true
 end
 
-function AttackAction:perform(duration, onFinish)    
-    self.actor:changeAnimation(directionString[self.actor.direction])
-    self.actor.direction = self.direction
+function AttackAction:perform(actor, duration, onFinish)    
+    actor.direction = self.direction
+    actor:changeAnimation(directionString[actor.direction])
 
-    local effect = Effect(EFFECT_DEFS['strike'], self.target.x, self.target.y)
-    self.actor.dungeon:addEntity(effect)
+    local effect = Effect(EFFECT_DEFS['strike'], self.effect_x, self.effect_y)
+    actor.dungeon:addEntity(effect)
 
     if effect.sound then
         gSounds[effect.sound]:play()
     end
 
-    Timer.after(duration, onFinish)
+    actor.sync(duration, onFinish)
 end

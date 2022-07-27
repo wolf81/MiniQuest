@@ -10,72 +10,71 @@ local mceil = math.ceil
 
 EntityRoamState = BaseState:extend()
 
-function EntityRoamState:enter()
-    print('enter roam state')
+function EntityRoamState:enter(actor)
+    actor:addEffect('state', 'roam')
+
     self.turns = love.math.random(5, 10)
 end
 
-function EntityRoamState:new(entity, dungeon)
-    self.entity = entity
+function EntityRoamState:new(dungeon)
     self.dungeon = dungeon
 end
 
-function EntityRoamState:update()
-    local hero_x, hero_y = self.dungeon.hero:nextPosition()
-    local sight = self.entity.sight
+function EntityRoamState:update(actor)
+    local hero_x, hero_y = self.dungeon.scheduler.hero:nextPosition()
+    local sight = actor.sight
 
-    if (hero_x > self.entity.x - sight and 
-        hero_x < self.entity.x + sight and
-        hero_y > self.entity.y - sight and
-        hero_y < self.entity.y + sight) then
-        return self.entity.strategy:combat()
+    if (hero_x > actor.x - sight and 
+        hero_x < actor.x + sight and
+        hero_y > actor.y - sight and
+        hero_y < actor.y + sight) then
+        return actor:combat()
     end
 
     self.turns = self.turns - 1
     if self.turns == 0 then
-        return self.entity.strategy:sleep()
+        return actor:sleep()
     end
 end
 
-function EntityRoamState:getAction()
-    local actions = {}
-
-    local dirs = shuffle({ 
-        Direction.N, Direction.E, Direction.S, Direction.W, 
-    })    
-    if oneIn(2) then
-        table.insert(dirs, 1, self.entity.direction)
-    end
-
+function EntityRoamState:getAction(actor)
+     local actions = {}
+ 
+     local dirs = shuffle({ 
+         Direction.N, Direction.E, Direction.S, Direction.W, 
+     })    
+     if oneIn(2) then
+        table.insert(dirs, 1, actor.direction)
+     end
+ 
     while true do
-        local move_cost = mceil(BASE_ENERGY_COST / self.entity.move_speed)
-
-        if self.entity.energy < move_cost then break end 
-
-        local x, y = self.entity:nextPosition()
-
-        local is_stuck = true
+        local move_cost = mceil(BASE_ENERGY_COST / actor.move_speed)
+ 
+        if actor.energy < move_cost then return nil end 
+ 
+        local done = true
 
         for _, dir in ipairs(dirs) do
             local heading = Direction.heading[dir]
-            local x1, y1 = x + heading.x, y + heading.y
+            local x1, y1 = actor.x + heading.x, actor.y + heading.y
             local target = self.dungeon:getActor(x1, y1)
             if not self.dungeon:isBlocked(x1, y1) and not target then
-                self.entity.energy = self.entity.energy - move_cost
-                actions[#actions + 1] = MoveAction(self.entity, dir)
-                is_stuck = false
+                actor.energy = actor.energy - move_cost
+                actions[#actions + 1] = MoveAction(actor, dir)
+                done = true
                 break
-            end
-        end
-
-        if is_stuck then break end
+             end
+         end
+ 
+        if done then break end
     end
 
     if #actions == 0 then 
-        return nil
+         return nil
     elseif #actions == 1 then 
         return actions[1]
     else 
-        return CompositeAction(self.entity, actions) 
+        print('roam ' .. #actions .. ' tiles')
+        return CompositeAction(actor, actions) 
     end
-end
+ end

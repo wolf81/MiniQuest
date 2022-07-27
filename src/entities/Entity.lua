@@ -36,11 +36,14 @@ function Entity:new(def, x, y)
     self.remove = false
 end
 
-function Entity:addEffect(name)
+function Entity:addEffect(name, sub)
     print('add effect', name)
-    assert(EFFECT_DEFS[name] ~= nil, 'effect not defined: ' .. name)
 
-    local effect = Effect(EFFECT_DEFS[name], 0, 0)
+    local def_name = sub and name .. '_' .. sub or name
+
+    assert(EFFECT_DEFS[def_name] ~= nil, 'effect not defined: ' .. name)
+
+    local effect = Effect(EFFECT_DEFS[def_name], 0, 0)
     self.effects[name] = effect
 end
 

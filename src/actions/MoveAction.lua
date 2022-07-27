@@ -30,23 +30,12 @@ function MoveAction:new(actor, direction)
     end
 
     local heading = Direction.heading[direction]
-    self.dx = heading.x
-    self.dy = heading.y
-
-    local x, y = self.actor:nextPosition()
     self.actor.direction = self.direction
-    self.actor.next_x = x + self.dx
-    self.actor.next_y = y + self.dy
+    self.actor.x = self.actor.x + heading.x
+    self.actor.y = self.actor.y + heading.y
 end
 
-function MoveAction:perform(duration, onFinish)
-    self.actor:changeAnimation(directionString[self.actor.direction])
-
-    Timer.tween(duration, {
-        [self.actor] = { 
-            x = self.actor.next_x,
-            y = self.actor.next_y,
-        }
-    })
-    :finish(onFinish)
+function MoveAction:perform(actor, duration, onFinish)
+    actor:changeAnimation(directionString[self.actor.direction])
+    actor.sync(duration, onFinish)
 end

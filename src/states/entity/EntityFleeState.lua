@@ -32,40 +32,39 @@ local function getAdjacentCells(cart_move_cost, ord_move_cost)
     }
 end
 
-function EntityFleeState:enter()
-    print('enter flee state')
+function EntityFleeState:enter(actor)
+    actor:addEffect('state', 'flee')
 end
 
-function EntityFleeState:new(entity, dungeon)
-    self.entity = entity
+function EntityFleeState:new(dungeon)
     self.dungeon = dungeon
 end
 
-function EntityFleeState:update()
-    local hero_x, hero_y = self.dungeon.hero:nextPosition()
-    local sight = self.entity.sight * 2
+function EntityFleeState:update(actor)
+    local hero = self.dungeon.scheduler.hero
+    local sight = actor.sight * 2
 
-    if (hero_x < self.entity.x - sight or 
-        hero_x > self.entity.x + sight or
-        hero_y < self.entity.y - sight or
-        hero_y > self.entity.y + sight) then
-        return self.entity.strategy:idle()
+    if (hero.x < actor.x - sight or 
+        hero.x > actor.x + sight or
+        hero.y < actor.y - sight or
+        hero.y > actor.y + sight) then
+        return actor:idle()
     end
 end
 
-function EntityFleeState:getAction()
+function EntityFleeState:getAction(actor)
     local actions = {}
 
     while true do
-        local move_cost = math.ceil(BASE_ENERGY_COST / self.entity.move_speed)
+        local move_cost = math.ceil(BASE_ENERGY_COST / actor.move_speed)
         local ord_move_cost = math.ceil(move_cost * ORDINAL_MOVE_FACTOR)
 
-        if self.entity.energy < move_cost then break end
+        if actor.energy < move_cost then break end
 
         local adjacent_cells = getAdjacentCells(move_cost, 
-            self.entity.energy >= ord_move_cost and ord_move_cost or nil)
+            actor.energy >= ord_move_cost and ord_move_cost or nil)
 
-        local x, y = self.entity:nextPosition()
+        local x, y = actor:nextPosition()
         for idx, cell in ripairs(adjacent_cells) do
             local heading = Direction.heading[cell.dir]
             local x1, y1 = x + heading.x, y + heading.y
@@ -83,8 +82,8 @@ function EntityFleeState:getAction()
 
         if #adjacent_cells > 0 then
             local cell = adjacent_cells[1]
-            self.entity.energy = self.entity.energy - cell.cost
-            actions[#actions + 1] = MoveAction(self.entity, cell.dir)
+            actor.energy = actor.energy - cell.cost
+            actions[#actions + 1] = MoveAction(actor, cell.dir)
         else
             break
         end        
@@ -93,10 +92,10 @@ function EntityFleeState:getAction()
     if #actions == 0 then 
         return nil
     elseif #actions == 1 then 
-        self.entity.morale = self.entity.morale + 1
+        actor.morale = actor.morale + 1
         return actions[1]
     else 
-        self.entity.morale = self.entity.morale + 1
-        return CompositeAction(self.entity, actions) 
+        actor.morale = actor.morale + 1
+        return CompositeAction(actor, actions) 
     end
 end

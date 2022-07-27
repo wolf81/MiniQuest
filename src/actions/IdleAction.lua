@@ -14,10 +14,10 @@ function IdleAction:new(actor, sleeping)
     self.sleeping = sleeping or false
 end
 
-function IdleAction:perform(duration, onFinish)
+function IdleAction:perform(actor, duration, onFinish)
     if self.sleeping then
         self.actor:changeAnimation('sleep')
     end
 
-    onFinish()
+    actor.sync(duration, onFinish)
 end

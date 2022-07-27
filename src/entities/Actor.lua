@@ -17,7 +17,7 @@ local function parseFlags(self, flags)
     end
 end
 
-function Actor:new(def, dungeon, x, y)
+function Actor:new(def, dungeon, x, y, strategy)
     Entity.new(self, def, x, y)
 
     self.dungeon = dungeon
@@ -30,29 +30,27 @@ function Actor:new(def, dungeon, x, y)
     self.attack_speed = def.attack_speed or 1.0
     self.morale = def.morale or 10
     self.sight = def.sight or 5
-    self.next_x = x
-    self.next_y = y
 
     parseFlags(self, def.flags)
 
     self.stateMachine = StateMachine {
-        ['idle'] = function() return EntityIdleState(self, self.dungeon) end,
-        ['combat'] = function() return EntityCombatState(self, self.dungeon) end,
-        ['flee'] = function() return EntityFleeState(self, self.dungeon) end,
-        ['roam'] = function() return EntityRoamState(self, self.dungeon) end,
-        ['sleep'] = function() return EntitySleepState(self, self.dungeon) end,
+        ['idle'] = function() return EntityIdleState(self.dungeon) end,
+        ['combat'] = function() return EntityCombatState(self.dungeon) end,
+        ['flee'] = function() return EntityFleeState(self.dungeon) end,
+        ['roam'] = function() return EntityRoamState(self.dungeon) end,
+        ['sleep'] = function() return EntitySleepState(self.dungeon) end,
     }
 
-    self.strategy = ActorStrategy
+    self.strategy = strategy or ActorStrategy
 
-    self:idle()
+    if self.undead or self.strategy == HeroStrategy then
+        self:idle(self)
+    else
+        self:sleep(self)
+    end
 end
 
 function Actor:nextPosition()
-    if self.next_x and self.next_y then 
-        return self.next_x, self.next_y 
-    end
-
     return self.x, self.y
 end
 
@@ -65,23 +63,23 @@ function Actor:getAction(energy_gain)
 end
 
 function Actor:sleep()
-    self.stateMachine:change('sleep')
+    self.stateMachine:change('sleep', self)
 end
 
 function Actor:idle()
-    self.stateMachine:change('idle')
+    self.stateMachine:change('idle', self)
 end
 
 function Actor:combat()
-    self.stateMachine:change('combat')
+    self.stateMachine:change('combat', self)
 end
 
 function Actor:flee()
-    self.stateMachine:change('flee')
+    self.stateMachine:change('flee', self)
 end
 
 function Actor:roam()
-    self.stateMachine:change('roam')
+    self.stateMachine:change('roam', self)
 end
 
 -- inflict some damage on this actor; if hitpoints are reduced to 0, then set 

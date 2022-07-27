@@ -55,6 +55,7 @@ require 'src.Constants'
 require 'src.Util'
 require 'src.Animation'
 
+require 'src.ScheduledEntity'
 require 'src.Scheduler'
 
 require 'src.Theme'
