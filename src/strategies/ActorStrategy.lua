@@ -6,12 +6,12 @@
     info+miniquest@wolftrail.net
 ]]
 
-ActorStrategy = BaseStrategy:extend()
+ActorStrategy = {}
 
 local BASE_ENERGY_COST = 100
 
-function ActorStrategy:getAction()
-    self.stateMachine.current:update()
+function ActorStrategy.getAction(actor)
+    actor.stateMachine.current:update()
 
-    return self.stateMachine.current:getAction()
+    return actor.stateMachine.current:getAction()
 end

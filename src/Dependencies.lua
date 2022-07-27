@@ -33,7 +33,6 @@ require 'src.actions.AttackAction'
 require 'src.actions.CompositeAction'
 
 -- strategies
-require 'src.strategies.BaseStrategy'
 require 'src.strategies.HeroStrategy'
 require 'src.strategies.ActorStrategy'
 

@@ -6,16 +6,10 @@
     info+miniquest@wolftrail.net
 ]]
 
-HeroStrategy = BaseStrategy:extend()
-
-function HeroStrategy:new(actor, dungeon)
-    BaseStrategy.new(self, actor, dungeon)
-    
-    self:idle()
-end
+HeroStrategy = {}
 
 -- the hero strategy just returns actions based on keyboard input
-function HeroStrategy:getAction()
+function HeroStrategy.getAction(actor)
     local dir = nil
 
     if love.keyboard.isDown('kp4') or love.keyboard.isDown('h') then
@@ -41,19 +35,19 @@ function HeroStrategy:getAction()
     if not dir then return nil end
 
     local heading = Direction.heading[dir]
-    local x, y = self.actor.x + heading.x, self.actor.y + heading.y
+    local x, y = actor.x + heading.x, actor.y + heading.y
 
-    local target = self.dungeon:getActor(x, y)
+    local target = actor.dungeon:getActor(x, y)
     if dir == Direction.NONE then
-        return IdleAction(self.actor)
+        return IdleAction(actor)
     elseif target then
-        return AttackAction(self.actor, target)
-    elseif not self.dungeon:isBlocked(x, y) then
-        local move = MoveAction(self.actor, dir)
+        return AttackAction(actor, target)
+    elseif not actor.dungeon:isBlocked(x, y) then
+        local move = MoveAction(actor, dir)
         -- TODO: this is ugly, but I think we need to do this order to get the
         -- next position of hero set properly, so other entities can move 
         -- towards hero
-        self.dungeon:updateMovementGraph()
+        actor.dungeon:updateMovementGraph()
         return move
     end
 

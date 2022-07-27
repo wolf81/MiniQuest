@@ -35,7 +35,17 @@ function Actor:new(def, dungeon, x, y)
 
     parseFlags(self, def.flags)
 
-    self.strategy = ActorStrategy(self, dungeon)
+    self.stateMachine = StateMachine {
+        ['idle'] = function() return EntityIdleState(self, self.dungeon) end,
+        ['combat'] = function() return EntityCombatState(self, self.dungeon) end,
+        ['flee'] = function() return EntityFleeState(self, self.dungeon) end,
+        ['roam'] = function() return EntityRoamState(self, self.dungeon) end,
+        ['sleep'] = function() return EntitySleepState(self, self.dungeon) end,
+    }
+
+    self.strategy = ActorStrategy
+
+    self:idle()
 end
 
 function Actor:nextPosition()
@@ -51,7 +61,27 @@ function Actor:getAction(energy_gain)
 
     self.energy = self.energy + energy_gain
 
-    return self.strategy:getAction()
+    return self.strategy.getAction(self)
+end
+
+function Actor:sleep()
+    self.stateMachine:change('sleep')
+end
+
+function Actor:idle()
+    self.stateMachine:change('idle')
+end
+
+function Actor:combat()
+    self.stateMachine:change('combat')
+end
+
+function Actor:flee()
+    self.stateMachine:change('flee')
+end
+
+function Actor:roam()
+    self.stateMachine:change('roam')
 end
 
 -- inflict some damage on this actor; if hitpoints are reduced to 0, then set 

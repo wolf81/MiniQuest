@@ -33,8 +33,8 @@ function Scheduler:new(entities)
 	self.hero = nil
 	self.busy = false
 
-	for _, entity in ipairs(entities) do
-		if entity.strategy:is(HeroStrategy) then		
+	for idx, entity in ipairs(entities) do
+		if entity.strategy == HeroStrategy then		
 			self.hero = entity
 		else
 			self.entities[#self.entities + 1] = entity  

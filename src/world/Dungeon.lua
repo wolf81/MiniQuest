@@ -57,7 +57,7 @@ function Dungeon:new(map, start, spawns)
 
     if start ~= nil then
         self.hero = Actor(ACTOR_DEFS['hero'], self, start.x, start.y)
-        self.hero.strategy = HeroStrategy(self.hero, self)
+        self.hero.strategy = HeroStrategy
     end
 
     self.layers = { tiles, shadow, objects }
