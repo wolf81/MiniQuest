@@ -75,12 +75,14 @@ function EntityCombatState:getAction(actor)
         local attack_cost = mceil(BASE_ENERGY_COST / actor.attack_speed)
         local move_cost = mceil(BASE_ENERGY_COST / actor.move_speed)
 
+        local done = false
+
         if isAdjacent(actor, self.dungeon.scheduler.hero) then
             if actor.energy >= attack_cost then
                 actor.energy = actor.energy - attack_cost
                 actions[#actions + 1] = AttackAction(actor, self.dungeon.scheduler.hero)
             else
-                break
+                done = true
             end
         elseif actor.energy >= move_cost then        
             local ord_move_cost = math.ceil(move_cost * ORDINAL_MOVE_FACTOR)
@@ -103,7 +105,9 @@ function EntityCombatState:getAction(actor)
 
             table.sort(adjacent_cells, function(a, b) return a.v < b.v end)
 
-            if #adjacent_cells > 0 then
+            if #adjacent_cells == 0 then
+                done = true
+            else
                 local cell = adjacent_cells[1]
                 if not isNan(cell.v) then
                     actor.energy = actor.energy - cell.cost
@@ -111,8 +115,10 @@ function EntityCombatState:getAction(actor)
                 end
             end
         else
-            break
+            done = true
         end
+
+        if done then break end
     end
 
     if #actions == 0 then

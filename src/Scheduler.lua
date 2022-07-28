@@ -86,6 +86,8 @@ function Scheduler:update(dt)
 end
 
 function Scheduler:getActor(x, y)
+	if self.hero.x == x and self.hero.y == y then return self.hero end
+	
     for _, entity in ipairs(self.entities) do
         local entity_x, entity_y = entity:nextPosition()
         if entity_x == x and entity_y == y then
