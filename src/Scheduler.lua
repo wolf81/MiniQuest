@@ -33,7 +33,6 @@ local function performActionsSeq(actions, duration, onFinish)
 
 	local action_info = table.remove(actions, 1)
 	action_info.action:perform(action_info.entity, duration, function()
-		print('iter')
 		performActionsSeq(actions, duration, onFinish)
 	end)
 end
