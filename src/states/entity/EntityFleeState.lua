@@ -79,7 +79,7 @@ function EntityFleeState:getAction(actor)
             local cell = adjacent_cells[1]
             actor.energy = actor.energy - cell.cost
             actions[#actions + 1] = MoveAction(actor, cell.dir)
-        else
+        else            
             break
         end        
     end

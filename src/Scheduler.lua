@@ -28,6 +28,16 @@ local function performActions(actions, duration, onFinish)
 	end
 end
 
+local function performActionsSeq(actions, duration, onFinish)
+	if #actions == 0 then return onFinish() end
+
+	local action_info = table.remove(actions, 1)
+	action_info.action:perform(action_info.entity, duration, function()
+		print('iter')
+		performActionsSeq(actions, duration, onFinish)
+	end)
+end
+
 function Scheduler:new(entities)
 	self.entities = {}
 	self.hero = nil
@@ -69,7 +79,7 @@ function Scheduler:update(dt)
 	end
 
 	performActions(actions_p1, 0.25, function()
-		performActions(actions_p2, 0.25, function()
+		performActionsSeq(actions_p2, 0.25, function()
 			self.busy = false
 		end)
 	end)

@@ -45,12 +45,12 @@ local prefab_map = [[
 ]]
 
 local spawn_table = amazing.RandomTable({
---    ['spider']      = 60,
+   ['spider']      = 60,
     ['bat']         = 60,
-    -- ['skeleton']    = 25,
-    -- ['zombie']      = 15,
-    -- ['skel_mage']   = 10,
-    -- ['vampire']     = 5,
+    ['skeleton']    = 25,
+    ['zombie']      = 15,
+    ['skel_mage']   = 10,
+    ['vampire']     = 5,
 })
 
 function love.load(args)
