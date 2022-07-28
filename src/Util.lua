@@ -6,7 +6,7 @@
     info+miniquest@wolftrail.net
 ]]
 
-local lrandom = love.math.random
+local lrandom, msqrt = love.math.random, math.sqrt
 
 function GenerateQuads(atlas, tilewidth, tileheight)
     local sheetWidth = math.floor(atlas:getWidth() / tilewidth)
@@ -67,4 +67,10 @@ end
 -- check if a value is not a number
 function isNan(x)
     return x ~= x
+end
+
+function getDistance(x1, y1, x2, y2)
+    local dx = x2 - x1
+    local dy = y2 - y1
+    return msqrt((dx ^ 2) + (dy ^ 2)) 
 end

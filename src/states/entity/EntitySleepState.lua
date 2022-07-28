@@ -29,10 +29,7 @@ function EntitySleepState:update(actor)
     local hero = self.dungeon.scheduler.hero
     local sight = 2
 
-    if (hero.x > actor.x - sight and 
-        hero.x < actor.x + sight and
-        hero.y > actor.y - sight and
-        hero.y < actor.y + sight) then
+    if getDistance(actor.x, actor.y, hero.x, hero.y) <= sight then
         return actor:combat()
     end
 

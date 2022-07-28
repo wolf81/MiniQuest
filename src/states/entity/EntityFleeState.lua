@@ -42,12 +42,8 @@ end
 
 function EntityFleeState:update(actor)
     local hero = self.dungeon.scheduler.hero
-    local sight = actor.sight * 2
 
-    if (hero.x < actor.x - sight or 
-        hero.x > actor.x + sight or
-        hero.y < actor.y - sight or
-        hero.y > actor.y + sight) then
+    if getDistance(actor.x, actor.y, hero.x, hero.y) > actor.sight * 2 then
         return actor:idle()
     end
 end
@@ -64,14 +60,13 @@ function EntityFleeState:getAction(actor)
         local adjacent_cells = getAdjacentCells(move_cost, 
             actor.energy >= ord_move_cost and ord_move_cost or nil)
 
-        local x, y = actor:nextPosition()
         for idx, cell in ripairs(adjacent_cells) do
             local heading = Direction.heading[cell.dir]
-            local x1, y1 = x + heading.x, y + heading.y
+            local x1, y1 = actor.x + heading.x, actor.y + heading.y
             local v = self.dungeon.movement.get(x1, y1)
             local target = self.dungeon:getActor(x1, y1)
 
-            if isNan(v) or target ~= nil then 
+            if isNan(v) or target then 
                 table.remove(adjacent_cells, idx)
             else 
                 cell.v = v * DIJKSTRA_SAFETY_CONSTANT

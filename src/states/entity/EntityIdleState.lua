@@ -17,13 +17,10 @@ function EntityIdleState:new(dungeon)
 end
 
 function EntityIdleState:update(actor)
-    local hero_x, hero_y = self.dungeon.scheduler.hero:nextPosition()
+    local hero = self.dungeon.scheduler.hero
     local sight = actor.sight
 
-    if (hero_x > actor.x - sight and 
-        hero_x < actor.x + sight and
-        hero_y > actor.y - sight and
-        hero_y < actor.y + sight) then
+    if getDistance(actor.x, actor.y, hero.x, hero.y) <= sight then
         return actor:combat()
     end
 end

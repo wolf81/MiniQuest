@@ -51,7 +51,7 @@ function EntityCombatState:new(dungeon)
 end
 
 function EntityCombatState:update(actor)
-    local hero_x, hero_y = self.dungeon.scheduler.hero:nextPosition()
+    local hero = self.dungeon.scheduler.hero
     local sight = actor.sight
 
     if actor.morale == 1 then
@@ -59,10 +59,7 @@ function EntityCombatState:update(actor)
     end
 
     -- if hero out of range, transition to idle state
-    if (hero_x < actor.x - sight or 
-        hero_x > actor.x + sight or
-        hero_y < actor.y - sight or
-        hero_y > actor.y + sight) then
+    if getDistance(actor.x, actor.y, hero.x, hero.y) >= actor.sight then
         if not actor.undead then
             return actor:roam()
         else

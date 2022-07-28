@@ -28,7 +28,7 @@ ACTOR_DEFS = {
     },
     ['spider'] = {
         ['hitpoints'] = 1,
-        ['sight'] = 3,
+        ['sight'] = 2,
         ['move_speed'] = 0.8,
         ['animations'] = {
             ['right'] = {
