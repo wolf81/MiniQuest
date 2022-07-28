@@ -45,6 +45,8 @@ function Dungeon:new(map, start, spawns)
                     shadow[x .. '.' .. y] = 
                         Tile({ id = WALL_SHADOW_TILE_ID, }, x, y + 1)
                 end
+            elseif y == map_h then
+                tile_obj = theme:getWallTileH(x, y)                
             end
         elseif bit.band(tile, amazing.Tile.STAIR_UP) == amazing.Tile.STAIR_UP then
             objects[x .. '.' .. y] = theme:getStairUp(x, y)
