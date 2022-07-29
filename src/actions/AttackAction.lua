@@ -52,7 +52,7 @@ function AttackAction:perform(actor, duration, onFinish)
     actor.dungeon:addEntity(effect)
 
     if effect.sound then
-        gSounds[effect.sound]:play()
+        -- gSounds[effect.sound]:play()
     end
 
     actor.sync(duration, onFinish)

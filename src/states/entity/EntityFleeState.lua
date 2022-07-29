@@ -8,8 +8,6 @@
 
 EntityFleeState = EntityBaseState:extend()
 
-local DIJKSTRA_SAFETY_CONSTANT = -1.6
-
 function EntityFleeState:enter()
     if DEBUG then
         self.actor:addEffect('state', 'flee')
@@ -24,7 +22,7 @@ function EntityFleeState:exit()
     self.actor:removeEffect('fear')
 end
 
-function EntityFleeState:update(actor)
+function EntityFleeState:update()
     local hero = self.dungeon.scheduler.hero
 
     if not self:isTargetInSight(hero, self.actor.sight * 2) then
@@ -36,13 +34,12 @@ function EntityFleeState:getAction()
     local actions = {}
 
     while true do
-        local move_cost = math.ceil(BASE_ENERGY_COST / self.actor.move_speed)
-        local ord_move_cost = math.ceil(move_cost * ORDINAL_MOVE_FACTOR)
+        local cost = self:getActionCosts()
 
-        if self.actor.energy < move_cost then break end
+        if self.actor.energy < cost.move_cart then break end
 
-        local adjacent_cells = self:getAdjacentCells(move_cost, 
-            self.actor.energy >= ord_move_cost and ord_move_cost or nil)
+        local adjacent_cells = self:getAdjacentCells(cost.move_cart, 
+            self.actor.energy >= cost.move_ordi and cost.move_ordi or nil)
 
         for idx, cell in ripairs(adjacent_cells) do
             local heading = Direction.heading[cell.dir]

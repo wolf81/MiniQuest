@@ -45,9 +45,9 @@ function EntityRoamState:getAction()
      end
  
     while true do
-        local move_cost = mceil(BASE_ENERGY_COST / self.actor.move_speed)
+        local cost = self:getActionCosts()
  
-        if self.actor.energy < move_cost then return nil end 
+        if self.actor.energy < cost.move_cart then return nil end 
  
         local done = true
 
@@ -56,7 +56,7 @@ function EntityRoamState:getAction()
             local x1, y1 = self.actor.x + heading.x, self.actor.y + heading.y
             local target = self.dungeon:getActor(x1, y1)
             if not self.dungeon:isBlocked(x1, y1) and not target then
-                self.actor.energy = self.actor.energy - move_cost
+                self.actor.energy = self.actor.energy - cost.move_cart
                 actions[#actions + 1] = MoveAction(self.actor, dir)
                 done = true
                 break

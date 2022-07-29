@@ -44,11 +44,11 @@ function EntitySleepState:getAction()
     local actions = {}
 
     while true do
-        local idle_cost = math.ceil(BASE_ENERGY_COST / self.actor.move_speed)
+        local cost = self:getActionCosts()
         
-        if self.actor.energy < idle_cost then break end
+        if self.actor.energy < cost.idle then break end
 
-        self.actor.energy = self.actor.energy - idle_cost
+        self.actor.energy = self.actor.energy - cost.idle
         actions[#actions + 1] = IdleAction(self.actor, true)
     end
 

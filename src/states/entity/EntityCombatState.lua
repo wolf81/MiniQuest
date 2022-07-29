@@ -47,22 +47,20 @@ function EntityCombatState:getAction()
     local hero = self.dungeon.scheduler.hero
 
     while true do
-        local attack_cost = mceil(BASE_ENERGY_COST / self.actor.attack_speed)
-        local move_cost = mceil(BASE_ENERGY_COST / self.actor.move_speed)
+        local cost = self:getActionCosts()
 
         local done = false
 
         if self:isAdjacent(hero) and hero:isAlive() then
-            if self.actor.energy >= attack_cost then
-                self.actor.energy = self.actor.energy - attack_cost
+            if self.actor.energy >= cost.attack then
+                self.actor.energy = self.actor.energy - cost.attack
                 actions[#actions + 1] = AttackAction(self.actor, hero)
             else
                 done = true
             end
-        elseif self.actor.energy >= move_cost then        
-            local ord_move_cost = math.ceil(move_cost * ORDINAL_MOVE_FACTOR)
-            local adjacent_cells = self:getAdjacentCells(move_cost, 
-                self.actor.energy >= ord_move_cost and ord_move_cost or nil)
+        elseif self.actor.energy >= cost.move_cart then        
+            local adjacent_cells = self:getAdjacentCells(cost.move_cart, 
+                self.actor.energy >= cost.move_ordi and cost.move_ordi or nil)
 
             local x, y = self.actor:nextPosition()
             for idx, cell in ripairs(adjacent_cells) do
