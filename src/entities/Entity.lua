@@ -66,24 +66,19 @@ end
 function Entity:draw()
     local anim = self.currentAnimation
 
-    love.graphics.setColor(1.0, 1.0, 1.0, self.alpha)
+    love.graphics.push()
+    love.graphics.translate(mfloor(self.x * TILE_SIZE), mfloor(self.y * TILE_SIZE))
 
+    love.graphics.setColor(1.0, 1.0, 1.0, self.alpha)
     love.graphics.draw(
         gTextures[anim.texture], 
-        gFrames[anim.texture][anim:getCurrentFrame()],
-        mfloor(self.x * TILE_SIZE), 
-        mfloor(self.y * TILE_SIZE)
+        gFrames[anim.texture][anim:getCurrentFrame()]
     )
 
     love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
+    for _, effect in pairs(self.effects) do effect:draw() end
 
-    -- TODO: perhaps quicker to use translate instead of setting coords
-    -- or perhaps allow draw to accept x, y arguments instead
-    for _, effect in pairs(self.effects) do
-        effect.x = self.x
-        effect.y = self.y
-        effect:draw()
-    end
+    love.graphics.pop()
 end
 
 function Entity:collides(target)
