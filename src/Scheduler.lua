@@ -54,7 +54,7 @@ function Scheduler:new(entities)
 	self.busy = false
 
 	for idx, entity in ipairs(entities) do
-		local scheduledEntity = ScheduledEntity.new(entity, { 'x', 'y' })
+		local scheduledEntity = ScheduledEntity.new(entity, { 'x', 'y', 'alpha' })
 		scheduledEntity:configureStateMachine()
 
 		if entity.strategy == HeroStrategy then		
@@ -77,7 +77,10 @@ function Scheduler:update(dt)
 	local actions_p2 = { }
 
 	for idx, entity in ripairs(self.entities) do
-		if entity.remove then table.remove(self.entities, idx) end
+		if entity.remove then 
+			table.remove(self.entities, idx) 
+			goto continue
+		end
 		
 		local action = entity:getAction(hero_action.cost)
 		if not action then goto continue end

@@ -98,6 +98,16 @@ EFFECT_DEFS = {
             },
         },
     },
+    ['state_destroy'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 22 },
+                interval = 0.5,
+                texture = 'effects_ext',
+                looping = true,
+            },
+        },
+    },
     ['active'] = {
         ['animations'] = {
             ['default'] = {

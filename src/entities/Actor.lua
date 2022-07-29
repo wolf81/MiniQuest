@@ -40,9 +40,7 @@ end
 -- final states for decision making, while drawing code can rely on intermediate 
 -- state
 function Actor:configureStateMachine()
-    assert(self.getObject() ~= nil, 'a ScheduledEntity should be used')
-
-    if self.strategy == HeroStrategy then return end
+    assert(self.getObject() ~= nil, 'a ScheduledEntity should be used')    
 
     self.stateMachine = StateMachine {
         ['idle'] = function() return EntityIdleState(self, self.dungeon) end,
@@ -50,6 +48,7 @@ function Actor:configureStateMachine()
         ['flee'] = function() return EntityFleeState(self, self.dungeon) end,
         ['roam'] = function() return EntityRoamState(self, self.dungeon) end,
         ['sleep'] = function() return EntitySleepState(self, self.dungeon) end,
+        ['destroy'] = function() return EntityDestroyState(self, self.dungeon) end,
     }    
 
     if self.undead or self.strategy == HeroStrategy then
@@ -91,12 +90,22 @@ function Actor:roam()
     self.stateMachine:change('roam', self)
 end
 
+function Actor:destroy()
+    self.stateMachine:change('destroy', self)
+end
+
+function Actor:isAlive()
+    return self.hitpoints > 0
+end
+
 -- inflict some damage on this actor; if hitpoints are reduced to 0, then set 
 -- remove flag to true, so the game loop can remove the entity next iteration
 function Actor:inflict(damage)
+    if self.hitpoints == 0 then return end
+
     self.hitpoints = math.max(self.hitpoints - damage, 0)
 
-    self.remove = self.hitpoints == 0
-    
     self.morale = self.morale - 1
+
+    if self.hitpoints == 0 then self:destroy() end
 end

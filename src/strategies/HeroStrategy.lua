@@ -10,6 +10,8 @@ HeroStrategy = {}
 
 -- the hero strategy just returns actions based on keyboard input
 function HeroStrategy.getAction(actor)
+    if not actor:isAlive() then return DestroyAction(actor) end
+
     local dir = nil
 
     if love.keyboard.isDown('kp4') or love.keyboard.isDown('h') then
@@ -40,7 +42,7 @@ function HeroStrategy.getAction(actor)
     local target = actor.dungeon:getActor(x, y)
     if dir == Direction.NONE then
         return IdleAction(actor)
-    elseif target then
+    elseif target and target:isAlive() then
         return AttackAction(actor, target)
     elseif not actor.dungeon:isBlocked(x, y) then
         local move = MoveAction(actor, dir)

@@ -30,6 +30,7 @@ require 'src.actions.BaseAction'
 require 'src.actions.IdleAction'
 require 'src.actions.MoveAction'
 require 'src.actions.AttackAction'
+require 'src.actions.DestroyAction'
 require 'src.actions.CompositeAction'
 
 -- strategies
@@ -50,6 +51,7 @@ require 'src.states.entity.EntityCombatState'
 require 'src.states.entity.EntityFleeState'
 require 'src.states.entity.EntityRoamState'
 require 'src.states.entity.EntitySleepState'
+require 'src.states.entity.EntityDestroyState'
 
 -- constants, utility functions & classes
 require 'src.Constants'

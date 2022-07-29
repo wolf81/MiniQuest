@@ -23,6 +23,10 @@ end
 function EntityCombatState:update()
     local hero = self.dungeon.scheduler.hero
 
+    if not hero:isAlive() then
+        self.actor:idle()
+    end
+
     if self.actor.morale == 1 then
         return self.actor:flee()
     end
@@ -37,6 +41,8 @@ function EntityCombatState:update()
 end
 
 function EntityCombatState:getAction()
+    if not self.actor:isAlive() then return nil end
+
     local actions = {}
     local hero = self.dungeon.scheduler.hero
 
@@ -46,7 +52,7 @@ function EntityCombatState:getAction()
 
         local done = false
 
-        if self:isAdjacent(hero) then
+        if self:isAdjacent(hero) and hero:isAlive() then
             if self.actor.energy >= attack_cost then
                 self.actor.energy = self.actor.energy - attack_cost
                 actions[#actions + 1] = AttackAction(self.actor, hero)

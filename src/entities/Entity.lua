@@ -31,6 +31,8 @@ function Entity:new(def, x, y)
 
     self.x = x or 0
     self.y = y or 0
+    self.alpha = 1.0
+
     self.effects = {}
 
     self.remove = false
@@ -64,12 +66,16 @@ end
 function Entity:draw()
     local anim = self.currentAnimation
 
+    love.graphics.setColor(1.0, 1.0, 1.0, self.alpha)
+
     love.graphics.draw(
         gTextures[anim.texture], 
         gFrames[anim.texture][anim:getCurrentFrame()],
         mfloor(self.x * TILE_SIZE), 
         mfloor(self.y * TILE_SIZE)
     )
+
+    love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
 
     -- TODO: perhaps quicker to use translate instead of setting coords
     -- or perhaps allow draw to accept x, y arguments instead
