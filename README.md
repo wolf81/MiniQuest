@@ -28,3 +28,20 @@ I would like to note my turn based implementation is based on some code from the
 
 In order to decide on an action, an actor will make use of a strategy object. For the hero the strategy will just be based on keyboard input. For enemy creatures the strategy will be based on various variables. For example a melee enemy that stands next to the hero will usually attack the hero. If a melee enemy is not standing next to the hero, the enemy should move towards the hero.
 
+# Turn-based State Machine
+
+I wanted MiniQuest to be a turn-based roguelike game, but at the same time I wanted the game to feel very smooth. Many roguelike games don't use animation, so all actions, both by the player and the advisaries are instant. When many of the same advisaries are near the player, it can be difficult to decern what action each advisary is performing.
+
+So I wanted to add animations. Animations can make it very clear which advisary is moving to what location. But at the same time the animations should feel almost instant, if possible.
+
+Through trial and error I decided upon the following approach:
+a) the player is always the first to perform an action
+b) each action has a energy cost and energy cost can be influenced by the actor's stats
+c) based on the energy cost of the player's action, provide each actor the same energy
+d) then the actor can choose an action to perform based on energy available, e.g. move, attack, idle, sleep, ...
+e) if an actor is able to perform multiple actions based on energy available, combine multiple actions into a single action
+f) now divide the actions into 2 categories: move actions and combat actions, combat actions include an attack action
+g) first perform all move actions simultaneously
+h) afterward perform all combat actions sequentially
+
+Using the above approach most movement will feel very smooth if no combat actions are performed in a turn. If combat actions are performed during a turn, the player can quite clearly see which unit is performing what attack.
