@@ -6,6 +6,8 @@
     info+miniquest@wolftrail.net
 ]]
 
+DEBUG = false
+
 VIRTUAL_WIDTH = 384
 VIRTUAL_HEIGHT = 216
 

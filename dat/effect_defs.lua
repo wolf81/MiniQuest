@@ -28,6 +28,16 @@ EFFECT_DEFS = {
             },
         },
     },
+    ['fear'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 4, 5 },
+                interval = 0.5,
+                texture = 'effects_ext',
+                looping = true,
+            },
+        },
+    },
     ['sleep'] = {
         ['animations'] = {
             ['default'] = {

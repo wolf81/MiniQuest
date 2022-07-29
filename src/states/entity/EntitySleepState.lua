@@ -9,7 +9,9 @@
 EntitySleepState = EntityBaseState:extend()
 
 function EntitySleepState:enter(actor)
-    actor:addEffect('state', 'sleep')
+    if DEBUG then
+        actor:addEffect('state', 'sleep')
+    end
 
     self.turns = love.math.random(5, 10)
     

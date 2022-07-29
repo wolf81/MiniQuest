@@ -10,8 +10,18 @@ EntityFleeState = EntityBaseState:extend()
 
 local DIJKSTRA_SAFETY_CONSTANT = -1.6
 
-function EntityFleeState:enter(actor)
-    actor:addEffect('state', 'flee')
+function EntityFleeState:enter()
+    if DEBUG then
+        self.actor:addEffect('state', 'flee')
+    end
+
+    self.actor:addEffect('fear')
+end
+
+function EntityFleeState:exit()
+    self.actor:removeEffect('state')
+
+    self.actor:removeEffect('fear')
 end
 
 function EntityFleeState:update(actor)

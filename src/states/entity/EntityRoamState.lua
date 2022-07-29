@@ -11,7 +11,9 @@ local mceil = math.ceil
 EntityRoamState = EntityBaseState:extend()
 
 function EntityRoamState:enter()
-    self.actor:addEffect('state', 'roam')
+    if DEBUG then
+        self.actor:addEffect('state', 'roam')
+    end
 
     self.turns = love.math.random(5, 10)
 end

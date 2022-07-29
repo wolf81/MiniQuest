@@ -11,7 +11,9 @@ local mabs, mceil = math.abs, math.ceil
 EntityCombatState = EntityBaseState:extend()
 
 function EntityCombatState:enter()
-    self.actor:addEffect('state', 'combat')
+    if DEBUG then
+        self.actor:addEffect('state', 'combat')
+    end
 end
 
 function EntityCombatState:exit()

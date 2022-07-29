@@ -9,7 +9,9 @@
 EntityIdleState = EntityBaseState:extend()
 
 function EntityIdleState:enter()
-    self.actor:addEffect('state', 'idle')
+    if DEBUG then
+        self.actor:addEffect('state', 'idle')
+    end
 end
 
 function EntityIdleState:exit()
