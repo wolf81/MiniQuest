@@ -44,6 +44,7 @@ require 'src.states.BaseState'
 require 'src.states.game.GamePlayState'
 
 -- entity states
+require 'src.states.entity.EntityBaseState'
 require 'src.states.entity.EntityIdleState'
 require 'src.states.entity.EntityCombatState'
 require 'src.states.entity.EntityFleeState'

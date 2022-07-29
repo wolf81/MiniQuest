@@ -45,11 +45,11 @@ function Actor:configureStateMachine()
     if self.strategy == HeroStrategy then return end
 
     self.stateMachine = StateMachine {
-        ['idle'] = function() return EntityIdleState(self.dungeon) end,
-        ['combat'] = function() return EntityCombatState(self.dungeon) end,
-        ['flee'] = function() return EntityFleeState(self.dungeon) end,
-        ['roam'] = function() return EntityRoamState(self.dungeon) end,
-        ['sleep'] = function() return EntitySleepState(self.dungeon) end,
+        ['idle'] = function() return EntityIdleState(self, self.dungeon) end,
+        ['combat'] = function() return EntityCombatState(self, self.dungeon) end,
+        ['flee'] = function() return EntityFleeState(self, self.dungeon) end,
+        ['roam'] = function() return EntityRoamState(self, self.dungeon) end,
+        ['sleep'] = function() return EntitySleepState(self, self.dungeon) end,
     }    
 
     if self.undead or self.strategy == HeroStrategy then

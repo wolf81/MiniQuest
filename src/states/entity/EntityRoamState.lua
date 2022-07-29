@@ -8,56 +8,54 @@
 
 local mceil = math.ceil
 
-EntityRoamState = BaseState:extend()
+EntityRoamState = EntityBaseState:extend()
 
-function EntityRoamState:enter(actor)
-    actor:addEffect('state', 'roam')
+function EntityRoamState:enter()
+    self.actor:addEffect('state', 'roam')
 
     self.turns = love.math.random(5, 10)
 end
 
-function EntityRoamState:new(dungeon)
-    self.dungeon = dungeon
+function EntityRoamState:exit()
+    self.actor:removeEffect('state')
 end
 
-function EntityRoamState:update(actor)
-    local hero = self.dungeon.scheduler.hero
-    local sight = actor.sight
-
-    if getDistance(actor.x, actor.y, hero.x, hero.y) <= sight then
-        return actor:combat()
+function EntityRoamState:update()
+    if self:isTargetInSight(self.dungeon.scheduler.hero) then
+        return self.actor:combat()
     end
 
     self.turns = self.turns - 1
+
     if self.turns == 0 then
-        return actor:sleep()
+        return self.actor:sleep()
     end
 end
 
-function EntityRoamState:getAction(actor)
+function EntityRoamState:getAction()
      local actions = {}
  
      local dirs = shuffle({ 
          Direction.N, Direction.E, Direction.S, Direction.W, 
      })    
      if oneIn(2) then
-        table.insert(dirs, 1, actor.direction)
+        table.insert(dirs, 1, self.actor.direction)
      end
  
     while true do
-        local move_cost = mceil(BASE_ENERGY_COST / actor.move_speed)
+        local move_cost = mceil(BASE_ENERGY_COST / self.actor.move_speed)
  
-        if actor.energy < move_cost then return nil end 
+        if self.actor.energy < move_cost then return nil end 
  
         local done = true
 
         for _, dir in ipairs(dirs) do
             local heading = Direction.heading[dir]
-            local x1, y1 = actor.x + heading.x, actor.y + heading.y
+            local x1, y1 = self.actor.x + heading.x, self.actor.y + heading.y
             local target = self.dungeon:getActor(x1, y1)
             if not self.dungeon:isBlocked(x1, y1) and not target then
-                actor.energy = actor.energy - move_cost
-                actions[#actions + 1] = MoveAction(actor, dir)
+                self.actor.energy = self.actor.energy - move_cost
+                actions[#actions + 1] = MoveAction(self.actor, dir)
                 done = true
                 break
              end
@@ -71,7 +69,6 @@ function EntityRoamState:getAction(actor)
     elseif #actions == 1 then 
         return actions[1]
     else 
-        print('roam ' .. #actions .. ' tiles')
-        return CompositeAction(actor, actions) 
+        return CompositeAction(self.actor, actions) 
     end
  end

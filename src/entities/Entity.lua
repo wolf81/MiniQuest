@@ -37,8 +37,6 @@ function Entity:new(def, x, y)
 end
 
 function Entity:addEffect(name, sub)
-    print('add effect', name)
-
     local def_name = sub and name .. '_' .. sub or name
 
     assert(EFFECT_DEFS[def_name] ~= nil, 'effect not defined: ' .. name)
@@ -48,7 +46,6 @@ function Entity:addEffect(name, sub)
 end
 
 function Entity:removeEffect(name)
-    print('rm effect', name)
     self.effects[name] = nil
 end
 
