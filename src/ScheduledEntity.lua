@@ -1,3 +1,11 @@
+--[[
+    GD50
+    MiniQuest
+
+    Author: Wolfgang Schreurs
+    info+miniquest@wolftrail.net
+]]
+
 ScheduledEntity = {}
 
 ScheduledEntity.new = function(object, member_keys)

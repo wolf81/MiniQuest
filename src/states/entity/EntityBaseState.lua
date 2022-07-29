@@ -1,3 +1,11 @@
+--[[
+    GD50
+    MiniQuest
+
+    Author: Wolfgang Schreurs
+    info+miniquest@wolftrail.net
+]]
+
 EntityBaseState = BaseState:extend()
 
 function EntityBaseState:new(actor, dungeon)

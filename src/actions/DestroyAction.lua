@@ -1,3 +1,11 @@
+--[[
+    GD50
+    MiniQuest
+
+    Author: Wolfgang Schreurs
+    info+miniquest@wolftrail.net
+]]
+
 DestroyAction = BaseAction:extend()
 
 function DestroyAction:new(actor)

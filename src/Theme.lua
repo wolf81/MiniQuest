@@ -65,7 +65,3 @@ end
 function Theme:getStairDown(x, y)
     return Tile({ id = self.stair_down }, x, y)
 end
-
--- function Theme:getDoor(x, y)
---     return Tile({ id = 161 }, x, y)
--- end
