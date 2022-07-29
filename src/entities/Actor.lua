@@ -52,9 +52,9 @@ function Actor:configureStateMachine()
     }    
 
     if self.undead or self.strategy == HeroStrategy then
-        self:idle(self)
+        self:idle()
     else
-        self:sleep(self)
+        if oneIn(2) then self:sleep() else self:roam() end
     end
 end
 
