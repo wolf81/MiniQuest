@@ -13,3 +13,6 @@
 [submodule "lib/hump"]
 	path = lib/hump
 	url = https://github.com/wolf81/hump.git
+[submodule "lib/ndn"]
+	path = lib/ndn
+	url = https://github.com/wolf81/ndn.git
