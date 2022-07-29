@@ -24,7 +24,8 @@ ACTOR_DEFS = {
                 interval = 0.5,
                 texture = 'monsters',
             },
-        }
+        },
+        ['stats'] = {},
     },
     ['spider'] = {
         ['hitpoints'] = 1,
@@ -56,7 +57,11 @@ ACTOR_DEFS = {
                 interval = 1.5,
                 texture = 'monsters',
             },
-        }        
+        }, 
+        ['stats'] = {
+            ['hd'] = '2d8+2',
+            ['ac'] = 14,
+        },
     },
     ['bat'] = {
         ['hitpoints'] = 3,
@@ -88,7 +93,11 @@ ACTOR_DEFS = {
                 interval = 1.5,
                 texture = 'monsters',
             },
-        }        
+        },
+        ['stats'] = {
+            ['hd'] = '1/2d8',
+            ['ac'] = 16,
+        },     
     },
     ['skeleton'] = {
         ['hitpoints'] = 4,
@@ -115,7 +124,11 @@ ACTOR_DEFS = {
                 interval = 0.5,
                 texture = 'monsters',
             },
-        }
+        },
+        ['stats'] = {
+            ['hd'] = '1d12',
+            ['ac'] = 15,
+        },
     },
     ['skel_mage'] = {
         ['hitpoints'] = 2,
@@ -143,7 +156,11 @@ ACTOR_DEFS = {
                 interval = 0.5,
                 texture = 'monsters',
             },
-        }
+        },
+        ['stats'] = {
+            ['hd'] = '3d8+3',
+            ['ac'] = 12,
+        },
     },
     ['zombie'] = {
         ['hitpoints'] = 4,
@@ -171,7 +188,11 @@ ACTOR_DEFS = {
                 interval = 0.5,
                 texture = 'monsters',
             },
-        }        
+        },
+        ['stats'] = {
+            ['hd'] = '2d12+3',
+            ['ac'] = 11,
+        },
     },
     ['vampire'] = {
         ['hitpoints'] = 6,
@@ -200,6 +221,10 @@ ACTOR_DEFS = {
                 interval = 0.5,
                 texture = 'monsters',
             },
-        }
+        },
+        ['stats'] = {
+            ['hd'] = '4d12+3',
+            ['ac'] = 15,
+        },        
     },
 }

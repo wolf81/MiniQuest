@@ -11,6 +11,7 @@ Object = require 'lib.classic.classic'
 Timer = require 'lib.knife.knife.timer'
 amazing = require 'lib.amazing'
 vector = require 'lib.hump.vector'
+ndn = require 'lib.ndn'
 
 -- data files
 require 'dat.actor_defs'
