@@ -43,10 +43,13 @@ function Scheduler:new(entities)
 	self.busy = false
 
 	for idx, entity in ipairs(entities) do
+		local scheduledEntity = ScheduledEntity.new(entity, { 'x', 'y' })
+		scheduledEntity:configureStateMachine()
+
 		if entity.strategy == HeroStrategy then		
-			self.hero = ScheduledEntity.new(entity, { 'x', 'y' })
+			self.hero = scheduledEntity
 		else
-			self.entities[#self.entities + 1] = ScheduledEntity.new(entity, { 'x', 'y' })
+			self.entities[#self.entities + 1] = scheduledEntity
 		end
 	end
 end

@@ -1,5 +1,4 @@
 ScheduledEntity = {}
-ScheduledEntity.__index = ScheduledEntity
 
 ScheduledEntity.new = function(object, member_keys)
 	local members = {}

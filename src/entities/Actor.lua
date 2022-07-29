@@ -30,8 +30,19 @@ function Actor:new(def, dungeon, x, y, strategy)
     self.attack_speed = def.attack_speed or 1.0
     self.morale = def.morale or 10
     self.sight = def.sight or 5
+    self.strategy = strategy or ActorStrategy
 
     parseFlags(self, def.flags)
+end
+
+-- we configure the state machine seperately, in order for use to be able to 
+-- use the scheduled entity as self object - this way the state machine can use 
+-- final states for decision making, while drawing code can rely on intermediate 
+-- state
+function Actor:configureStateMachine()
+    assert(self.getObject() ~= nil, 'a ScheduledEntity should be used')
+
+    if self.strategy == HeroStrategy then return end
 
     self.stateMachine = StateMachine {
         ['idle'] = function() return EntityIdleState(self.dungeon) end,
@@ -39,9 +50,7 @@ function Actor:new(def, dungeon, x, y, strategy)
         ['flee'] = function() return EntityFleeState(self.dungeon) end,
         ['roam'] = function() return EntityRoamState(self.dungeon) end,
         ['sleep'] = function() return EntitySleepState(self.dungeon) end,
-    }
-
-    self.strategy = strategy or ActorStrategy
+    }    
 
     if self.undead or self.strategy == HeroStrategy then
         self:idle(self)
