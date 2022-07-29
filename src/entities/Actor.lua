@@ -98,6 +98,17 @@ function Actor:isAlive()
     return self.hitpoints > 0
 end
 
+function Actor:draw()
+    if self.stencilFunc then
+        love.graphics.stencil(self.stencilFunc, 'replace', 1)
+        love.graphics.setStencilTest('equal', 0)
+    end
+
+    Entity.draw(self)
+
+    love.graphics.setStencilTest()
+end
+
 -- inflict some damage on this actor; if hitpoints are reduced to 0, then set 
 -- remove flag to true, so the game loop can remove the entity next iteration
 function Actor:inflict(damage)

@@ -80,6 +80,10 @@ function Dungeon:new(map, start, spawns)
     self:updateMovementGraph()
 end
 
+function Dungeon:getTileType(x, y)
+    return self.map.get(x, y)
+end
+
 function Dungeon:updateMovementGraph()
     local isBlocked = function(x, y)
         return bit.band(self.map.get(x, y), amazing.Tile.WALL) == amazing.Tile.WALL
