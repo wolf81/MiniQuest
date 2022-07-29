@@ -17,8 +17,6 @@ function EntitySleepState:enter(actor)
 end
 
 function EntitySleepState:exit()
-    print('exit sleep state')
-
     self.actor:removeEffect('sleep')    
 end
 

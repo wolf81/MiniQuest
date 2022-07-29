@@ -16,6 +16,14 @@
 
 Scheduler = Object:extend()
 
+local function changeActive(entity, is_active)	
+	if is_active then
+		entity:addEffect('active')
+	else
+		entity:removeEffect('active')
+	end
+end
+
 local function performActions(actions, duration, onFinish)
 	if #actions == 0 then onFinish() end
 
@@ -32,7 +40,10 @@ local function performActionsSeq(actions, duration, onFinish)
 	if #actions == 0 then return onFinish() end
 
 	local action_info = table.remove(actions, 1)
+
+	changeActive(action_info.entity, true)
 	action_info.action:perform(action_info.entity, duration, function()
+		changeActive(action_info.entity, false)
 		performActionsSeq(actions, duration, onFinish)
 	end)
 end

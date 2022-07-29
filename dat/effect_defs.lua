@@ -33,7 +33,7 @@ EFFECT_DEFS = {
             ['default'] = {
                 frames = { 1, 2, 3 },
                 interval = 0.5,
-                texture = 'effects_custom',
+                texture = 'effects_ext',
                 looping = true,
             },
         },
@@ -43,7 +43,7 @@ EFFECT_DEFS = {
             ['default'] = {
                 frames = { 17 },
                 interval = 0.5,
-                texture = 'effects_custom',
+                texture = 'effects_ext',
                 looping = true,
             },
         },
@@ -53,7 +53,7 @@ EFFECT_DEFS = {
             ['default'] = {
                 frames = { 18 },
                 interval = 0.5,
-                texture = 'effects_custom',
+                texture = 'effects_ext',
                 looping = true,
             },
         },
@@ -63,7 +63,7 @@ EFFECT_DEFS = {
             ['default'] = {
                 frames = { 19 },
                 interval = 0.5,
-                texture = 'effects_custom',
+                texture = 'effects_ext',
                 looping = true,
             },
         },
@@ -73,7 +73,7 @@ EFFECT_DEFS = {
             ['default'] = {
                 frames = { 20 },
                 interval = 0.5,
-                texture = 'effects_custom',
+                texture = 'effects_ext',
                 looping = true,
             },
         },
@@ -83,9 +83,19 @@ EFFECT_DEFS = {
             ['default'] = {
                 frames = { 21 },
                 interval = 0.5,
-                texture = 'effects_custom',
+                texture = 'effects_ext',
                 looping = true,
             },
         },
     },
+    ['active'] = {
+        ['animations'] = {
+            ['default'] = {
+                frames = { 169 },
+                interval = 0.5,
+                texture = 'interface',
+                looping = true,
+            }
+        }
+    }
 }
