@@ -15,7 +15,7 @@ ScheduledEntity.new = function(object, member_keys)
 	end
 
 	local sync = function(duration, onFinish)
-		Timer.tween(duration, { [object] = members }):finish(onFinish)
+		Timer.tween(duration, object, members, 'linear', onFinish)
 	end
 
 	local getObject = function()

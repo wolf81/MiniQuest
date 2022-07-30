@@ -30,7 +30,7 @@ local function performActions(actions, duration, onFinish)
 end
 
 function CompositeAction:new(actor, actions)
-    BaseAction.new(self, getTotalCost(actions), actor)
+    BaseAction.new(self, actor, getTotalCost(actions))
 
     self.actions = actions
 end

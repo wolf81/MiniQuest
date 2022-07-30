@@ -32,6 +32,7 @@ function Entity:new(def, x, y)
     self.x = x or 0
     self.y = y or 0
     self.alpha = 1.0
+    self.color = { 1.0, 1.0, 1.0 }
 
     self.effects = {}
 
@@ -69,7 +70,7 @@ function Entity:draw()
     love.graphics.push()
     love.graphics.translate(mfloor(self.x * TILE_SIZE), mfloor(self.y * TILE_SIZE))
 
-    love.graphics.setColor(1.0, 1.0, 1.0, self.alpha)
+    love.graphics.setColor(self.color[1], self.color[2], self.color[3], self.alpha)
     love.graphics.draw(
         gTextures[anim.texture], 
         gFrames[anim.texture][anim:getCurrentFrame()]

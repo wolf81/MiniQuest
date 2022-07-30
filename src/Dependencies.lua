@@ -8,7 +8,7 @@
 
 push = require 'lib.push.push'
 Object = require 'lib.classic.classic'
-Timer = require 'lib.knife.knife.timer'
+Timer = require 'lib.hump.timer'
 amazing = require 'lib.amazing'
 vector = require 'lib.hump.vector'
 ndn = require 'lib.ndn'
