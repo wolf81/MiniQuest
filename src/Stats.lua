@@ -32,7 +32,13 @@ function Stats:get(id)
     local total = self.base[id] or 0
 
     for _, modifier in pairs(self.modifiers) do
-        total = total + modifier[id] or 0
+        local value = modifier[id]
+        if type(value) == 'string' then
+            local dice = ndn.dice(modifier[id])
+            total = total + dice.roll()
+        else
+            total = total + modifier[id] or 0            
+        end
     end
 
     return total

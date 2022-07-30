@@ -28,6 +28,12 @@ ACTOR_DEFS = {
             ['att_speed'] = 1.0,
             ['hd'] = '1d8+6',
         },
+        ['equipment'] = {
+            ['scimitar+1'] = {
+                ['dmg_melee'] = '1d6',
+                ['att_melee'] = '1',
+            },
+        },
     },
     ['spider'] = {
         ['animations'] = {
