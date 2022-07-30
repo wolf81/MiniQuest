@@ -20,8 +20,8 @@ local directionString = {
     [Direction.NE] = 'right',
 }
 
-function AttackAction:new(actor, target)
-    BaseAction.new(self, actor)
+function AttackAction:new(actor, cost, target)
+    BaseAction.new(self, actor, cost)
 
     local dx, dy = actor.x - target.x, actor.y - target.y
     local direction = nil
@@ -31,9 +31,7 @@ function AttackAction:new(actor, target)
     elseif dy > 0 then direction = Direction.N
     else error('invalid direction') end
 
-    local cost = getActionCosts(self.actor)
     self.direction = direction
-    self.cost = cost.attack
 
     self.effect_x = target.x
     self.effect_y = target.y

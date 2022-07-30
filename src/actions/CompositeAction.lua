@@ -8,6 +8,16 @@
 
 CompositeAction = BaseAction:extend()
 
+local function getTotalCost(actions)
+    local total = 0
+
+    for _, action in ipairs(actions) do
+        total = total + action.cost
+    end
+
+    return total
+end
+
 local function performActions(actions, duration, onFinish)
     if #actions == 0 then 
         onFinish() 
@@ -20,7 +30,7 @@ local function performActions(actions, duration, onFinish)
 end
 
 function CompositeAction:new(actor, actions)
-    BaseAction.new(self, actor)
+    BaseAction.new(self, getTotalCost(actions), actor)
 
     self.actions = actions
 end

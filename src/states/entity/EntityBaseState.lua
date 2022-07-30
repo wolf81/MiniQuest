@@ -15,28 +15,6 @@ function EntityBaseState:new(actor, dungeon)
     self.dungeon = dungeon
 end
 
-function EntityBaseState:getAdjacentCells(cart_move_cost, ord_move_cost)
-    if ord_move_cost then 
-        return {
-            { dir = Direction.N,  cost = cart_move_cost },
-            { dir = Direction.W,  cost = cart_move_cost },
-            { dir = Direction.E,  cost = cart_move_cost },
-            { dir = Direction.S,  cost = cart_move_cost },
-            { dir = Direction.NW, cost = ord_move_cost  },
-            { dir = Direction.SW, cost = ord_move_cost  },
-            { dir = Direction.NE, cost = ord_move_cost  },
-            { dir = Direction.SE, cost = ord_move_cost  },
-        }
-    end
-
-    return {
-        { dir = Direction.N, cost = cart_move_cost },
-        { dir = Direction.W, cost = cart_move_cost },
-        { dir = Direction.E, cost = cart_move_cost },
-        { dir = Direction.S, cost = cart_move_cost },
-    }
-end
-
 function EntityBaseState:isAdjacent(target)
     return getDistance(self.actor.x, self.actor.y, target.x, target.y) <= ORDINAL_MOVE_FACTOR
 end

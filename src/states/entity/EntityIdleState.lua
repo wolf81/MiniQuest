@@ -32,7 +32,7 @@ function EntityIdleState:getAction()
         if self.actor.energy < cost.idle then break end
 
         self.actor.energy = self.actor.energy - cost.idle
-        actions[#actions + 1] = IdleAction(self.actor)
+        actions[#actions + 1] = IdleAction(self.actor, cost.idle)
     end
 
     if #actions == 0 then 

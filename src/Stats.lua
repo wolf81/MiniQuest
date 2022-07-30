@@ -10,11 +10,14 @@
 
 Stats = Object:extend()
 
-function Stats:new(def)
+function Stats:new(def, converter)
+    converter = converter or function(id, value) return value end
+
     self.base = {}
     self.modifiers = {}
 
     for id, value in pairs(def) do
+        value = converter(id, value)
         self.base[id] = value
     end
 

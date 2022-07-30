@@ -34,33 +34,35 @@ end
 function EntityFleeState:getAction()
     local actions = {}
 
+    local dirs = { 
+        Direction.N, Direction.NW, Direction.W, Direction.SW, 
+        Direction.S, Direction.SE, Direction.E, Direction.NE 
+    }
+
     while true do
         local cost = getActionCosts(self.actor)
 
-        if self.actor.energy < cost.move_cart then break end
+        if self.actor.energy < cost.move then break end
 
-        local adjacent_cells = self:getAdjacentCells(cost.move_cart, 
-            self.actor.energy >= cost.move_ordi and cost.move_ordi or nil)
-
-        for idx, cell in ripairs(adjacent_cells) do
-            local heading = Direction.heading[cell.dir]
+        for idx, dir in ripairs(dirs) do
+            local heading = Direction.heading[dir]
             local x1, y1 = self.actor.x + heading.x, self.actor.y + heading.y
             local v = self.dungeon.movement.get(x1, y1)
             local target = self.dungeon:getActor(x1, y1)
 
             if isNan(v) or target then 
-                table.remove(adjacent_cells, idx)
+                table.remove(dirs, idx)
             else 
-                cell.v = v * DIJKSTRA_SAFETY_CONSTANT
+                dirs[idx] = { dir = dir, v = v * DIJKSTRA_SAFETY_CONSTANT }
             end
         end
 
-        table.sort(adjacent_cells, function(a, b) return a.v < b.v end)
+        table.sort(dirs, function(a, b) return a.v < b.v end)
 
-        if #adjacent_cells > 0 then
-            local adj_cell = adjacent_cells[1]
-            self.actor.energy = self.actor.energy - adj_cell.cost
-            actions[#actions + 1] = MoveAction(self.actor, adj_cell.dir)
+        if #dirs > 0 then
+            local adj_cell = dirs[1]
+            self.actor.energy = self.actor.energy - cost.move
+            actions[#actions + 1] = MoveAction(self.actor, cost.move, adj_cell.dir)
         else            
             break
         end        

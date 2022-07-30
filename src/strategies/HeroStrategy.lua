@@ -39,13 +39,15 @@ function HeroStrategy.getAction(actor)
     local heading = Direction.heading[dir]
     local x, y = actor.x + heading.x, actor.y + heading.y
 
+    local cost = getActionCosts(actor)
+
     local target = actor.dungeon:getActor(x, y)
     if dir == Direction.NONE then
-        return IdleAction(actor)
+        return IdleAction(actor, cost.idle)
     elseif target and target:isAlive() then
-        return AttackAction(actor, target)
+        return AttackAction(actor, cost.attack, target)
     elseif not actor.dungeon:isBlocked(x, y) then
-        local move = MoveAction(actor, dir)
+        local move = MoveAction(actor, cost.move, dir)
         -- TODO: this is ugly, but I think we need to do this order to get the
         -- next position of hero set properly, so other entities can move 
         -- towards hero

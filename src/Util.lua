@@ -8,7 +8,7 @@
 
 local lrandom, msqrt, mceil = love.math.random, math.sqrt, math.ceil
 
-function GenerateQuads(atlas, tilewidth, tileheight)
+function generateQuads(atlas, tilewidth, tileheight)
     local sheetWidth = math.floor(atlas:getWidth() / tilewidth)
     local sheetHeight = math.floor(atlas:getHeight() / tileheight)
 
@@ -37,7 +37,7 @@ function getKeys(tbl)
     return keys
 end
 
-local ripairs_iter = function(t, i)
+local ripairsIter = function(t, i)
   i = i - 1
   local v = t[i]
   if v ~= nil then
@@ -47,7 +47,7 @@ end
 
 -- reverse ipairs, based on code from the lume library
 function ripairs(t)
-  return ripairs_iter, t, (#t + 1)
+  return ripairsIter, t, (#t + 1)
 end
 
 function oneIn(count)
@@ -76,13 +76,12 @@ function getDistance(x1, y1, x2, y2)
 end
 
 function getActionCosts(actor)
-    local move_cost_cart = mceil(BASE_ENERGY_COST / actor.stats:get('spd'))
+    local move_cost = mceil(BASE_ENERGY_COST / actor.stats:get('spd'))
 
     return { 
         attack = BASE_ENERGY_COST, -- TODO: remove 
-        move_cart = move_cost_cart, 
-        move_ordi = mceil(move_cost_cart * ORDINAL_MOVE_FACTOR), 
-        idle = move_cost_cart 
+        move = move_cost,
+        idle = move_cost,
     }
 end
 

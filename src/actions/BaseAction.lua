@@ -8,9 +8,9 @@
 
 BaseAction = Object:extend()
 
-function BaseAction:new(actor)
+function BaseAction:new(actor, cost)
     self.actor = actor
-    self.cost = 100
+    self.cost = cost or BASE_ENERGY_COST
 end
 
 function BaseAction:isCombatAction()

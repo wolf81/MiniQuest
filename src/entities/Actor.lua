@@ -17,6 +17,11 @@ local function parseFlags(self, flags)
     end
 end
 
+local function statValueConverter(id, value)
+    local value = id == 'spd' and (value / 30) or value
+    return value
+end
+
 function Actor:new(def, dungeon, x, y, strategy)
     Entity.new(self, def, x, y)
 
@@ -27,7 +32,7 @@ function Actor:new(def, dungeon, x, y, strategy)
     self.strategy = strategy or ActorStrategy
 
     assert(def.stats ~= nil, 'stats must be defined')
-    self.stats = Stats(def.stats)
+    self.stats = Stats(def.stats, statValueConverter)
     
     self.hp = self.stats:get('hp')
     self.morale = self.stats:get('morale')

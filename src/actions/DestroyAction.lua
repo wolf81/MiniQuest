@@ -9,7 +9,7 @@
 DestroyAction = BaseAction:extend()
 
 function DestroyAction:new(actor)
-    BaseAction.new(self, actor)
+    BaseAction.new(self, actor, 0)
 
     self.actor.alpha = 0.0
 end

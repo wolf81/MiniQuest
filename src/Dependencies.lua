@@ -78,11 +78,11 @@ gTextures = {
 }
 
 gFrames = {
-    ['tiles'] = GenerateQuads(gTextures['world'], 16, 16),
-    ['monsters'] = GenerateQuads(gTextures['monsters'], 16, 16),
-    ['interface'] = GenerateQuads(gTextures['interface'], 16, 16),
-    ['effects'] = GenerateQuads(gTextures['effects'], 16, 16),
-    ['effects_ext'] = GenerateQuads(gTextures['effects_ext'], 16, 16),
+    ['tiles'] = generateQuads(gTextures['world'], 16, 16),
+    ['monsters'] = generateQuads(gTextures['monsters'], 16, 16),
+    ['interface'] = generateQuads(gTextures['interface'], 16, 16),
+    ['effects'] = generateQuads(gTextures['effects'], 16, 16),
+    ['effects_ext'] = generateQuads(gTextures['effects_ext'], 16, 16),
 }
 
 gSounds = {

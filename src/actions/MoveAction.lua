@@ -31,16 +31,10 @@ local stencilInfo = {
     [Direction.SE] = function(dungeon, x, y) return dungeon:getTileType(x, y + 1) == amazing.Tile.WALL, x, y + 1 end,
 }
 
-function MoveAction:new(actor, direction)
-    BaseAction.new(self, actor)
+function MoveAction:new(actor, cost, direction)
+    BaseAction.new(self, actor, cost)
     
-    self.direction = direction
-    local cost = getActionCosts(self.actor)    
-    self.cost = cost.move_cart
-    if Direction.isOrdinal(direction) then
-        self.cost = cost.move_ordi
-    end
-
+    self.direction = direction 
     self.last_x = self.actor.x
     self.last_y = self.actor.y
 

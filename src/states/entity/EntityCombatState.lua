@@ -46,6 +46,11 @@ function EntityCombatState:getAction()
     local actions = {}
     local hero = self.dungeon.scheduler.hero
 
+    local dirs = { 
+        Direction.N, Direction.NW, Direction.W, Direction.SW, 
+        Direction.S, Direction.SE, Direction.E, Direction.NE 
+    }
+
     while true do
         local cost = getActionCosts(self.actor)
 
@@ -54,37 +59,34 @@ function EntityCombatState:getAction()
         if self:isAdjacent(hero) and hero:isAlive() then
             if self.actor.energy >= cost.attack then
                 self.actor.energy = self.actor.energy - cost.attack
-                actions[#actions + 1] = AttackAction(self.actor, hero)
+                actions[#actions + 1] = AttackAction(self.actor, cost.attack, hero)
             else
                 done = true
             end
-        elseif self.actor.energy >= cost.move_cart then        
-            local adjacent_cells = self:getAdjacentCells(cost.move_cart, 
-                self.actor.energy >= cost.move_ordi and cost.move_ordi or nil)
-
+        elseif self.actor.energy >= cost.move then        
             local x, y = self.actor:nextPosition()
-            for idx, cell in ripairs(adjacent_cells) do
-                local heading = Direction.heading[cell.dir]
+            for idx, dir in ripairs(dirs) do
+                local heading = Direction.heading[dir]
                 local x1, y1 = x + heading.x, y + heading.y
                 local v = self.dungeon.movement.get(x1, y1)
                 local target = self.dungeon:getActor(x1, y1)
 
                 if isNan(v) or target ~= nil then 
-                    table.remove(adjacent_cells, idx)
+                    table.remove(dirs, idx)
                 else 
-                    cell.v = v
+                    dirs[idx] = { dir = dir, v = v }
                 end
             end
 
-            table.sort(adjacent_cells, function(a, b) return a.v < b.v end)
+            table.sort(dirs, function(a, b) return a.v < b.v end)
 
-            if #adjacent_cells == 0 then
+            if #dirs == 0 then
                 done = true
             else
-                local cell = adjacent_cells[1]
+                local cell = dirs[1]
                 if not isNan(cell.v) then
-                    self.actor.energy = self.actor.energy - cell.cost
-                    actions[#actions + 1] = MoveAction(self.actor, cell.dir)
+                    self.actor.energy = self.actor.energy - cost.move
+                    actions[#actions + 1] = MoveAction(self.actor, cost.move, cell.dir)
                 end
             end
         else

@@ -8,8 +8,8 @@
 
 IdleAction = BaseAction:extend()
 
-function IdleAction:new(actor, sleeping)
-    BaseAction.new(self, actor)
+function IdleAction:new(actor, cost, sleeping)
+    BaseAction.new(self, actor, cost)
 
     self.sleeping = sleeping or false
 end
