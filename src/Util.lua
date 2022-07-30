@@ -6,7 +6,7 @@
     info+miniquest@wolftrail.net
 ]]
 
-local lrandom, msqrt = love.math.random, math.sqrt
+local lrandom, msqrt, mceil = love.math.random, math.sqrt, math.ceil
 
 function GenerateQuads(atlas, tilewidth, tileheight)
     local sheetWidth = math.floor(atlas:getWidth() / tilewidth)
@@ -74,3 +74,16 @@ function getDistance(x1, y1, x2, y2)
     local dy = y2 - y1
     return msqrt((dx ^ 2) + (dy ^ 2)) 
 end
+
+function getActionCosts(actor)
+    local move_cost_cart = mceil(BASE_ENERGY_COST / actor.stats:get('mov_speed'))
+    local att_cost = mceil(BASE_ENERGY_COST / actor.stats:get('att_speed'))
+
+    return { 
+        attack = att_cost, 
+        move_cart = move_cost_cart, 
+        move_ordi = mceil(move_cost_cart * ORDINAL_MOVE_FACTOR), 
+        idle = move_cost_cart 
+    }
+end
+

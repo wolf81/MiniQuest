@@ -31,8 +31,9 @@ function AttackAction:new(actor, target)
     elseif dy > 0 then direction = Direction.N
     else error('invalid direction') end
 
+    local cost = getActionCosts(self.actor)
     self.direction = direction
-    self.cost = math.ceil(self.cost / actor.attack_speed)
+    self.cost = cost.attack
 
     self.effect_x = target.x
     self.effect_y = target.y

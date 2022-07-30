@@ -1,8 +1,5 @@
 ACTOR_DEFS = {
     ['hero'] = {
-        ['hitpoints'] = 10,
-        ['move_speed'] = 1.0,
-        ['attack_speed'] = 1.0,
         ['animations'] = {
             ['right'] = {
                 frames = { 1, 17 },
@@ -26,13 +23,13 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
-            ['hd'] = '1d8+6'
+            ['mov_speed'] = 1.0,
+            ['att_speed'] = 1.0,
+            ['hd'] = '1d8+6',
         },
     },
     ['spider'] = {
-        ['hitpoints'] = 1,
         ['sight'] = 3,
-        ['move_speed'] = 0.8,
         ['animations'] = {
             ['right'] = {
                 frames = { 257, 273 },
@@ -61,14 +58,14 @@ ACTOR_DEFS = {
             },
         }, 
         ['stats'] = {
+            ['mov_speed'] = 0.8,
+            ['att_speed'] = 1.0,
             ['hd'] = '1d8+1',
             ['ac'] = 14,
         },
     },
     ['bat'] = {
-        ['hitpoints'] = 3,
         ['morale'] = 2,
-        ['move_speed'] = 1.6,
         ['animations'] = {
             ['right'] = {
                 frames = { 233, 249 },
@@ -97,13 +94,13 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['mov_speed'] = 1.6,
+            ['att_speed'] = 1.0,
             ['hd'] = '1d8',
             ['ac'] = 16,
         },     
     },
     ['skeleton'] = {
-        ['hitpoints'] = 4,
-        ['move_speed'] = 1.0,
         ['flags'] = { 'undead' },
         ['animations'] = {
             ['right'] = {
@@ -128,14 +125,14 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['mov_speed'] = 1.0,
+            ['att_speed'] = 1.0,
             ['hd'] = '1d12',
             ['ac'] = 15,
         },
     },
     ['skel_mage'] = {
-        ['hitpoints'] = 2,
         ['sight'] = 6,
-        ['move_speed'] = 1.2,
         ['flags'] = { 'undead' },
         ['animations'] = {
             ['right'] = {
@@ -160,14 +157,13 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['mov_speed'] = 1.2,
+            ['att_speed'] = 1.0,
             ['hd'] = '3d8+3',
             ['ac'] = 12,
         },
     },
     ['zombie'] = {
-        ['hitpoints'] = 4,
-        ['move_speed'] = 0.5,
-        ['attack_speed'] = 0.8,
         ['flags'] = { 'undead' },
         ['animations'] = {
             ['right'] = {
@@ -192,15 +188,14 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['mov_speed'] = 0.6,
+            ['att_speed'] = 0.8,
             ['hd'] = '2d12+3',
             ['ac'] = 11,
         },
     },
     ['vampire'] = {
-        ['hitpoints'] = 6,
         ['sight'] = 6,
-        ['move_speed'] = 1.8,
-        ['attack_speed'] = 1.6,
         ['flags'] = { 'undead' },
         ['animations'] = {
             ['right'] = {
@@ -225,6 +220,8 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['mov_speed'] = 1.8,
+            ['att_speed'] = 1.5,
             ['hd'] = '4d12+3',
             ['ac'] = 15,
         },        

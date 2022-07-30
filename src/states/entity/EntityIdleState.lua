@@ -28,7 +28,7 @@ function EntityIdleState:getAction()
     local actions = {}
 
     while true do
-        local cost = self:getActionCosts()
+        local cost = getActionCosts(self.actor)
         if self.actor.energy < cost.idle then break end
 
         self.actor.energy = self.actor.energy - cost.idle

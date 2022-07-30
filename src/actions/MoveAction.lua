@@ -35,9 +35,10 @@ function MoveAction:new(actor, direction)
     BaseAction.new(self, actor)
     
     self.direction = direction
-    self.cost = math.ceil(self.cost / actor.move_speed) 
+    local cost = getActionCosts(self.actor)    
+    self.cost = cost.move_cart
     if Direction.isOrdinal(direction) then
-        self.cost = math.ceil(self.cost * ORDINAL_MOVE_FACTOR)
+        self.cost = cost.move_ordi
     end
 
     self.last_x = self.actor.x

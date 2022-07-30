@@ -37,18 +37,6 @@ function EntityBaseState:getAdjacentCells(cart_move_cost, ord_move_cost)
     }
 end
 
-function EntityBaseState:getActionCosts()
-    local move_cost_cart = mceil(BASE_ENERGY_COST / self.actor.move_speed)
-    local att_cost = mceil(BASE_ENERGY_COST / self.actor.attack_speed)
-
-    return { 
-        attack = att_cost, 
-        move_cart = move_cost_cart, 
-        move_ordi = mceil(move_cost_cart * ORDINAL_MOVE_FACTOR), 
-        idle = move_cost_cart 
-    }
-end
-
 function EntityBaseState:isAdjacent(target)
     return getDistance(self.actor.x, self.actor.y, target.x, target.y) <= ORDINAL_MOVE_FACTOR
 end

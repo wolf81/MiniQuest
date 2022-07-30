@@ -45,7 +45,7 @@ function EntityRoamState:getAction()
      end
  
     while true do
-        local cost = self:getActionCosts()
+        local cost = getActionCosts(self.actor)
  
         if self.actor.energy < cost.move_cart then return nil end 
  

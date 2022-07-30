@@ -47,7 +47,7 @@ function EntityCombatState:getAction()
     local hero = self.dungeon.scheduler.hero
 
     while true do
-        local cost = self:getActionCosts()
+        local cost = getActionCosts(self.actor)
 
         local done = false
 
