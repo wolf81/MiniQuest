@@ -25,7 +25,8 @@ end
 function EntityFleeState:update()
     local hero = self.dungeon.scheduler.hero
 
-    if not self:isTargetInSight(hero, self.actor.stats:get('sight') * 2) then
+    local morale_max = self.actor.stats:get('morale')
+    if not self:isTargetInSight(hero, self.actor.stats:get('sight') * 2) or self.actor.morale == morale_max then
         return self.actor:idle()
     end
 end
@@ -68,10 +69,14 @@ function EntityFleeState:getAction()
     if #actions == 0 then 
         return nil
     elseif #actions == 1 then 
-        self.actor.morale = self.actor.morale + 1
+        local morale_max = self.actor.stats:get('morale')
+        self.actor.morale = math.min(self.actor.morale + 1, morale_max)
+
         return actions[1]
     else 
-        self.actor.morale = self.actor.morale + 1
+        local morale_max = self.actor.stats:get('morale')
+        self.actor.morale = math.min(self.actor.morale + 1, morale_max)
+
         return CompositeAction(self.actor, actions) 
     end
 end

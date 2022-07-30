@@ -24,16 +24,14 @@ function Actor:new(def, dungeon, x, y, strategy)
 
     self.direction = Direction.S
 
-    self.energy = 0
-
-    self.move_speed = def.move_speed or 1.0
-    self.attack_speed = def.attack_speed or 1.0
-    self.morale = def.morale or 10
     self.strategy = strategy or ActorStrategy
 
     assert(def.stats ~= nil, 'stats must be defined')
     self.stats = Stats(def.stats)
+    
     self.hp = self.stats:get('hp')
+    self.morale = self.stats:get('morale')
+    self.energy = 0
 
     parseFlags(self, def.flags)
 end
@@ -120,7 +118,7 @@ function Actor:inflict(damage)
     self.hp = self.hp - damage
 
     if not self.undead then
-        self.morale = self.morale - 1
+        self.morale = math.max(self.morale - 1, 0)
     end
 
     if self.hp <= 0 then
