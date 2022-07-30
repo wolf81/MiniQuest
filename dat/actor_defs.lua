@@ -24,7 +24,7 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 5,
-            ['mov_speed'] = 1.0,
+            ['mov_speed'] = 30,
             ['att_speed'] = 1.0,
             ['hd'] = '1d8+6',
         },
@@ -74,7 +74,7 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 3,
-            ['mov_speed'] = 0.8,
+            ['mov_speed'] = 20,
             ['att_speed'] = 1.0,
             ['morale'] = 5,
             ['hd'] = '1d4-1',
@@ -116,7 +116,7 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 5,
-            ['mov_speed'] = 1.6,
+            ['mov_speed'] = 30,
             ['att_speed'] = 1.0,
             ['morale'] = 4,
             ['hd'] = '1d4-1',
@@ -159,7 +159,7 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 5,
-            ['mov_speed'] = 1.0,
+            ['mov_speed'] = 30,
             ['att_speed'] = 1.0,
             ['morale'] = 5,
             ['hd'] = '2d8+4',
@@ -192,7 +192,7 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 6,
-            ['mov_speed'] = 1.2,
+            ['mov_speed'] = 30,
             ['att_speed'] = 1.0,
             ['morale'] = 5,
             ['hd'] = '1d8+3',
@@ -231,7 +231,7 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 5,
-            ['mov_speed'] = 0.6,
+            ['mov_speed'] = 20,
             ['att_speed'] = 0.8,
             ['morale'] = 5,
             ['hd'] = '3d8+9',
@@ -264,7 +264,7 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 6,
-            ['mov_speed'] = 1.8,
+            ['mov_speed'] = 30,
             ['att_speed'] = 1.5,
             ['morale'] = 5,
             ['hd'] = '4d12+3',
