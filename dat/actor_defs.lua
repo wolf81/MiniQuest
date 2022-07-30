@@ -25,7 +25,9 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
-        ['stats'] = {},
+        ['stats'] = {
+            ['hd'] = '1d8+6'
+        },
     },
     ['spider'] = {
         ['hitpoints'] = 1,
@@ -59,7 +61,7 @@ ACTOR_DEFS = {
             },
         }, 
         ['stats'] = {
-            ['hd'] = '2d8+2',
+            ['hd'] = '1d8+1',
             ['ac'] = 14,
         },
     },
@@ -95,7 +97,7 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
-            ['hd'] = '1/2d8',
+            ['hd'] = '1d8',
             ['ac'] = 16,
         },     
     },

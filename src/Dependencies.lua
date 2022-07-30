@@ -19,6 +19,7 @@ require 'dat.effect_defs'
 
 -- utility
 require 'src.Direction'
+require 'src.Stats'
 
 -- entities
 require 'src.entities.Entity'
