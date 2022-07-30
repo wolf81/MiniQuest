@@ -32,7 +32,7 @@ function EntitySleepState:update()
             self.actor:combat()
         end
     else
-        if self:isTargetInSight(hero, self.actor.sight) then
+        if self:isTargetInSight(hero, self.actor.stats:get('sight')) then
             self.actor:combat()
         else
             self.actor:roam()

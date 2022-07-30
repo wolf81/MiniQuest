@@ -42,7 +42,7 @@ function EntityBaseState:isAdjacent(target)
 end
 
 function EntityBaseState:isTargetInSight(target, sight)
-    local sight = sight or self.actor.sight
+    local sight = sight or self.actor.stats:get('sight')
     return getDistance(self.actor.x, self.actor.y, target.x, target.y) <= sight 
 end
 

@@ -25,7 +25,7 @@ end
 function EntityFleeState:update()
     local hero = self.dungeon.scheduler.hero
 
-    if not self:isTargetInSight(hero, self.actor.sight * 2) then
+    if not self:isTargetInSight(hero, self.actor.stats:get('sight') * 2) then
         return self.actor:idle()
     end
 end

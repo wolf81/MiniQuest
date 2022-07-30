@@ -29,7 +29,6 @@ function Actor:new(def, dungeon, x, y, strategy)
     self.move_speed = def.move_speed or 1.0
     self.attack_speed = def.attack_speed or 1.0
     self.morale = def.morale or 10
-    self.sight = def.sight or 5
     self.strategy = strategy or ActorStrategy
 
     assert(def.stats ~= nil, 'stats must be defined')
@@ -119,7 +118,10 @@ function Actor:inflict(damage)
     if self.hp <= 0 then return end
 
     self.hp = self.hp - damage
-    self.morale = self.morale - 1
+
+    if not self.undead then
+        self.morale = self.morale - 1
+    end
 
     if self.hp <= 0 then
         self:destroy()

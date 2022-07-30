@@ -23,13 +23,13 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['sight'] = 5,
             ['mov_speed'] = 1.0,
             ['att_speed'] = 1.0,
             ['hd'] = '1d8+6',
         },
     },
     ['spider'] = {
-        ['sight'] = 3,
         ['animations'] = {
             ['right'] = {
                 frames = { 257, 273 },
@@ -58,6 +58,7 @@ ACTOR_DEFS = {
             },
         }, 
         ['stats'] = {
+            ['sight'] = 3,
             ['mov_speed'] = 0.8,
             ['att_speed'] = 1.0,
             ['hd'] = '1d8+1',
@@ -94,6 +95,7 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['sight'] = 5,
             ['mov_speed'] = 1.6,
             ['att_speed'] = 1.0,
             ['hd'] = '1d8',
@@ -125,6 +127,7 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['sight'] = 5,
             ['mov_speed'] = 1.0,
             ['att_speed'] = 1.0,
             ['hd'] = '1d12',
@@ -132,7 +135,6 @@ ACTOR_DEFS = {
         },
     },
     ['skel_mage'] = {
-        ['sight'] = 6,
         ['flags'] = { 'undead' },
         ['animations'] = {
             ['right'] = {
@@ -157,6 +159,7 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['sight'] = 6,
             ['mov_speed'] = 1.2,
             ['att_speed'] = 1.0,
             ['hd'] = '3d8+3',
@@ -188,6 +191,7 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['sight'] = 5,
             ['mov_speed'] = 0.6,
             ['att_speed'] = 0.8,
             ['hd'] = '2d12+3',
@@ -195,7 +199,6 @@ ACTOR_DEFS = {
         },
     },
     ['vampire'] = {
-        ['sight'] = 6,
         ['flags'] = { 'undead' },
         ['animations'] = {
             ['right'] = {
@@ -220,6 +223,7 @@ ACTOR_DEFS = {
             },
         },
         ['stats'] = {
+            ['sight'] = 6,
             ['mov_speed'] = 1.8,
             ['att_speed'] = 1.5,
             ['hd'] = '4d12+3',

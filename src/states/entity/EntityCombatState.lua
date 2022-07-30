@@ -31,7 +31,7 @@ function EntityCombatState:update()
         return self.actor:flee()
     end
 
-    if not self:isTargetInSight(hero, self.actor.sight) then
+    if not self:isTargetInSight(hero, self.actor.stats:get('sight')) then
         if not self.actor.undead then
             return self.actor:roam()            
         else
