@@ -34,6 +34,7 @@ ACTOR_DEFS = {
             ['sight'] = 5,
             ['spd'] = 30,
             ['hd'] = '1d8+6',
+            ['ac'] = 10,
         },
         ['equip'] = {
             ['Leather Armor'] = {
