@@ -76,11 +76,10 @@ function getDistance(x1, y1, x2, y2)
 end
 
 function getActionCosts(actor)
-    local move_cost_cart = mceil(BASE_ENERGY_COST / actor.stats:get('mov_speed'))
-    local att_cost = mceil(BASE_ENERGY_COST / actor.stats:get('att_speed'))
+    local move_cost_cart = mceil(BASE_ENERGY_COST / actor.stats:get('spd'))
 
     return { 
-        attack = att_cost, 
+        attack = BASE_ENERGY_COST, -- TODO: remove 
         move_cart = move_cost_cart, 
         move_ordi = mceil(move_cost_cart * ORDINAL_MOVE_FACTOR), 
         idle = move_cost_cart 

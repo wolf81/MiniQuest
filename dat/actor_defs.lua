@@ -24,12 +24,11 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 5,
-            ['mov_speed'] = 30,
-            ['att_speed'] = 1.0,
+            ['spd'] = 30,
             ['hd'] = '1d8+6',
         },
-        ['equipment'] = {
-            ['leather armor'] = {
+        ['equip'] = {
+            ['Leather Armor'] = {
                 ['ac'] = 2,
             },
             ['scimitar+1'] = {
@@ -66,16 +65,15 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         }, 
-        ['equipment'] = {
-            ['bite+4'] = {
+        ['equip'] = {
+            ['Bite +4'] = {
                 ['att_melee'] = 4,
                 ['dmg_melee'] = '1d1', -- +1d4 poison
             },
         },
         ['stats'] = {
             ['sight'] = 3,
-            ['mov_speed'] = 20,
-            ['att_speed'] = 1.0,
+            ['spd'] = 20,
             ['morale'] = 5,
             ['hd'] = '1d4-1',
             ['ac'] = 12,
@@ -109,15 +107,14 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
-        ['equipment'] = {
-            ['bite'] = {
+        ['equip'] = {
+            ['Bite'] = {
                 ['dmg_melee'] = '1d1',
             },
         },
         ['stats'] = {
             ['sight'] = 5,
-            ['mov_speed'] = 30,
-            ['att_speed'] = 1.0,
+            ['spd'] = 30,
             ['morale'] = 4,
             ['hd'] = '1d4-1',
             ['ac'] = 12,
@@ -147,7 +144,7 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
-        ['equipment'] = {
+        ['equip'] = {
             ['Short Sword +4'] = {
                 ['att_melee'] = 4,
                 ['dmg_melee'] = '1d6+2',
@@ -159,8 +156,7 @@ ACTOR_DEFS = {
         },
         ['stats'] = {
             ['sight'] = 5,
-            ['mov_speed'] = 30,
-            ['att_speed'] = 1.0,
+            ['spd'] = 30,
             ['morale'] = 5,
             ['hd'] = '2d8+4',
             ['ac'] = 13,
@@ -190,10 +186,15 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
+        ['equip'] = {
+            ['Crooked Staff +2'] = {
+                ['att_melee'] = 2,
+                ['dmg_melee'] = '1d8',
+            },
+        },
         ['stats'] = {
             ['sight'] = 6,
-            ['mov_speed'] = 30,
-            ['att_speed'] = 1.0,
+            ['spd'] = 30,
             ['morale'] = 5,
             ['hd'] = '1d8+3',
             ['ac'] = 12,
@@ -223,16 +224,15 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
-        ['equipment'] = {
-            ['slam + 3'] = {
+        ['equip'] = {
+            ['Slam +3'] = {
                 ['att_melee'] = 3,
                 ['dmg_melee'] = '1d6+1',
             },
         },
         ['stats'] = {
             ['sight'] = 5,
-            ['mov_speed'] = 20,
-            ['att_speed'] = 0.8,
+            ['spd'] = 20,
             ['morale'] = 5,
             ['hd'] = '3d8+9',
             ['ac'] = 8,
@@ -262,12 +262,17 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
+        ['equip'] = {
+            ['Unarmed Strike +9'] = {
+                ['att_melee'] = 9,
+                ['dmg_melee'] = '1d8+4',
+            },
+        },
         ['stats'] = {
             ['sight'] = 6,
-            ['mov_speed'] = 30,
-            ['att_speed'] = 1.5,
+            ['spd'] = 30,
             ['morale'] = 5,
-            ['hd'] = '4d12+3',
+            ['hd'] = '17d8+68',
             ['ac'] = 16,
         },        
     },

@@ -33,7 +33,7 @@ function Actor:new(def, dungeon, x, y, strategy)
     self.morale = self.stats:get('morale')
     self.energy = 0
 
-    for name, modifier in pairs(def.equipment or {}) do
+    for name, modifier in pairs(def.equip or {}) do
         self.stats:addModifier(name, modifier)
     end
 
