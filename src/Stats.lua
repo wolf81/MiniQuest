@@ -30,18 +30,26 @@ end
 
 function Stats:get(id)
     local total = self.base[id] or 0
-
     for _, modifier in pairs(self.modifiers) do
-        local value = modifier[id]
+        local value = modifier[id] or 0
         if type(value) == 'string' then
             local dice = ndn.dice(modifier[id])
             total = total + dice.roll()
         else
-            total = total + modifier[id] or 0            
+            total = total + value
         end
     end
 
     return total
+end
+
+function Stats:__tostring()
+    local s = 'base = {\n'
+    for k, v in pairs(self.base) do
+        s = s .. '\t ' .. k .. ' = ' .. v .. ',\n' 
+    end
+    s = s .. '}'
+    return s
 end
 
 function Stats:addModifier(id, modifier)

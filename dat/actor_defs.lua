@@ -29,9 +29,12 @@ ACTOR_DEFS = {
             ['hd'] = '1d8+6',
         },
         ['equipment'] = {
+            ['leather armor'] = {
+                ['ac'] = 2,
+            },
             ['scimitar+1'] = {
                 ['dmg_melee'] = '1d6',
-                ['att_melee'] = '1',
+                ['att_melee'] = 1,
             },
         },
     },
@@ -63,13 +66,19 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         }, 
+        ['equipment'] = {
+            ['bite+4'] = {
+                ['att_melee'] = 4,
+                ['dmg_melee'] = '1d1', -- +1d4 poison
+            },
+        },
         ['stats'] = {
             ['sight'] = 3,
             ['mov_speed'] = 0.8,
             ['att_speed'] = 1.0,
             ['morale'] = 5,
-            ['hd'] = '1d8+1',
-            ['ac'] = 14,
+            ['hd'] = '1d4-1',
+            ['ac'] = 12,
         },
     },
     ['bat'] = {
@@ -100,13 +109,18 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
+        ['equipment'] = {
+            ['bite'] = {
+                ['dmg_melee'] = '1d1',
+            },
+        },
         ['stats'] = {
             ['sight'] = 5,
             ['mov_speed'] = 1.6,
             ['att_speed'] = 1.0,
             ['morale'] = 4,
-            ['hd'] = '1d8+2',
-            ['ac'] = 16,
+            ['hd'] = '1d4-1',
+            ['ac'] = 12,
         },     
     },
     ['skeleton'] = {
@@ -133,13 +147,23 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
+        ['equipment'] = {
+            ['Short Sword +4'] = {
+                ['att_melee'] = 4,
+                ['dmg_melee'] = '1d6+2',
+            },
+            -- ['Shortbow + 4'] = {
+            --     ['att_ranged'] = 4,
+            --     ['dmg_ranged'] = '1d6+2',
+            -- },
+        },
         ['stats'] = {
             ['sight'] = 5,
             ['mov_speed'] = 1.0,
             ['att_speed'] = 1.0,
             ['morale'] = 5,
-            ['hd'] = '1d12',
-            ['ac'] = 15,
+            ['hd'] = '2d8+4',
+            ['ac'] = 13,
         },
     },
     ['skel_mage'] = {
@@ -238,7 +262,7 @@ ACTOR_DEFS = {
             ['att_speed'] = 1.5,
             ['morale'] = 5,
             ['hd'] = '4d12+3',
-            ['ac'] = 15,
+            ['ac'] = 16,
         },        
     },
 }

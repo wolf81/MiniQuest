@@ -38,7 +38,21 @@ function AttackAction:new(actor, target)
     self.effect_x = target.x
     self.effect_y = target.y
 
-    target:inflict(1)   
+    local dmg_melee = self.actor.stats:get('dmg_melee')
+    local att_bonus = self.actor.stats:get('att_melee')
+    local att_roll = ndn.dice('1d20').roll()
+    local target_ac = target.stats:get('ac')
+
+    self.is_hit = att_roll == 20 or (att_roll + att_bonus) > target_ac
+
+    print(att_roll .. ' + ' .. att_bonus .. ' vs ' .. target_ac)
+
+    if self.is_hit then
+        print('hit for ' .. dmg_melee)
+        target:inflict(dmg_melee)   
+    else
+        print('miss')
+    end
 end
 
 function AttackAction:isCombatAction()

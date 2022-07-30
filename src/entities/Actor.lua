@@ -37,8 +37,6 @@ function Actor:new(def, dungeon, x, y, strategy)
         self.stats:addModifier(name, modifier)
     end
 
-    print(self.stats:get('dmg_melee'))
-
     parseFlags(self, def.flags)
 end
 
