@@ -29,7 +29,7 @@ local function performActions(actions, duration, onFinish)
 
 	local n_actions = #actions
 	for _, action_info in ipairs(actions) do	
-		action_info.action:perform(action_info.entity, duration, function()
+		action_info.action:perform(duration, function()
 			n_actions = n_actions - 1
 			if n_actions == 0 then onFinish() end
 		end)
@@ -42,7 +42,7 @@ local function performActionsSeq(actions, duration, onFinish)
 	local action_info = table.remove(actions, 1)
 
 	changeActive(action_info.entity, true)
-	action_info.action:perform(action_info.entity, duration, function()
+	action_info.action:perform(duration, function()
 		changeActive(action_info.entity, false)
 		performActionsSeq(actions, duration, onFinish)
 	end)

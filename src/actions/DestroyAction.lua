@@ -14,8 +14,8 @@ function DestroyAction:new(actor)
     self.actor.alpha = 0.0
 end
 
-function DestroyAction:perform(actor, duration, onFinish)
-    actor.sync(duration, function()
+function DestroyAction:perform(duration, onFinish)
+    self.actor.sync(duration, function()
         self.actor.remove = true
         onFinish()
     end)

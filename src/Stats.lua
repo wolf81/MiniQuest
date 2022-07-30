@@ -52,6 +52,8 @@ function Stats:__tostring()
     return s
 end
 
+-- TODO: in case of string, directly add ndn dice object, so user of stats class
+-- can then decide to roll a random value, average value, max value, etc...
 function Stats:addModifier(id, modifier)
     assert(self.modifiers[id] == nil, 'already added modifier with id: ' .. id)
     self.modifiers[id] = modifier

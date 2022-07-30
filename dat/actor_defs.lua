@@ -223,13 +223,19 @@ ACTOR_DEFS = {
                 texture = 'monsters',
             },
         },
+        ['equipment'] = {
+            ['slam + 3'] = {
+                ['att_melee'] = 3,
+                ['dmg_melee'] = '1d6+1',
+            },
+        },
         ['stats'] = {
             ['sight'] = 5,
             ['mov_speed'] = 0.6,
             ['att_speed'] = 0.8,
             ['morale'] = 5,
-            ['hd'] = '2d12+3',
-            ['ac'] = 11,
+            ['hd'] = '3d8+9',
+            ['ac'] = 8,
         },
     },
     ['vampire'] = {

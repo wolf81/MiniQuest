@@ -43,7 +43,8 @@ function AttackAction:new(actor, target)
     local att_roll = ndn.dice('1d20').roll()
     local target_ac = target.stats:get('ac')
 
-    self.is_hit = att_roll == 20 or (att_roll + att_bonus) > target_ac
+    -- TODO: support critical hits on natural 20 roll
+    self.is_hit = (att_roll + att_bonus) > target_ac
 
     print(att_roll .. ' + ' .. att_bonus .. ' vs ' .. target_ac)
 
@@ -59,16 +60,16 @@ function AttackAction:isCombatAction()
     return true
 end
 
-function AttackAction:perform(actor, duration, onFinish)    
-    actor.direction = self.direction
-    actor:changeAnimation(directionString[actor.direction])
+function AttackAction:perform(duration, onFinish)    
+    self.actor.direction = self.direction
+    self.actor:changeAnimation(directionString[self.actor.direction])
 
     local effect = Effect(EFFECT_DEFS['strike'], self.effect_x, self.effect_y)
-    actor.dungeon:addEntity(effect)
+    self.actor.dungeon:addEntity(effect)
 
     if effect.sound then
         gSounds[effect.sound]:play()
     end
 
-    actor.sync(duration, onFinish)
+    self.actor.sync(duration, onFinish)
 end

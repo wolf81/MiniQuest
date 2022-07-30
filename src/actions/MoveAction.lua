@@ -49,9 +49,9 @@ function MoveAction:new(actor, direction)
     self.actor.y = self.actor.y + heading.y
 end
 
-function MoveAction:perform(actor, duration, onFinish)
+function MoveAction:perform(duration, onFinish)
     self.actor.direction = self.direction
-    actor:changeAnimation(directionString[self.actor.direction])
+    self.actor:changeAnimation(directionString[self.actor.direction])
 
     local draw_stencil, stencil_x, stencil_y = stencilInfo[self.direction](self.actor.dungeon, self.last_x, self.last_y)
     if draw_stencil then
@@ -65,7 +65,7 @@ function MoveAction:perform(actor, duration, onFinish)
         end         
     end
 
-    actor.sync(duration, function()
+    self.actor.sync(duration, function()
         self.actor.stencilFunc = nil
         onFinish()
     end)
