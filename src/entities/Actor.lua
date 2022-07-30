@@ -24,7 +24,6 @@ function Actor:new(def, dungeon, x, y, strategy)
 
     self.direction = Direction.S
 
-    self.injury = 0
     self.energy = 0
 
     self.move_speed = def.move_speed or 1.0
@@ -35,6 +34,7 @@ function Actor:new(def, dungeon, x, y, strategy)
 
     assert(def.stats ~= nil, 'stats must be defined')
     self.stats = Stats(def.stats)
+    self.hp = self.stats:get('hp')
 
     parseFlags(self, def.flags)
 end
@@ -99,7 +99,7 @@ function Actor:destroy()
 end
 
 function Actor:isAlive()
-    return self.injury < self.stats:get('hp')
+    return self.hp > 0
 end
 
 function Actor:draw()
@@ -116,14 +116,12 @@ end
 -- inflict some damage on this actor; if hitpoints are reduced to 0, then set 
 -- remove flag to true, so the game loop can remove the entity next iteration
 function Actor:inflict(damage)
-    local hitpoints = self.stats:get('hp')
+    if self.hp <= 0 then return end
 
-    if self.injury < hitpoints then
-        self.injury = self.injury + 1
-        self.morale = self.morale - 1
+    self.hp = self.hp - damage
+    self.morale = self.morale - 1
 
-        if self.injury >= hitpoints then 
-            self:destroy() 
-        end
+    if self.hp <= 0 then
+        self:destroy()
     end
 end
