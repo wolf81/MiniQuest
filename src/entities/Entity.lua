@@ -72,8 +72,7 @@ function Entity:draw()
 
     local shader = gShaders['color_mix']
     shader:send('blendColor', self.color)
-
-
+    shader:send('alpha', self.alpha)
     love.graphics.setShader(shader)
 
     --love.graphics.setColor(self.color[1], self.color[2], self.color[3], self.alpha)

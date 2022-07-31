@@ -21,16 +21,18 @@ local directionString = {
 }
 
 local function animateHit(target, duration)
+    local halfDuration = duration / 2
+
     Timer.tween(
-        duration / 2, 
+        halfDuration, 
         target, 
         { color = { 1.0, 0.0, 0.0, 1.0 }}, 
         'linear', 
         function()
             Timer.tween(
-                duration / 2,
+                halfDuration,
                 target,
-                { color = { 1.0, 1.0, 1.0, 0.0 }}, 
+                { color = { 1.0, 0.0, 0.0, 0.0 }}, 
                 'linear'
             )
         end

@@ -1,9 +1,14 @@
 extern vec4 blendColor;
+extern float alpha;
 
-vec4 effect(vec4 col, Image texture, vec2 texturePos, vec2 screenPos)
+vec4 effect(vec4 col, Image tex, vec2 texCoord, vec2 screenCoord)
 {
-    vec4 textureCol = texture2D(texture, texturePos);
-    vec4 color = mix(textureCol, blendColor, blendColor[3]);
+    // get color at texture coord
+    vec4 texCol = texture2D(tex, texCoord);
 
-    return vec4(color[0], color[1], color[2], textureCol[3]);
+    // mix texture color with blend color using blend color alpha
+    vec4 color = mix(texCol, blendColor, blendColor[3]);
+
+    // multiply with alpha, so we can properly show transparancy if needed
+    return vec4(color.xyz, texCol[3] * alpha);
 }
