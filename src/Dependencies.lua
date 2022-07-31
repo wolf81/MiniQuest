@@ -12,6 +12,7 @@ Timer = require 'lib.hump.timer'
 amazing = require 'lib.amazing'
 vector = require 'lib.hump.vector'
 ndn = require 'lib.ndn'
+composer = require 'lib.composer'
 
 -- data files
 require 'dat.actor_defs'
