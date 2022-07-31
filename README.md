@@ -4,6 +4,22 @@ The goal of MiniQuest is to create a simple turn-based RPG as final project for 
 
 In this document I will try to describe the development process and design choices.
 
+# Gameplay
+
+The idea is to have a turn-based Diablo clone based using mechanics loosely based on Microlite20.
+
+At the start of the game the player will find himself in a village. Inside the village there will the the occasional quest. The village is in need of help, as lately weird activity has been noticed around the nearby cathedral. The player is tasked to investigate the cathedral.
+
+Soon the player discovers the Cathedral is infested by undead and worse. The player will then be able to go down the catacombs to find the source of the problems.
+
+As the player descends lower and lower, the scenery changes. At some point the player will find himself in hell, having to defeat a major demon. Once the demon is slain, the player has won.
+
+At the start of the game the player will be able to select a class. I'll probably add the following classes to start with:
+
+- Fighter: excels at physical combat
+- Rogue: stealthy, but average at physical combat
+- Mage: bad at physical combat, but can cast powerful spells
+
 # Entities
 
 The entity structure is quite basic.
