@@ -92,6 +92,10 @@ gSounds = {
     ['impact_a'] = love.audio.newSource('sfx/impacts/impact_b.wav', 'static'),
 }
 
+gShaders = {
+    ['color_mix'] = love.graphics.newShader('shd/color_mix.glsl')
+}
+
 gStateMachine = StateMachine {
     ['play'] = function() return GamePlayState() end,
 }
